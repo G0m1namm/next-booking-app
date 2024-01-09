@@ -150,7 +150,7 @@ const roomSchema: Schema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required: true
+        required: false // TODO: turn ir true once users are created in DB
     },
     createdAt: {
         type: Date,
