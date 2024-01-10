@@ -1,5 +1,5 @@
 import dbConnect from "@/backend/config/dbConnect";
-import { updateRoomById } from "@/backend/controllers/roomControllers";
+import { deleteRoomById, updateRoomById } from "@/backend/controllers/roomControllers";
 import { createEdgeRouter } from "next-connect";
 import { NextRequest } from "next/server";
 
@@ -14,7 +14,12 @@ const router = createEdgeRouter<NextRequest, RequestContext>()
 dbConnect()
 
 router.put(updateRoomById)
+router.delete(deleteRoomById)
 
 export async function PUT(request: NextRequest, ctx: RequestContext) {
+    return router.run(request, ctx)
+}
+
+export async function DELETE(request: NextRequest, ctx: RequestContext) {
     return router.run(request, ctx)
 }

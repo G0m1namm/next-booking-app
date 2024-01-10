@@ -42,7 +42,7 @@ export interface IRoom extends Document {
     reviews: IReview[];
     user: mongoose.Types.ObjectId;
     createdAt: Date;
-  }
+}
 const roomSchema: Schema = new Schema({
     name: {
         type: String,
@@ -50,20 +50,20 @@ const roomSchema: Schema = new Schema({
         trim: true,
         maxLength: [200, 'Room name can not exceed 200 characters']
     },
-    description:{
+    description: {
         type: String,
-        required: [true, 'Please enter room description']    
+        required: [true, 'Please enter room description']
     },
     pricePerNight: {
         type: Number,
         required: [true, 'Please enter room price'],
         default: 0.0
     },
-    address:{
+    address: {
         type: String,
-        required: [true, 'Please enter room address']    
+        required: [true, 'Please enter room address']
     },
-    location:{
+    location: {
         type: {
             type: String,
             enum: ['Point']
