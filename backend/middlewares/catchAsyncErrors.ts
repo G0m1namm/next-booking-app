@@ -2,10 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 type HandlerType = (req: NextRequest, params: any) => Promise<NextResponse>
 
+export interface IValidationError {
+    message: string;
+}
+
 export const catchAsyncErrors = (handler: HandlerType) => async (req: NextRequest, params: any) => {
     try {
-        await handler(req, params)
+        return await handler(req, params)
     } catch (error: any) {
+        if (error?.name === 'CastError') {
+            error.message = `Resource not found. Invalid ${error?.path}`;
+            error.statusCode = 400;
+        }
+        if (error?.name === 'ValidationError') {
+            error.message = Object.values<IValidationError>(error.errors).map(value => value.message)
+            error.statusCode = 400;
+        }
         return NextResponse.json({
             message: error.message
         }, { status: error.statusCode || 500 })
