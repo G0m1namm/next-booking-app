@@ -8,15 +8,13 @@ class APIFilters {
     }
 
     search(): Promise<Array<any>> {
-        if (this.queryParams?.location) {
-            this.queryParams.address = {
-                $regex: this.queryParams.location,
-                $options: 'i' // Case-sensitive
-            }
-            delete this.queryParams.location
-        }
-
         return this.model.find({ ...this.queryParams })
+    }
+
+    pagination(page: number, resultsPerPage: number): Promise<Array<any>> {
+        const skipPage = resultsPerPage * (page - 1)
+
+        return this.model.find({ ...this.queryParams }).limit(resultsPerPage).skip(skipPage)
     }
 }
 

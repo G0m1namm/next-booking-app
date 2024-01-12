@@ -4,15 +4,38 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import ErrorHandler from "../utils/errorHandler";
 import APIFilters from "../utils/apiFilters";
 
+const FILTERS_NOT_ALLOWED = ['location', 'page']
+const RESULTS_PER_PAGE = 8;
+
 // Get all rooms => GET /api/rooms
 export const allRooms = catchAsyncErrors(async (req: NextRequest) => {
     const { searchParams } = new URL(req.url)
-    const queryParams: Record<string, string> = {};
+    const page = Number(searchParams.get('page')) || 1;
+    const queryParams: Record<string, any> = {};
+    const totalResults = await Room.countDocuments()
+
     searchParams.forEach((value, key) => queryParams[key] = value)
-    const rooms: IRoom[] = await new APIFilters(Room, queryParams).search()
+
+    if (queryParams?.location) {
+        queryParams.address = {
+            $regex: queryParams.location,
+            $options: 'i' // Case-sensitive
+        }
+    }
+
+    FILTERS_NOT_ALLOWED.forEach(filter => delete queryParams[filter])
+
+    const apiFilters = new APIFilters(Room, queryParams)
+    let rooms: IRoom[] = await apiFilters.search()
+    const totalFiltered = rooms.length
+    rooms = await apiFilters.pagination(page, RESULTS_PER_PAGE)
 
     return NextResponse.json({
         success: true,
+        limit: RESULTS_PER_PAGE,
+        page,
+        totalResults,
+        totalFiltered,
         rooms
     })
 })
