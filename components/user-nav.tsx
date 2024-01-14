@@ -1,6 +1,9 @@
+'use client'
+
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { toast } from "sonner"
 
 type Props = {}
 
@@ -17,7 +20,7 @@ export default function UserNav({ }: Props) {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => toast('say somethin!')}>Dashboard</DropdownMenuItem>
                     <DropdownMenuItem>My Bookings</DropdownMenuItem>
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                 </DropdownMenuGroup>

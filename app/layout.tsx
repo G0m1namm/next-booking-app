@@ -4,8 +4,9 @@ import './globals.css'
 import Header from '@/components/header'
 import { cn } from '@/lib/utils'
 import Footer from '@/components/footer'
+import GlobalProvider from '@/providers/global-provider'
 
-export const fontSans = FontSans({
+const openSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 })
@@ -25,11 +26,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn(
         "min-h-screen bg-background font-sans antialiased",
-        fontSans.variable
+        openSans.variable
       )}>
-        <Header />
-        {children}
-        <Footer />
+        <GlobalProvider>
+          <Header />
+          {children}
+          <Footer />
+        </GlobalProvider>
       </body>
     </html>
   )
