@@ -33,6 +33,8 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
+
+    --page-shell-max-content-width: 2520px;
   }
  
   .dark {
@@ -72,5 +74,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .page-shell-container {
+    max-width: var(--page-shell-max-content-width, 1760px);
   }
 }
