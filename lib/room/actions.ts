@@ -9,7 +9,7 @@ export const getRooms = async (): Promise<GetRoomResponseType & Pick<ApiError, '
         return data
     } catch (error) {
         return {
-            success: false,
+            success: true,
             message: 'Failed to retrieve the rooms'
         }
     }

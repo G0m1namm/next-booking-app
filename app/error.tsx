@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button'
 
 type Props = {
-    error: Error & { digest?: string },
+    error: Pick<Error, 'message'>,
     reset?: () => void
 }
 
