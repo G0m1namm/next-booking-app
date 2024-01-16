@@ -7,8 +7,23 @@ import APIFilters from "../utils/apiFilters";
 const FILTERS_NOT_ALLOWED = ['location', 'page']
 const RESULTS_PER_PAGE = 8;
 
+interface IRoomResponse {
+    success: boolean,
+    room?: IRoom,
+    rooms?: IRoom[]
+}
+
+interface IPagination {
+    limit?: number,
+    page?: number,
+    totalResults?: number,
+    totalFiltered?: number
+}
+
+export interface GetRoomResponseType extends Omit<IRoomResponse, 'room'>, IPagination { }
+
 // Get all rooms => GET /api/rooms
-export const allRooms = catchAsyncErrors(async (req: NextRequest) => {
+export const getAllRooms = catchAsyncErrors<GetRoomResponseType>(async (req: NextRequest) => {
     const { searchParams } = new URL(req.url)
     const page = Number(searchParams.get('page')) || 1;
     const queryParams: Record<string, any> = {};

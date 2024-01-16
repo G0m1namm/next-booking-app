@@ -1,12 +1,13 @@
+import { ApiError } from "next/dist/server/api-utils";
 import { NextRequest, NextResponse } from "next/server";
 
-type HandlerType = (req: NextRequest, params: any) => Promise<NextResponse>
+export type HandlerType<T> = (req: NextRequest, params: any) => Promise<NextResponse<T | ApiError>>
 
 export interface IValidationError {
     message: string;
 }
 
-export const catchAsyncErrors = (handler: HandlerType) => async (req: NextRequest, params: any) => {
+export const catchAsyncErrors = <T>(handler: HandlerType<T>) => async (req: NextRequest, params: any) => {
     try {
         return await handler(req, params)
     } catch (error: any) {
