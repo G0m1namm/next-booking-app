@@ -19,11 +19,11 @@ export default async function Page({ }: Props) {
       <section>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 xl:gap-8">
           {data.rooms.map((room, roomIdx) => (
-            <div itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
+            <div key={`room_${room._id}`} itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
               <meta itemProp="name" content={room.name} />
               <meta itemProp="position" content={roomIdx.toString()} />
               <meta itemProp="url" content={`${getBaseUrl()}/rooms/${room._id}`} />
-              <Room key={`room_${room._id}`} room={room} className="grid grid-cols-[100%]" />
+              <Room room={room} className="grid grid-cols-[100%]" />
             </div>
           ))}
         </div>
