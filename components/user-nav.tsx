@@ -13,7 +13,7 @@ export default function UserNav({ }: Props) {
             <DropdownMenuTrigger asChild>
                 <Button variant={"ghost"} className="relative size-8 rounded-full">
                     <Avatar className="size-8">
-                        <AvatarImage src="/avatar.jpg" alt="user avatar" />
+                        <AvatarImage src="/images/avatar.jpg" alt="user avatar" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                 </Button>
