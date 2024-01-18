@@ -6,8 +6,8 @@ type Props = {}
 
 export default function Header({ }: Props) {
     return (
-        <header className="w-full sticky top-0 left-0">
-            <div className="page-shell-container px-24 h-16 flex items-center justify-between">
+        <header className="w-full sticky top-0 left-0 z-10 border-b border-slate-200 bg-white">
+            <div className="page-shell-container mx-auto px-24 h-20 flex items-center justify-between">
                 <h2 className="font-black text-lg">BookIt</h2>
                 <UserNav />
             </div>
