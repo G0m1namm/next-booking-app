@@ -7,13 +7,13 @@ import APIFilters from "../utils/apiFilters";
 const FILTERS_NOT_ALLOWED = ['location', 'page']
 const RESULTS_PER_PAGE = 8;
 
-interface IRoomResponse {
+export interface IRoomResponse {
     success: boolean,
     room?: IRoom,
     rooms?: IRoom[]
 }
 
-interface IPagination {
+export interface IPagination {
     limit?: number,
     page?: number,
     totalResults?: number,

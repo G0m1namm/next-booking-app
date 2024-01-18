@@ -11,6 +11,20 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontSize: {
+      '90': 'var(--text-size-90)',
+      '80': 'var(--text-size-80)',
+      '100': 'var(--text-size-100)',
+      '200': 'var(--text-size-200)',
+      '300': 'var(--text-size-300)',
+      '400': 'var(--text-size-400)',
+      '500': 'var(--text-size-500)',
+      '600': 'var(--text-size-600)',
+      '700': 'var(--text-size-700)',
+      '800': 'var(--text-size-800)',
+      '900': 'var(--text-size-900)',
+      '1000': 'var(--text-size-1000)',
+    },
     container: {
       center: true,
       padding: "2rem",

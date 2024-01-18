@@ -1,8 +1,8 @@
-import Room from "@/components/room/room";
 import { getBaseUrl } from "@/lib/getBaseUrl";
 import { getRooms } from "@/lib/room/actions";
 import ErrorPage from "./error";
 import { IRoom } from "@/backend/models/room";
+import RoomCard from "@/components/room/room-card";
 
 type Props = {
 
@@ -26,7 +26,7 @@ export default async function Page({ }: Props) {
               <meta itemProp="name" content={room.name} />
               <meta itemProp="position" content={roomIdx.toString()} />
               <meta itemProp="url" content={`${getBaseUrl()}/rooms/${room._id}`} />
-              <Room room={room} className="grid grid-cols-[100%]" />
+              <RoomCard room={room} className="grid grid-cols-[100%]" />
             </div>
           ))}
         </div>

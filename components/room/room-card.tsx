@@ -12,7 +12,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
     room?: IRoom
 }
 
-export default function Room({ aspectRatio, className, room }: Props) {
+export default function RoomCard({ aspectRatio, className, room }: Props) {
     return (
         <div className={cn("relative space-y-3", className)}>
             {room?._id && (
@@ -29,7 +29,7 @@ export default function Room({ aspectRatio, className, room }: Props) {
             </div>
             <div className='space-y-1'>
                 <div className='flex justify-between items-center space-x-7'>
-                    <strong className='block text-ellipsis overflow-hidden whitespace-nowrap text-lg leading-normal'>{room?.name}</strong>
+                    <strong className='block text-ellipsis overflow-hidden whitespace-nowrap text-100 leading-normal'>{room?.name}</strong>
                     <div className='flex items-center leading-normal'>
                         <StarFilledIcon className='size-4' />
                         <span>{room?.ratings}</span>
