@@ -37,7 +37,7 @@ export function RoomCarousel({ images, name }: Props) {
 
     return (
         <div>
-            <Carousel setApi={setApi} className="rounded-lg">
+            <Carousel setApi={setApi} className="rounded-lg overflow-hidden">
                 <CarouselContent>
                     {images.map((image, index) => (
                         <CarouselItem key={index}>

@@ -10,7 +10,7 @@ export default function GlobalProvider({ children }: Props) {
     return (
         <>
             {children}
-            <Toaster />
+            <Toaster expand={false} />
         </>
     )
 }
