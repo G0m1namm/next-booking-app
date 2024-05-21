@@ -1,11 +1,13 @@
 'use client'
 
-import { cn } from '@/lib/utils'
-import Image from 'next/image'
 import React, { HTMLAttributes } from 'react'
-import { StarFilledIcon } from '@radix-ui/react-icons'
+
 import { IRoom } from '@/backend/models/room';
+import { StarFilledIcon } from '@radix-ui/react-icons'
+import Image from 'next/image'
 import Link from 'next/link';
+
+import { cn } from '@/lib/utils'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
     aspectRatio?: 'portrait' | 'square';
@@ -28,7 +30,7 @@ export default function RoomCard({ aspectRatio, className, room }: Props) {
                 />
             </div>
             <div className='space-y-1'>
-                <div className='flex justify-between items-center space-x-7'>
+                <div className='flex justify-between items-center space-x-7 text-black'>
                     <strong className='block text-ellipsis overflow-hidden whitespace-nowrap text-100 leading-normal'>{room?.name}</strong>
                     <div className='flex items-center leading-normal'>
                         <StarFilledIcon className='size-4' />

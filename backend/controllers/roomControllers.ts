@@ -17,7 +17,8 @@ export interface IPagination {
     limit?: number,
     page?: number,
     totalResults?: number,
-    totalFiltered?: number
+    totalFiltered?: number,
+    totalPages?: number
 }
 
 export interface GetRoomResponseType extends Omit<IRoomResponse, 'room'>, IPagination { }
@@ -26,7 +27,7 @@ export interface GetRoomResponseType extends Omit<IRoomResponse, 'room'>, IPagin
 export const getAllRooms = catchAsyncErrors<GetRoomResponseType>(async (req: NextRequest) => {
     const { searchParams } = new URL(req.url)
     const page = Number(searchParams.get('page')) || 1;
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, string|number|object> = {};
     const totalResults = await Room.countDocuments()
 
     searchParams.forEach((value, key) => queryParams[key] = value)
@@ -44,6 +45,7 @@ export const getAllRooms = catchAsyncErrors<GetRoomResponseType>(async (req: Nex
     let rooms: IRoom[] = await apiFilters.search()
     const totalFiltered = rooms.length
     rooms = await apiFilters.pagination(page, RESULTS_PER_PAGE)
+    const totalPages = Math.ceil(totalResults / RESULTS_PER_PAGE)
 
     return NextResponse.json({
         success: true,
@@ -51,6 +53,7 @@ export const getAllRooms = catchAsyncErrors<GetRoomResponseType>(async (req: Nex
         page,
         totalResults,
         totalFiltered,
+        totalPages,
         rooms
     })
 })

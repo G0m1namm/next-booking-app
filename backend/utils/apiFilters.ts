@@ -1,8 +1,8 @@
 class APIFilters {
     readonly model: any;
-    readonly queryParams: Record<string, any> = {};
+    readonly queryParams: Record<string, string | number | object> = {};
 
-    constructor(model: any, queryParams: Record<string, string | number>) {
+    constructor(model: any, queryParams: Record<string, string | number | object>) {
         this.model = model;
         this.queryParams = queryParams;
     }

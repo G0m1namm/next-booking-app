@@ -219,4 +219,491 @@ export const rooms = [
     category: "Single",
     reviews: [],
   },
+  {
+    name: "The Spa at Base Camp at Kerry Hotel",
+    pricePerNight: 76,
+    description:
+      "Our largest room with a queen bed and foldable sofa. Comfortably fits 2-3 adults, four adults maximum. Decorated with Irish-themed colors and arts. It has a private bathroom with a shower, equipped with smart TV, mini-fridge, desk, chairs. Enjoy City views at the sitting area by the window. Located on the 3rd floor with no elevator.",
+    address: "3118 Red Hawk Road, Garfield, MN, 56332",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: false,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Single",
+    reviews: []
+  },
+  {
+    name: "Sunset Boulevard Suite",
+    pricePerNight: 120,
+    description: "A luxurious suite with a king bed and a spectacular view of the sunset. The suite is furnished with modern decor, featuring a private bathroom with a Jacuzzi, a smart TV, mini-bar, desk, and lounge chairs. Perfect for a romantic getaway. Located on the 5th floor with elevator access.",
+    address: "9876 Sunset Boulevard, Beverly Hills, CA, 90210",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: true,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "King",
+    reviews: []
+  },
+  {
+    name: "Mountain View Cabin",
+    pricePerNight: 90,
+    description: "A cozy cabin with stunning mountain views, featuring a queen bed and a small living area. The cabin is decorated with rustic charm, including a private bathroom with a shower, a smart TV, mini-fridge, and a fireplace. Ideal for nature lovers. Located on the ground floor.",
+    address: "1234 Mountain Road, Boulder, CO, 80302",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: false,
+    isAirConditioned: false,
+    isPetsAllowed: true,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "King",
+    reviews: []
+  },
+  {
+    name: "Oceanfront Paradise",
+    pricePerNight: 200,
+    description: "A beautiful oceanfront room with a balcony and breathtaking views of the sea. It includes a king bed, private bathroom with a luxurious bath, a smart TV, mini-bar, and a seating area. Perfect for a relaxing beach vacation. Located on the 7th floor with elevator access.",
+    address: "4567 Ocean Drive, Miami Beach, FL, 33139",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "King",
+    reviews: []
+  },
+  {
+    name: "Cozy Downtown Studio",
+    pricePerNight: 65,
+    description: "A comfortable studio apartment in the heart of downtown. Features a queen bed, private bathroom with a shower, smart TV, mini-fridge, and a small kitchenette. Ideal for business travelers. Located on the 2nd floor with elevator access.",
+    address: "345 Main Street, New York, NY, 10001",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: false,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Single",
+    reviews: []
+  },
+  {
+    name: "Historic City Bungalow",
+    pricePerNight: 110,
+    description: "A charming bungalow in the historic district. Features a king bed, private bathroom with a clawfoot tub, smart TV, mini-fridge, and antique furnishings. Perfect for a cultural trip. Located on the ground floor.",
+    address: "789 Heritage Street, Charleston, SC, 29401",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Twins",
+    reviews: []
+  },
+  {
+    name: "Luxury Penthouse",
+    pricePerNight: 300,
+    description: "An exquisite penthouse with panoramic city views. Features a king bed, private bathroom with a Jacuzzi, smart TV, full kitchen, and a spacious living area. Ideal for luxury travelers. Located on the top floor with elevator access.",
+    address: "1010 High Street, San Francisco, CA, 94109",
+    guestCapacity: 4,
+    numOfBeds: 2,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Single",
+    reviews: []
+  },
+  {
+    name: "Countryside Cottage",
+    pricePerNight: 80,
+    description: "A quaint cottage in the countryside. Features a queen bed, private bathroom with a shower, smart TV, mini-fridge, and a cozy fireplace. Perfect for a peaceful retreat. Located on the ground floor.",
+    address: "5678 Country Lane, Nashville, TN, 37209",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: false,
+    isAirConditioned: false,
+    isPetsAllowed: true,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "King",
+    reviews: []
+  },
+  {
+    name: "City Center Loft",
+    pricePerNight: 150,
+    description: "A modern loft in the city center. Features a king bed, private bathroom with a rain shower, smart TV, mini-bar, and a contemporary kitchen. Perfect for urban explorers. Located on the 10th floor with elevator access.",
+    address: "4321 Downtown Avenue, Seattle, WA, 98101",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Single",
+    reviews: []
+  },
+  {
+    name: "Beachfront Villa",
+    pricePerNight: 250,
+    description: "A stunning villa with direct beach access. Features a king bed, private bathroom with a soaking tub, smart TV, full kitchen, and a large patio. Perfect for a beach vacation. Located on the ground floor.",
+    address: "6789 Beach Road, Malibu, CA, 90265",
+    guestCapacity: 4,
+    numOfBeds: 2,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "King",
+    reviews: []
+  },
+  {
+    name: "Desert Oasis",
+    pricePerNight: 180,
+    description: "A serene retreat in the desert. Features a king bed, private bathroom with a walk-in shower, smart TV, mini-fridge, and a large deck. Ideal for a peaceful getaway. Located on the ground floor.",
+    address: "1234 Desert Road, Phoenix, AZ, 85001",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: false,
+    isAirConditioned: true,
+    isPetsAllowed: true,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "King",
+    reviews: []
+  },
+  {
+    name: "Mountain Chalet",
+    pricePerNight: 220,
+    description: "A luxurious chalet in the mountains. Features a king bed, private bathroom with a sauna, smart TV, full kitchen, and a spacious living area with a fireplace. Perfect for a winter vacation. Located on the ground floor.",
+    address: "5678 Chalet Lane, Aspen, CO, 81611",
+    guestCapacity: 4,
+    numOfBeds: 2,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: true,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Twins",
+    reviews: []
+  },
+  {
+    name: "Historic Mansion",
+    pricePerNight: 400,
+    description: "A grand mansion with period furnishings. Features a king bed, private bathroom with a clawfoot tub, smart TV, mini-bar, and a spacious living area. Perfect for a luxurious getaway. Located on the ground floor.",
+    address: "7890 Mansion Lane, Newport, RI, 02840",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Twins",
+    reviews: []
+  },
+  {
+    name: "Ski Resort Lodge",
+    pricePerNight: 300,
+    description: "A cozy lodge in the mountains. Features a king bed, private bathroom with a hot tub, smart TV, mini-bar, and a fireplace. Perfect for a winter getaway. Located on the ground floor.",
+    address: "1010 Lodge Lane, Vail, CO, 81657",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Single",
+    reviews: []
+  },
+  {
+    name: "Beachfront Resort",
+    pricePerNight: 350,
+    description: "A luxurious resort with direct beach access. Features a king bed, private bathroom with a Jacuzzi, smart TV, mini-bar, and a large balcony. Perfect for a beach vacation. Located on the ground floor.",
+    address: "4321 Resort Lane, Maui, HI, 96761",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "King",
+    reviews: []
+  },
+  {
+    name: "Safari Tent",
+    pricePerNight: 150,
+    description: "A luxurious tent in the wilderness. Features a king bed, private bathroom with a rain shower, smart TV, mini-bar, and a large deck. Perfect for a glamping adventure. Located on the ground floor.",
+    address: "5678 Safari Lane, Serengeti, Tanzania",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Single",
+    reviews: []
+  },
+  {
+    name: "Mountain Cabin",
+    pricePerNight: 120,
+    description: "A cozy cabin in the mountains. Features a queen bed, private bathroom with a shower, smart TV, mini-fridge, and a fireplace. Perfect for a nature retreat. Located on the ground floor.",
+    address: "1234 Cabin Lane, Lake Tahoe, CA, 96150",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: false,
+    isAirConditioned: false,
+    isPetsAllowed: true,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Twins",
+    reviews: []
+  },
+  {
+    name: "Beachfront Bungalow",
+    pricePerNight: 180,
+    description: "A charming bungalow with direct beach access. Features a queen bed, private bathroom with a shower, smart TV, mini-fridge, and a small patio. Perfect for a beach getaway. Located on the ground floor.",
+    address: "6789 Bungalow Lane, Bali, Indonesia",
+    guestCapacity: 2,
+    numOfBeds: 1,
+    isInternet: true,
+    isBreakfast: true,
+    isAirConditioned: true,
+    isPetsAllowed: false,
+    isRoomCleaning: true,
+    ratings: 0,
+    numOfReviews: 0,
+    images: [
+      {
+        public_id: "bookit/demo/bwrnbs3sqzd6bbuyau47",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136823/bookit/demo/bwrnbs3sqzd6bbuyau47.jpg"
+      },
+      {
+        public_id: "bookit/demo/hhjpp67jiqyacv8gvmso",
+        url: "http://res.cloudinary.com/udemy-courses/image/upload/v1693136822/bookit/demo/hhjpp67jiqyacv8gvmso.jpg"
+      }
+    ],
+    category: "Single",
+    reviews: []
+  }
 ];

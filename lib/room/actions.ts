@@ -1,10 +1,12 @@
 import { GetRoomResponseType, IPagination, IRoomResponse } from "@/backend/controllers/roomControllers"
-import { getApiUrl } from "../getBaseUrl"
 import { ApiError } from "next/dist/server/api-utils"
 
-export const getRooms = async (): Promise<GetRoomResponseType & Pick<ApiError, 'message'>> => {
+import { getApiUrl } from "../getBaseUrl"
+
+export const getRooms = async (searchParams: string): Promise<GetRoomResponseType & Pick<ApiError, 'message'>> => {
+    const query = new URLSearchParams(searchParams)
     try {
-        const res = await fetch(`${getApiUrl()}/rooms`)
+        const res = await fetch(`${getApiUrl()}/rooms?${query.toString()}`, {cache: 'no-cache'})
         const data = await res.json()
         return data
     } catch (error) {
