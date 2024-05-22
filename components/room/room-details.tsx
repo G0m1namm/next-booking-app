@@ -1,21 +1,28 @@
 'use client'
 
-import { IRoom } from '@/backend/models/room'
 import React from 'react'
-import { RoomCarousel } from './room-carousel'
+
+import { IRoom } from '@/backend/models/room'
 import { StarFilledIcon, CookieIcon } from '@radix-ui/react-icons'
+import { AirVentIcon, ArrowLeftIcon, PawPrintIcon, WashingMachineIcon, WifiIcon } from 'lucide-react'
+import Link from 'next/link'
+
 import { Separator } from '../ui/separator'
-import { AirVentIcon, PawPrintIcon, WashingMachineIcon, WifiIcon } from 'lucide-react'
 import { ReviewForm } from './review-form'
 import ReviewList from './review-list'
+import { RoomCarousel } from './room-carousel'
 
 type Props = {
     data: IRoom
 }
 
 export default function RoomDetails({ data }: Props) {
+
     return (
-        <div className='container mx-auto w-full flex flex-col min-h-svh'>
+        <div className='container mx-auto w-full flex flex-col min-h-svh pt-20'>
+            <div className='mb-5'>
+                <Link href="/" className='flex items-center'><ArrowLeftIcon size={24} className='mr-2' /> Back</Link>
+            </div>
             <div className="flex flex-col mb-10">
                 <h1 className='text-400'>{data.name}</h1>
                 <address className='text-200'>{data.address}</address>

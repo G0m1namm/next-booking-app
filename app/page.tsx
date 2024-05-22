@@ -17,7 +17,7 @@ export default async function Page({ searchParams }: Props) {
   }
 
   return (
-    <main className="page-shell-container mx-auto flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="page-shell-container mx-auto flex min-h-screen flex-col items-center justify-between">
       <RoomList roomsList={data} />
     </main>
   )
