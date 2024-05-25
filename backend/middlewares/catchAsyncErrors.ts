@@ -16,7 +16,8 @@ export const catchAsyncErrors = <T>(handler: HandlerType<T>) => async (req: Next
             error.statusCode = 400;
         }
         if (error?.name === 'ValidationError') {
-            error.message = Object.values<IValidationError>(error.errors).map(value => value.message)
+            error.message = Object.values<IValidationError>(error.errors)
+            .map(value => value.message)
             error.statusCode = 400;
         }
         return NextResponse.json({

@@ -1,23 +1,17 @@
 import dbConnect from "@/backend/config/dbConnect";
-import { getRoomById } from "@/backend/controllers/roomControllers";
+import { registerUser } from "@/backend/controllers/authControllers";
 import { NextRequest, NextResponse } from "next/server";
 import { createEdgeRouter } from "next-connect";
 
-interface RequestContext {
-    params: {
-        id: 'string'
-    }
-}
-
-const router = createEdgeRouter<NextRequest, RequestContext>()
+const router = createEdgeRouter<NextRequest, unknown>()
 
 dbConnect()
 
-router.get(getRoomById)
+router.post(registerUser)
 
-export async function GET(
+export async function POST(
     request: NextRequest,
-    ctx: RequestContext
+    ctx: unknown
 ): Promise<NextResponse<void | Response>> {
     return router.run(request, ctx) as Promise<NextResponse<void | Response>>;
 }
