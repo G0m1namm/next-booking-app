@@ -2,10 +2,18 @@
 import { usePagination } from '@mantine/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Pagination as UIPagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from './ui/pagination';
+import {
+  Pagination as UIPagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './ui/pagination';
 
 interface Props {
-  total: number
+  total: number;
 }
 
 export default function Pagination({ total }: Props) {
@@ -24,12 +32,16 @@ export default function Pagination({ total }: Props) {
     }
     const href = `${path}?${query.toString()}`;
     router.push(href);
-  }
+  };
 
-  const pagination = usePagination({ total, initialPage: parseInt(pageParam as string), onChange: onPageChange });
+  const pagination = usePagination({
+    total,
+    initialPage: parseInt(pageParam as string),
+    onChange: onPageChange,
+  });
 
   return (
-    <UIPagination className='py-10'>
+    <UIPagination className="py-10">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
@@ -44,7 +56,7 @@ export default function Pagination({ total }: Props) {
               <PaginationItem key={`pagination-${page}-${idx}`}>
                 <PaginationEllipsis />
               </PaginationItem>
-            )
+            );
           }
           return (
             <PaginationItem key={`pagination-${page}`}>
@@ -55,7 +67,7 @@ export default function Pagination({ total }: Props) {
                 {page}
               </PaginationLink>
             </PaginationItem>
-          )
+          );
         })}
         <PaginationItem>
           <PaginationNext
@@ -66,5 +78,5 @@ export default function Pagination({ total }: Props) {
         </PaginationItem>
       </PaginationContent>
     </UIPagination>
-  )
+  );
 }
