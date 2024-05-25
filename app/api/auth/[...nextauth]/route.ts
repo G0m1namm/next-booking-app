@@ -10,10 +10,7 @@ type Credentials = {
   password: string;
 };
 
-export async function auth(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export async function auth(req: NextApiRequest, res: NextApiResponse) {
   return await NextAuth(req, res, {
     session: {
       strategy: 'jwt',
@@ -25,18 +22,13 @@ export async function auth(
         async authorize(credentials: Credentials) {
           dbConnect();
           const { email, password } = credentials;
-          const user = await User.findOne({ email }).select(
-            '+password'
-          );
+          const user = await User.findOne({ email }).select('+password');
 
           if (!user) {
             throw new Error('Invalid Email or Password');
           }
 
-          const isPasswordMatched = await bcrypt.compare(
-            password,
-            user.password
-          );
+          const isPasswordMatched = await bcrypt.compare(password, user.password);
 
           if (!isPasswordMatched) {
             throw new Error('Invalid Email or Password');

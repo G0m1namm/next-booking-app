@@ -32,10 +32,7 @@ export default function RoomList({ roomsList }: Props) {
           >
             <meta itemProp="name" content={room.name} />
             <meta itemProp="position" content={roomIdx.toString()} />
-            <meta
-              itemProp="url"
-              content={`${getBaseUrl()}/rooms/${room._id}`}
-            />
+            <meta itemProp="url" content={`${getBaseUrl()}/rooms/${room._id}`} />
             <RoomCard room={room} className="grid grid-cols-[100%]" />
           </div>
         ))}
