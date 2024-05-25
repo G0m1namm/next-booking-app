@@ -1,5 +1,5 @@
 {
-  "plugins": ["@typescript-eslint", "perfectionist"],
+  "plugins": ["@typescript-eslint", "perfectionist", "prettier"],
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
@@ -45,14 +45,13 @@
         ]
       }
     ],
-    "max-len": [
+    "prettier/prettier": [
       "error",
       {
-        "code": 80,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreRegExpLiterals": true
+        "endOfLine": "auto"
+      },
+      {
+        "usePrettierrc": true
       }
     ]
   }
