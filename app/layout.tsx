@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 
+import LayoutWrapper from '@/layouts/layout-wrapper';
 import GlobalProvider from '@/providers/global-provider';
 import { Open_Sans as FontSans } from 'next/font/google';
 
-import Footer from '@/components/footer';
-import Header from '@/components/header';
 import { cn } from '@/lib/utils';
 
 import './globals.css';
@@ -30,9 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       >
         <GlobalProvider>
-          <Header />
-          {children}
-          <Footer />
+          <LayoutWrapper>{children}</LayoutWrapper>
         </GlobalProvider>
       </body>
     </html>

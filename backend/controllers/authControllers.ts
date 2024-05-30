@@ -1,19 +1,19 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from 'next/server';
 
-import { catchAsyncErrors } from "../middlewares/catchAsyncErrors"
-import User from "../models/user"
+import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
+import User from '../models/user';
 
 // Register a user => /api/auth/register
 export const registerUser = catchAsyncErrors(async (req: NextRequest) => {
-    const { name, email, password } = await req.json()
+  const { name, email, password } = await req.json();
 
-    await User.create({
-        name,
-        email,
-        password
-    })
+  await User.create({
+    name,
+    email,
+    password,
+  });
 
-    return NextResponse.json({
-        success: true,
-    })
-})
+  return NextResponse.json({
+    success: true,
+  });
+});

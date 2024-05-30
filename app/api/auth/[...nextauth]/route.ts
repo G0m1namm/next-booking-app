@@ -10,7 +10,7 @@ type Credentials = {
   password: string;
 };
 
-export async function auth(req: NextApiRequest, res: NextApiResponse) {
+async function auth(req: NextApiRequest, res: NextApiResponse) {
   return await NextAuth(req, res, {
     session: {
       strategy: 'jwt',
@@ -48,7 +48,7 @@ export async function auth(req: NextApiRequest, res: NextApiResponse) {
         return session;
       },
     },
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_URL,
   });
 }
 

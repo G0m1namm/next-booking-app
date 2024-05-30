@@ -1,27 +1,36 @@
-import { ApiError } from "next/dist/server/api-utils";
-import { NextRequest, NextResponse } from "next/server";
+import { ApiError } from 'next/dist/server/api-utils';
+import { NextRequest, NextResponse } from 'next/server';
 
-export type HandlerType<T> = (req: NextRequest, params: any) => Promise<NextResponse<T | ApiError>>
+export type HandlerType<T> = (
+  req: NextRequest,
+  params: any
+) => Promise<NextResponse<T | ApiError>>;
 
 export interface IValidationError {
-    message: string;
+  message: string;
 }
 
-export const catchAsyncErrors = <T>(handler: HandlerType<T>) => async (req: NextRequest, params: any) => {
+export const catchAsyncErrors =
+  <T>(handler: HandlerType<T>) =>
+  async (req: NextRequest, params: any) => {
     try {
-        return await handler(req, params)
+      return await handler(req, params);
     } catch (error: any) {
-        if (error?.name === 'CastError') {
-            error.message = `Resource not found. Invalid ${error?.path}`;
-            error.statusCode = 400;
-        }
-        if (error?.name === 'ValidationError') {
-            error.message = Object.values<IValidationError>(error.errors)
-            .map(value => value.message)
-            error.statusCode = 400;
-        }
-        return NextResponse.json({
-            message: error.message
-        }, { status: error.statusCode || 500 })
+      if (error?.name === 'CastError') {
+        error.message = `Resource not found. Invalid ${error?.path}`;
+        error.statusCode = 400;
+      }
+      if (error?.name === 'ValidationError') {
+        error.message = Object.values<IValidationError>(error.errors).map(
+          (value) => value.message
+        );
+        error.statusCode = 400;
+      }
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        { status: error.statusCode || 500 }
+      );
     }
-}
+  };

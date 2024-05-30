@@ -1,16 +1,18 @@
-'use client'
+'use client';
 
-import { Toaster } from "@/components/ui/sonner"
+import { SessionProvider } from 'next-auth/react';
+
+import { Toaster } from '@/components/ui/sonner';
 
 type Props = {
-    children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export default function GlobalProvider({ children }: Props) {
-    return (
-        <>
-            {children}
-            <Toaster expand={false} />
-        </>
-    )
+  return (
+    <SessionProvider>
+      {children}
+      <Toaster expand={false} />
+    </SessionProvider>
+  );
 }
