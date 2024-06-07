@@ -15,8 +15,8 @@ export default async function Page({ searchParams }: Props) {
   }
 
   return (
-    <main className="page-shell-container mx-auto flex min-h-screen h-full flex-col items-center justify-between">
+    <div className="flex-col items-center justify-between">
       <RoomList roomsList={data} />
-    </main>
+    </div>
   );
 }

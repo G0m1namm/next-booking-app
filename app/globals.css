@@ -44,20 +44,19 @@
 
     --page-shell-max-content-width: 2520px;
 
-    --text-size-90: 0.75rem;
-    --text-size-80: 0.563rem;
-    --text-size-100: 1rem;
-    --text-size-200: 1.313rem;
-    --text-size-300: 1.75rem;
-    --text-size-400: 2.375rem;
-    --text-size-500: 3.188rem;
-    --text-size-600: 4.188rem;
-    --text-size-700: 5.625rem;
-    --text-size-800: 7.5rem;
-    --text-size-900: 10rem;
-    --text-size-1000: 13.313rem;
+    --font-size-sm: 0.5rem;
+    --font-size-tiny: 0.71rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.41rem;
+    --font-size-xl: 2rem;
+    --font-size-2xl: 2.83rem;
+    --font-size-3xl: 4rem;
+    --font-size-4xl: 5.65rem;
+    --font-size-5xl: 7.99rem;
+    --font-size-6xl: 11.3rem;
+    --font-size-7xl: 15.98rem;
   }
- 
+  
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;

@@ -16,5 +16,9 @@ const layouts = {
 export default function LayoutWrapper({ children }: React.PropsWithChildren<unknown>) {
   const { status } = useSession();
   const Layout = layouts[status];
-  return <Layout>{children}</Layout>;
+  return (
+    <Layout>
+      <main className="container">{children}</main>
+    </Layout>
+  );
 }

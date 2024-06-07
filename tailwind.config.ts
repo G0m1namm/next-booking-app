@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 const config = {
@@ -12,18 +13,17 @@ const config = {
   prefix: '',
   theme: {
     fontSize: {
-      '90': 'var(--text-size-90)',
-      '80': 'var(--text-size-80)',
-      '100': 'var(--text-size-100)',
-      '200': 'var(--text-size-200)',
-      '300': 'var(--text-size-300)',
-      '400': 'var(--text-size-400)',
-      '500': 'var(--text-size-500)',
-      '600': 'var(--text-size-600)',
-      '700': 'var(--text-size-700)',
-      '800': 'var(--text-size-800)',
-      '900': 'var(--text-size-900)',
-      '1000': 'var(--text-size-1000)',
+      sm: '0.5rem',
+      tiny: '0.71rem',
+      base: '1rem',
+      lg: '1.41rem',
+      xl: '2rem',
+      '2xl': '2.83rem',
+      '3xl': '4rem',
+      '4xl': '5.65rem',
+      '5xl': '7.99rem',
+      '6xl': '11.3rem',
+      '7xl': '15.98rem',
     },
     container: {
       center: true,

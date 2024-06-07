@@ -2,6 +2,7 @@
 
 import { IUser } from '@/backend/models/user';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
+import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 
@@ -55,7 +56,9 @@ export default function UserNav() {
             Dashboard
           </DropdownMenuItem>
           <DropdownMenuItem>My Bookings</DropdownMenuItem>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/account-settings">Profile</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-red-400 cursor-pointer" onClick={handleLogout}>

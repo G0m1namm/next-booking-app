@@ -17,3 +17,15 @@ export const registerUser = catchAsyncErrors(async (req: NextRequest) => {
     success: true,
   });
 });
+
+// Update user profile => /api/me/update
+export const updateProfile = catchAsyncErrors(async (req: NextRequest) => {
+  const { name, email } = await req.json();
+
+  const user = await User.findByIdAndUpdate(req.user._id, { name, email });
+
+  return NextResponse.json({
+    success: true,
+    user,
+  });
+});

@@ -1,5 +1,8 @@
 'use client';
 
+import { Provider } from 'react-redux';
+
+import { store } from '@/redux/store';
 import { SessionProvider } from 'next-auth/react';
 
 import { Toaster } from '@/components/ui/sonner';
@@ -11,7 +14,7 @@ type Props = {
 export default function GlobalProvider({ children }: Props) {
   return (
     <SessionProvider>
-      {children}
+      <Provider store={store}>{children}</Provider>
       <Toaster expand={false} />
     </SessionProvider>
   );
