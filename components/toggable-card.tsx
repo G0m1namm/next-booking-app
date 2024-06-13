@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 
 import { useToggle } from '@mantine/hooks';
 
+import { cn } from '@/lib/utils';
+
 import { Button } from './ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 
@@ -43,12 +45,19 @@ export default function ToggableCard({
   }, [heading, subHeading, renderInitialContent, canShowSubHeading]);
 
   return (
-    <Collapsible open={activeOpen} onOpenChange={activeActionHandler} className="py-6">
+    <Collapsible
+      open={activeOpen}
+      onOpenChange={activeActionHandler}
+      className={cn('py-6 px-4', {
+        'border border-gray-200 rounded-lg shadow-md transition-shadow duration-200 ease-linear bg-zinc-50':
+          activeOpen,
+      })}
+    >
       <div className="flex justify-between items-start">
         {initilContent()}
         <CollapsibleTrigger asChild>
           <Button className="text-lg" variant="link">
-            {actionText ?? 'Edit'}
+            {actionText ?? (activeOpen ? 'Close' : 'Edit')}
           </Button>
         </CollapsibleTrigger>
       </div>

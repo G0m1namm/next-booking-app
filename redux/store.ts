@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { authApi } from './api/auth';
+import { userApi } from './api/user';
 import breadcrumbsReducer from './features/breadcrumbs/breadcrumbs-slice';
 import userReducer from './features/user/user-slice';
 
@@ -9,9 +10,10 @@ export const store = configureStore({
     auth: userReducer,
     breadcrumbs: breadcrumbsReducer,
     [authApi.reducerPath]: authApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([authApi.middleware]),
+    getDefaultMiddleware().concat([authApi.middleware, userApi.middleware]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

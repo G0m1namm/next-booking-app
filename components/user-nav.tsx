@@ -1,9 +1,9 @@
 'use client';
 
-import { IUser } from '@/backend/models/user';
+import { useAppSelector } from '@/redux/hooks';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
@@ -19,11 +19,10 @@ import {
 import { Skeleton } from './ui/skeleton';
 
 export default function UserNav() {
-  const { data } = useSession();
-  const user = data?.user as IUser;
+  const { user } = useAppSelector((state) => state.auth);
   const avatarUrl = user?.avatar?.url || '/images/avatar.jpg';
 
-  if (data === undefined) {
+  if (!user) {
     return (
       <div className="flex items-center space-x-4">
         <Skeleton className="size-8 rounded-full" />
@@ -42,13 +41,13 @@ export default function UserNav() {
         <Button variant={'ghost'} className="relative size-8 rounded-full">
           <Avatar className="size-8">
             <AvatarImage src={avatarUrl} alt="user avatar" />
-            <AvatarFallback>{user.name}</AvatarFallback>
+            <AvatarFallback>{user?.name}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-background text-black">
         <DropdownMenuGroup>
-          <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+          <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

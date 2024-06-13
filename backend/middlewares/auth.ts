@@ -11,7 +11,8 @@ export const isAuthenticated = async (
   event: unknown,
   next: NextFunction
 ) => {
-  const session = await getToken({ req, secret: `${process.env.JWT_SECRET}` });
+  const session = await getToken({ req });
+
   if (!session) {
     return NextResponse.json(
       {

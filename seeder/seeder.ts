@@ -1,26 +1,26 @@
-import Room from "../backend/models/room";
-import { config } from "dotenv";
-import mongoose from "mongoose";
-import { rooms } from "./data";
+import { config } from 'dotenv';
+import mongoose from 'mongoose';
 
-config({path: 'next.config.js'})
+import Room from '../backend/models/room';
+import { rooms } from './data';
+
+config({ path: 'next.config.js' });
 
 const seedRooms = async () => {
-    try {
-        await mongoose.connect(process.env.DB_URI!)
-        
-        await Room.deleteMany()
-        console.log("Rooms deleted");
-        
-        await Room.insertMany(rooms)
-        console.log("Rooms added");
+  try {
+    await mongoose.connect(process.env.DB_URI!);
 
-        process.exit()
-        
-    } catch (error) {
-        console.log(error)
-        process.exit()
-    }
-}
+    await Room.deleteMany();
+    console.log('Rooms deleted');
 
-seedRooms()
+    await Room.insertMany(rooms);
+    console.log('Rooms added');
+
+    process.exit();
+  } catch (error) {
+    console.log(error);
+    process.exit();
+  }
+};
+
+seedRooms();
