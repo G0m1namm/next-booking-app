@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <div className="grid gap-6">
-      <h1 className="text-3xl">Profile Info</h1>
+      <h1 className="text-2xl">Basic Information</h1>
       <div className="grid gap-4">
         <div className="grid gap-2">
           <ToggableCard heading="Legal name" subHeading={currentUser?.name}>

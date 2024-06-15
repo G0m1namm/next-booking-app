@@ -11,6 +11,7 @@
     "seeder": "tsc seeder/seeder.ts --outDir .temp && node .temp/seeder/seeder.js && rm -rf .temp"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-collapsible": "^1.0.3",
