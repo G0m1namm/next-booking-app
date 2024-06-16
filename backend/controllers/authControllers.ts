@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { deleteFIle, signatureParams } from '@/lib/cloudinary';
+
 import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
-import User from '../models/user';
+import User, { IUser } from '../models/user';
 import ErrorHandler from '../utils/errorHandler';
 
 // Register a user => /api/auth/register
@@ -48,5 +50,33 @@ export const updatePassword = catchAsyncErrors(async (req: NextRequest) => {
   return NextResponse.json({
     success: true,
     user,
+  });
+});
+
+// Update user avatar => /api/me/update_avatar
+export const updateAvatar = catchAsyncErrors(async (req: NextRequest) => {
+  const body = await req.json();
+
+  const user = (await User.findByIdAndUpdate(req.user._id, { avatar: body })) as IUser;
+
+  if (req?.user?.avatar?.public_id) {
+    await deleteFIle(req?.user?.avatar?.public_id);
+  }
+
+  return NextResponse.json({
+    success: true,
+    user,
+  });
+});
+
+// Enable sign requests to Cloudinary => /api/sign-cloudinary-params
+export const signCloudinaryRequest = catchAsyncErrors(async (req: NextRequest) => {
+  const body = await req.json();
+
+  const signature = signatureParams(body);
+
+  return NextResponse.json({
+    success: true,
+    signature,
   });
 });

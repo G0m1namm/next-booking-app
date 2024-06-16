@@ -2,6 +2,7 @@
 
 import { useAppSelector } from '@/redux/hooks';
 
+import AvatarSettings from '@/components/settings/avatar-settings';
 import { EmailForm } from '@/components/settings/email-form';
 import { NameForm } from '@/components/settings/name-form';
 import ToggableCard from '@/components/toggable-card';
@@ -20,6 +21,12 @@ export default function Page() {
           </ToggableCard>
           <ToggableCard heading="Personal email" subHeading={currentUser?.email}>
             <EmailForm />
+          </ToggableCard>
+          <ToggableCard
+            heading="Avatar Settings"
+            subHeading="Update your profile picture and adjust the size and position."
+          >
+            <AvatarSettings />
           </ToggableCard>
           <Separator />
         </div>

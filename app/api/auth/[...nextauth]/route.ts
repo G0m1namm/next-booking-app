@@ -48,7 +48,7 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
         user && (token.user = user);
 
         if (req.url?.includes('/api/auth/session')) {
-          const updatedUser = await User.findById(jwtToken?.user?._id);
+          const updatedUser = await User.findById(jwtToken?.user?._id).select('avatar');
 
           token.user = updatedUser;
         }
