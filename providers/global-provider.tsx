@@ -15,7 +15,7 @@ export default function GlobalProvider({ children }: Props) {
   return (
     <SessionProvider>
       <Provider store={store}>{children}</Provider>
-      <Toaster expand={false} />
+      <Toaster expand={false} position="top-center" richColors />
     </SessionProvider>
   );
 }
