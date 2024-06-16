@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import { FieldErrors, UseFormRegister, useForm } from 'react-hook-form';
 
+import { useUpdatePasswordMutation } from '@/redux/api/user';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2Icon } from 'lucide-react';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
@@ -44,16 +47,25 @@ export function ResetPasswordForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isDirty },
   } = useForm<IFormSchema>({
     resolver: zodResolver(formSchema),
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-
+  const [updatePassword, { isLoading, isSuccess, isError }] = useUpdatePasswordMutation();
   const submitHandler = async (formData: IFormSchema) => {
-    toast.info(JSON.stringify(formData));
+    updatePassword(formData);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Password updated successfully');
+    }
+    if (isError) {
+      toast.error('An error occurred while updating your password');
+    }
+  }, [isSuccess, isError]);
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
@@ -76,7 +88,13 @@ export function ResetPasswordForm() {
             label="Confirm New Password"
             errors={errors}
           />
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={(isDirty && !isValid) || isLoading}
+            loading={isLoading}
+          >
+            {isLoading && <Loader2Icon className="h-5 w-5 animate-spin" />}
             Reset Password
           </Button>
         </div>
