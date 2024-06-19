@@ -1,5 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
+import geocoder from '@/lib/geocoder';
+
 export interface ILocation {
   type: string;
   coordinates: [number, number];
@@ -160,6 +162,22 @@ const roomSchema: Schema = new Schema({
     type: Date,
     default: Date.now(),
   },
+});
+
+// Set location object using GeoCoder
+roomSchema.pre('save', async function () {
+  const loc = await geocoder.geocode(this.address);
+  const { latitude, longitude, formattedAddress, city, stateCode, zipcode, countryCode } =
+    loc[0];
+  this.location = {
+    type: 'Point',
+    coordinates: [longitude, latitude],
+    formattedAddress,
+    city,
+    state: stateCode,
+    zipCode: zipcode,
+    country: countryCode,
+  };
 });
 
 export default mongoose.models.Room || mongoose.model<IRoom>('Room', roomSchema);

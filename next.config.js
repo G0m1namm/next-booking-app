@@ -5,6 +5,7 @@ const nextConfig = {
     NEXTAUTH_SECRET: 'my-secret',
     NEXTAUTH_URL: 'http://localhost:3000',
     CLOUDINARY_URL: `cloudinary://${process.env.CLOUDINARY_API_KEY}:${process.env.CLOUDINARY_API_SECRET}@${process.env.CLOUDINARY_CLOUD_NAME}`,
+    MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN,
   },
   basePath: process.env.NEXT_PUBLIC_BASE_URL,
   images: {

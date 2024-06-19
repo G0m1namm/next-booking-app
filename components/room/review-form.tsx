@@ -57,11 +57,11 @@ export function ReviewForm() {
           name="review"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Add your review:</FormLabel>
+              <FormLabel className="text-tiny">Add your review:</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Share your experience with this place"
-                  className="resize-none h-24 w-full"
+                  className="resize-none h-24 w-full placeholder:text-base"
                   {...field}
                 />
               </FormControl>
