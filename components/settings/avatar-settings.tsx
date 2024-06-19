@@ -71,8 +71,8 @@ export default function AvatarSettings() {
               className={cn(buttonVariants({ variant: 'default', size: 'default' }))}
               signatureEndpoint="/api/sign-cloudinary-params"
               onSuccess={successHandler}
-              uploadPreset="cehwrfa3"
-              options={{ autoMinimize: true, maxFileSize: MAX_FILE_SIZE }}
+              uploadPreset="cehwrfa3" // preset for avatar
+              options={{ maxFileSize: MAX_FILE_SIZE, multiple: false }}
             />
             <p className="text-tiny text-gray-500 dark:text-gray-400">
               Maximum file size: 5MB

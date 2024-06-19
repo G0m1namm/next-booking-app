@@ -2,7 +2,7 @@
 
 import { useToggle } from '@mantine/hooks';
 
-import { ResetPasswordForm } from '@/components/settings/reset-password-form';
+import { UpdatePasswordForm } from '@/components/settings/update-password-form';
 import ToggableCard from '@/components/toggable-card';
 import { Separator } from '@/components/ui/separator';
 
@@ -14,7 +14,7 @@ export default function Page() {
       <div className="grid gap-4">
         <div className="grid gap-2">
           <ToggableCard heading="Reset Password" open={open} onAction={toggle}>
-            <ResetPasswordForm />
+            <UpdatePasswordForm />
           </ToggableCard>
           <Separator />
         </div>

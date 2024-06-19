@@ -31,9 +31,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
-type Props = {};
-
-export default function DynamicBreadcrumbs({}: Props) {
+export default function DynamicBreadcrumbs() {
   const [open, toggle] = useToggle();
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const ITEMS_TO_DISPLAY = useMemo(() => (isDesktop ? 5 : 3), [isDesktop]);

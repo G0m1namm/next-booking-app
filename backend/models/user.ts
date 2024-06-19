@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IUser extends Document {
@@ -11,8 +12,10 @@ export interface IUser extends Document {
     url: string;
   };
   createdAt: Date;
-  resetPasswordToken: string;
-  resetPasswordExpire: Date;
+  resetPasswordToken: string | undefined;
+  resetPasswordExpire: Date | undefined;
+  comparePassword: (newPassword: string) => Promise<boolean>;
+  getResetPasswordToken: () => string;
 }
 
 const userSchema: Schema<IUser> = new Schema<IUser>({
@@ -49,8 +52,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>({
 });
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified) next();
-  console.log(this.password);
+  if (!this.isModified('password')) next();
 
   this.password = await bcrypt.hash(this.password, 10);
 });
@@ -61,4 +63,11 @@ userSchema.methods.comparePassword = async function (
   return await bcrypt.compare(newPassword, this.password);
 };
 
+userSchema.methods.getResetPasswordToken = function (): string {
+  const TTL_TOKEN = 30 * 60 * 1000; // 30 minutes
+  const resetToken = crypto.randomBytes(20).toString('hex');
+  this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+  this.resetPasswordExpire = Date.now() + TTL_TOKEN;
+  return resetToken;
+};
 export default mongoose.models.User || mongoose.model<IUser>('User', userSchema);

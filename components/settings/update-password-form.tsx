@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { FieldErrors, UseFormRegister, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { useUpdatePasswordMutation } from '@/redux/api/user';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,11 +10,9 @@ import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { PasswordInput } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
 
-import InputErrorMessage from '../ui/input-error-message';
+import PasswordErrorList from '../password-error-list';
+import FormControl from '../zod-form-control';
 
 const formSchema = z
   .object({
@@ -43,7 +41,7 @@ const errorMessages = {
   one_number: 'Password must contain a number',
 };
 
-export function ResetPasswordForm() {
+export function UpdatePasswordForm() {
   const {
     register,
     handleSubmit,
@@ -74,15 +72,23 @@ export function ResetPasswordForm() {
           Enter your new email and click the button to update your profile.
         </p>
         <div className="grid gap-4">
-          <FormControl
+          <FormControl<IFormSchema>
             register={register}
             name="oldPassword"
             label="Old Password"
             errors={errors}
           />
-          <FormControl register={register} name="newPassword" label="New Password" />
-          <NewPasswordErrorList errors={errors} />
-          <FormControl
+          <FormControl<IFormSchema>
+            register={register}
+            name="newPassword"
+            label="New Password"
+          />
+          <PasswordErrorList
+            errors={errors}
+            errorMessages={errorMessages}
+            fieldName="newPassword"
+          />
+          <FormControl<IFormSchema>
             register={register}
             name="confirmNewPassword"
             label="Confirm New Password"
@@ -100,45 +106,5 @@ export function ResetPasswordForm() {
         </div>
       </div>
     </form>
-  );
-}
-
-function FormControl({
-  register,
-  name,
-  label,
-  errors,
-}: {
-  register: UseFormRegister<IFormSchema>;
-  name: keyof IFormSchema;
-  label: string;
-  errors?: FieldErrors<IFormSchema>;
-}) {
-  return (
-    <div className="grid gap-2">
-      <Label htmlFor={name}>{label}</Label>
-      <PasswordInput {...register(name)} required />
-      {errors && <InputErrorMessage errors={errors} name={name} />}
-    </div>
-  );
-}
-
-function NewPasswordErrorList({ errors }: { errors: FieldErrors<IFormSchema> }) {
-  const errorTypes = errors?.newPassword?.types || {};
-  const errorKeys = Object.values(errorTypes).flat();
-  return (
-    <ul className="grid gap-2">
-      {Object.entries(errorMessages).map(([key, value]) => (
-        <li
-          key={key}
-          className={cn(
-            'text-tiny list-disc ml-5',
-            errorKeys.includes(key) ? 'text-red-500' : 'text-gray-500'
-          )}
-        >
-          {value}
-        </li>
-      ))}
-    </ul>
   );
 }
