@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { IRoom } from '@/backend/models/room';
+import { useMediaQuery } from '@mantine/hooks';
 import { StarFilledIcon, CookieIcon } from '@radix-ui/react-icons';
 import {
   AirVentIcon,
@@ -13,10 +14,13 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { cn } from '@/lib/utils';
+
 import { Separator } from '../ui/separator';
 import { ReviewForm } from './review-form';
 import ReviewList from './review-list';
 import { RoomCarousel } from './room-carousel';
+import RoomDatePicker from './room-date-picker';
 import RoomMap from './room-map';
 
 type Props = {
@@ -24,8 +28,10 @@ type Props = {
 };
 
 export default function RoomDetails({ data }: Props) {
+  const isDesktop = useMediaQuery('(min-width: 992px)');
+
   return (
-    <div className="container mx-auto w-full flex flex-col min-h-svh pt-20">
+    <div className="w-full flex flex-col min-h-svh pt-20">
       <div className="mb-5">
         <Link href="/" className="flex items-center">
           <ArrowLeftIcon size={24} className="mr-2" /> Back
@@ -126,9 +132,10 @@ export default function RoomDetails({ data }: Props) {
             <ReviewList reviews={data.reviews} />
           </div>
         </div>
-        <aside className="sticky top-0 flex-none w-[400px]">
+        <aside className="grid top-0 flex-none w-fit gap-10">
+          <RoomDatePicker pricePerNight={data.pricePerNight} roomId={data.id} inline />
           {data.location?.coordinates && (
-            <div className="my-5 grid gap-3">
+            <div className={cn('my-5 grid gap-3', { hidden: !isDesktop })}>
               <h4 className="text-base">Room Location</h4>
               <div className="overflow-hidden rounded-lg shadow-md h-fit sticky top-0">
                 <RoomMap coordinates={data.location.coordinates} />
