@@ -52,6 +52,7 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
 
           token.user = updatedUser;
         }
+
         return token;
       },
       session: async ({ session, token }) => {

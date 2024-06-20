@@ -3,6 +3,8 @@
 import * as React from 'react';
 import { DateRange } from 'react-day-picker';
 
+import { IRoom } from '@/backend/models/room';
+import { useCreateBookingMutation } from '@/redux/api/booking';
 import { useMediaQuery, useToggle } from '@mantine/hooks';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { addDays, format, differenceInDays, formatDistanceStrict } from 'date-fns';
@@ -11,7 +13,14 @@ import { cn } from '@/lib/utils';
 
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
 import {
   Drawer,
   DrawerClose,
@@ -23,11 +32,10 @@ import {
   DrawerTrigger,
 } from '../ui/drawer';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-
 type Props = {
   inline?: true;
   pricePerNight: number;
-  roomId: string;
+  roomId: Pick<IRoom, '_id'>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export default function RoomDatePicker({
@@ -53,6 +61,8 @@ export default function RoomDatePicker({
   const isDesktop = useMediaQuery('(min-width: 992px)');
   const isLargeDesktop = useMediaQuery('(min-width: 1280px)');
 
+  const [createBooking, { isLoading }] = useCreateBookingMutation();
+
   // Calculate total price based on the number of days booked
   const totalPrice = pricePerNight * daysBooked;
 
@@ -61,6 +71,24 @@ export default function RoomDatePicker({
     daysBooked && date?.from && date?.to
       ? `${format(date?.from, 'LLL dd, y')} - ${format(date?.to, 'LLL dd, y')}`
       : 'Add dates to see the total price';
+
+  const handleSave = () => {
+    if (!date?.from || !date?.to) {
+      return;
+    }
+
+    createBooking({
+      room: roomId,
+      checkInDate: date.from,
+      checkOutDate: date.to,
+      daysOfStay: daysBooked,
+      amountPaid: totalPrice,
+      paymentInfo: {
+        id: 'STRIPE_ID',
+        status: 'PAID',
+      },
+    });
+  };
 
   if (!isDesktop) {
     let title = daysBooked ? `${daysBooked} nights` : '';
@@ -90,7 +118,7 @@ export default function RoomDatePicker({
                   )}
                 </Button>
               </DrawerTrigger>
-              <Button size="lg" className="py-6">
+              <Button size="lg" className="py-6" onClick={handleSave}>
                 Reserve
               </Button>
             </div>
@@ -108,9 +136,8 @@ export default function RoomDatePicker({
                   numberOfMonths={2}
                 />
                 <DrawerFooter className="pt-2">
-                  <Button variant="secondary">Save</Button>
                   <DrawerClose asChild>
-                    <Button variant="destructive">Close</Button>
+                    <Button variant="secondary">Save</Button>
                   </DrawerClose>
                 </DrawerFooter>
               </div>
@@ -143,6 +170,16 @@ export default function RoomDatePicker({
             className="-m-3"
           />
         </CardContent>
+        <CardFooter>
+          <Button
+            type="button"
+            onClick={handleSave}
+            disabled={!date?.from || !date?.to || isLoading}
+            loading={isLoading}
+          >
+            Reserve
+          </Button>
+        </CardFooter>
       </Card>
     );
   }

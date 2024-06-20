@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { authApi } from './api/auth';
+import { bookinApi } from './api/booking';
 import { passwordApi } from './api/password';
 import { userApi } from './api/user';
 import breadcrumbsReducer from './features/breadcrumbs/breadcrumbs-slice';
@@ -13,12 +14,14 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [passwordApi.reducerPath]: passwordApi.reducer,
+    [bookinApi.reducerPath]: bookinApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       authApi.middleware,
       userApi.middleware,
       passwordApi.middleware,
+      bookinApi.middleware,
     ]),
 });
 
