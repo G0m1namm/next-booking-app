@@ -133,7 +133,9 @@ export default function RoomDetails({ data }: Props) {
           </div>
         </div>
         <aside className="grid top-0 flex-none w-fit gap-10">
-          <RoomDatePicker pricePerNight={data.pricePerNight} roomId={data._id!} inline />
+          {data._id && (
+            <RoomDatePicker pricePerNight={data.pricePerNight} roomId={data._id} inline />
+          )}
           {data.location?.coordinates && (
             <div className={cn('my-5 grid gap-3', { hidden: !isDesktop })}>
               <h4 className="text-base">Room Location</h4>

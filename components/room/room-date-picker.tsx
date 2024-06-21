@@ -4,13 +4,19 @@ import * as React from 'react';
 import { DateRange } from 'react-day-picker';
 
 import { IRoom } from '@/backend/models/room';
-import { useCreateBookingMutation } from '@/redux/api/booking';
+import {
+  useCreateBookingMutation,
+  useGetAllBookedDaysQuery,
+  useLazyCheckBookingAvailabilityQuery,
+} from '@/redux/api/booking';
 import { useMediaQuery, useToggle } from '@mantine/hooks';
 import { CalendarIcon } from '@radix-ui/react-icons';
-import { addDays, format, differenceInDays, formatDistanceStrict } from 'date-fns';
+import { format, differenceInDays, formatDistanceStrict } from 'date-fns';
+import { CalendarOff } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
 import {
@@ -32,6 +38,7 @@ import {
   DrawerTrigger,
 } from '../ui/drawer';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+
 type Props = {
   inline?: true;
   pricePerNight: number;
@@ -45,8 +52,8 @@ export default function RoomDatePicker({
   roomId,
 }: Props) {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 7),
+    from: undefined,
+    to: undefined,
   });
   const [open, toggle] = useToggle([false, true]);
 
@@ -62,6 +69,42 @@ export default function RoomDatePicker({
   const isLargeDesktop = useMediaQuery('(min-width: 1280px)');
 
   const [createBooking, { isLoading }] = useCreateBookingMutation();
+  const [checkRoomAvailability, { data: bookingAvailability }] =
+    useLazyCheckBookingAvailabilityQuery();
+  const { data: currentRoomBookedDaysData } = useGetAllBookedDaysQuery({ roomId });
+  const checkAvailability = React.useCallback(
+    (range: DateRange | undefined) => {
+      if (!range?.from || !range?.to) {
+        return;
+      }
+
+      checkRoomAvailability({
+        id: roomId,
+        checkInDate: range.from.toISOString(),
+        checkOutDate: range.to.toISOString(),
+      });
+    },
+    [checkRoomAvailability, roomId]
+  );
+
+  const selectDateHandler = React.useCallback(
+    (range: DateRange | undefined) => {
+      if (range?.from && range?.to) checkAvailability(range);
+      setDate(range);
+    },
+    [checkAvailability]
+  );
+
+  const isRoomUnavailable =
+    bookingAvailability?.isAvailable === false &&
+    daysBooked > 0 &&
+    !!date?.from &&
+    !!date?.to;
+  const isButtonDisabled = !date?.from || !date?.to || isLoading || isRoomUnavailable;
+  const bookedDates =
+    currentRoomBookedDaysData?.allBookedDates?.map(
+      (bookedDate: string) => new Date(bookedDate)
+    ) || [];
 
   // Calculate total price based on the number of days booked
   const totalPrice = pricePerNight * daysBooked;
@@ -111,14 +154,23 @@ export default function RoomDatePicker({
                   className="grid gap-1 justify-start h-fit text-left -ml-3 flex-1"
                 >
                   <span>
-                    <strong>${totalPrice} USD</strong>
+                    <strong>
+                      {totalPrice
+                        ? `${totalPrice.toLocaleString('us-US')} USD`
+                        : `$${pricePerNight} USD / Night`}
+                    </strong>
                   </span>
                   {date?.from && date?.to && (
                     <span className="text-tiny">{description}</span>
                   )}
                 </Button>
               </DrawerTrigger>
-              <Button size="lg" className="py-6" onClick={handleSave}>
+              <Button
+                size="lg"
+                className="py-6"
+                onClick={handleSave}
+                disabled={isButtonDisabled}
+              >
                 Reserve
               </Button>
             </div>
@@ -132,9 +184,19 @@ export default function RoomDatePicker({
                   mode="range"
                   defaultMonth={date?.from}
                   selected={date}
-                  onSelect={setDate}
+                  onSelect={selectDateHandler}
                   numberOfMonths={2}
                 />
+                {isRoomUnavailable && (
+                  <Alert variant="destructive" className="w-full">
+                    <CalendarOff className="h-4 w-4" />
+                    <AlertTitle>Room occupied</AlertTitle>
+                    <AlertDescription>
+                      The room is not available for the selected dates. Please choose
+                      another date.
+                    </AlertDescription>
+                  </Alert>
+                )}
                 <DrawerFooter className="pt-2">
                   <DrawerClose asChild>
                     <Button variant="secondary">Save</Button>
@@ -153,28 +215,46 @@ export default function RoomDatePicker({
       <Card className="px-2 h-fit">
         <CardHeader>
           <CardTitle>
-            <span>{`${totalPrice.toLocaleString('us-US')} USD`}</span>
+            <span>
+              {totalPrice
+                ? `$${totalPrice.toLocaleString('us-US')} USD`
+                : `$${pricePerNight.toLocaleString('us-US')} USD`}
+            </span>
             <span className="italic text-base text-muted-foreground">
-              {date?.to && date.from && `/ ${formatDistanceStrict(date?.to, date?.from)}`}
+              {date?.to && date.from
+                ? `/ ${formatDistanceStrict(date?.to, date?.from)}`
+                : `/ night`}
             </span>
           </CardTitle>
           <CardDescription>{description}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="grid gap-6">
           <Calendar
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            disabled={bookedDates}
+            onSelect={selectDateHandler}
             numberOfMonths={isLargeDesktop ? 2 : 1}
             className="-m-3"
           />
+          {isRoomUnavailable && (
+            <Alert variant="destructive" className="w-full">
+              <CalendarOff className="h-5 w-5" />
+              <AlertTitle>Room occupied</AlertTitle>
+              <AlertDescription>
+                The room is not available for the selected dates. Please choose another
+                date.
+              </AlertDescription>
+            </Alert>
+          )}
         </CardContent>
         <CardFooter>
           <Button
+            className="w-full"
             type="button"
             onClick={handleSave}
-            disabled={!date?.from || !date?.to || isLoading}
+            disabled={isButtonDisabled}
             loading={isLoading}
           >
             Reserve
@@ -214,7 +294,7 @@ export default function RoomDatePicker({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={selectDateHandler}
             numberOfMonths={2}
           />
         </PopoverContent>

@@ -54,7 +54,9 @@ export default function UserNav() {
           <DropdownMenuItem onClick={() => toast('say somethin!')}>
             Dashboard
           </DropdownMenuItem>
-          <DropdownMenuItem>My Bookings</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/bookings/me">My Bookings</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/account-settings">Profile</Link>
           </DropdownMenuItem>
