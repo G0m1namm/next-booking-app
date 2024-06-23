@@ -1,8 +1,10 @@
 import mongoose, { Document } from 'mongoose';
+import { IUser } from './user';
+import { IRoom } from './room';
 
 export interface IBooking extends Document {
-  room: mongoose.Schema.Types.ObjectId;
-  user: mongoose.Schema.Types.ObjectId;
+  room: IRoom;
+  user: IUser;
   checkInDate: Date;
   checkOutDate: Date;
   amountPaid: number;

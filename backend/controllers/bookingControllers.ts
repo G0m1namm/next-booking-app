@@ -3,7 +3,8 @@ import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
-import Booking from '../models/booking';
+import Booking, { IBooking } from '../models/booking';
+import ErrorHandler from '../utils/errorHandler';
 
 // Create a new room booking   =>   /api/booking/new
 export const newBooking = catchAsyncErrors(async (req: NextRequest) => {
@@ -83,5 +84,20 @@ export const getBookings = catchAsyncErrors(async (req: NextRequest) => {
   return NextResponse.json({
     success: true,
     bookings,
+  });
+});
+
+// Get booking details   =>   /api/booking/:id
+export const getBookingDetails = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+  const booking = await Booking.findById(params.id).populate(['user', 'room']) as IBooking
+  
+  if(booking?.user._id.toString() !== req.user._id) {
+    throw new ErrorHandler("You don't have access to this view", 403);
+  }
+
+  return NextResponse.json({
+    success: true,
+    booking,
   });
 });
