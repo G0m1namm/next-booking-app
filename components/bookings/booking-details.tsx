@@ -24,9 +24,11 @@ export default function BookingDetails({ booking }: Readonly<Props>) {
               {booking.paymentInfo.status}
             </Badge>
           </div>
-          <Button variant="secondary" size="sm">
-            Check Invoice
-            <ExternalLinkIcon className="w-4 h-4 ml-2" />
+          <Button variant="secondary" size="sm" asChild>
+            <Link href={`/bookings/invoice/${booking._id}`} target="_blank">
+              Check Invoice
+              <ExternalLinkIcon className="w-4 h-4 ml-2" />
+            </Link>
           </Button>
         </div>
         <div className="flex flex-col gap-8">
@@ -66,7 +68,7 @@ export default function BookingDetails({ booking }: Readonly<Props>) {
       </div>
       <div className="grid gap-2">
         <h2 className="text-lg font-medium">Booked Room</h2>
-        <Link href={`/rooms/${booking.room._id}`}>
+        <Link href={`/rooms/${booking.room._id}`} target="_blank">
           <Card
             className="w-full md:w-[500px] relative rounded-lg overflow-hidden after:absolute
           after:top-0 after:left-0 after:w-full after:h-full after:z-[1] after:bg-gradient-to-t from-black"

@@ -38,8 +38,10 @@ export default async function Page({ params }: Readonly<Props>) {
       <div className="mb-5">
         <BackButton href="/bookings" />
       </div>
-      <h1 className="text-2xl font-semibold mb-6">Booking Info #{booking._id}</h1>
-      <BookingDetails booking={booking} />
+      <div className="grid gap-12">
+        <h1 className="text-2xl font-semibold">Booking Info #{booking._id}</h1>
+        <BookingDetails booking={booking} />
+      </div>
     </div>
   );
 }
