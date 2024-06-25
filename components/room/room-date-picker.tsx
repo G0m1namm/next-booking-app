@@ -8,11 +8,12 @@ import {
   useCreateBookingMutation,
   useGetAllBookedDaysQuery,
   useLazyCheckBookingAvailabilityQuery,
+  useLazyInitStripeCheckoutQuery,
 } from '@/redux/api/booking';
 import { useMediaQuery, useToggle } from '@mantine/hooks';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format, differenceInDays, formatDistanceStrict } from 'date-fns';
-import { CalendarOff } from 'lucide-react';
+import { CalendarOff, Loader2Icon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -38,6 +39,10 @@ import {
   DrawerTrigger,
 } from '../ui/drawer';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { useAppSelector } from '@/redux/hooks';
+import Link from 'next/link';
 
 type Props = {
   inline?: true;
@@ -55,6 +60,7 @@ export default function RoomDatePicker({
     from: undefined,
     to: undefined,
   });
+  const router = useRouter();
   const [open, toggle] = useToggle([false, true]);
 
   const daysBooked = React.useMemo(() => {
@@ -68,10 +74,21 @@ export default function RoomDatePicker({
   const isDesktop = useMediaQuery('(min-width: 992px)');
   const isLargeDesktop = useMediaQuery('(min-width: 1280px)');
 
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const [createBooking, { isLoading }] = useCreateBookingMutation();
   const [checkRoomAvailability, { data: bookingAvailability }] =
     useLazyCheckBookingAvailabilityQuery();
   const { data: currentRoomBookedDaysData } = useGetAllBookedDaysQuery({ roomId });
+  const [
+    initStripeCheckout,
+    {
+      isLoading: isInitiatingStripe,
+      data: stripeCheckoutData,
+      isError: isInitStripeError,
+      isSuccess: isInitStripeSuccess,
+    },
+  ] = useLazyInitStripeCheckoutQuery();
+
   const checkAvailability = React.useCallback(
     (range: DateRange | undefined) => {
       if (!range?.from || !range?.to) {
@@ -108,6 +125,9 @@ export default function RoomDatePicker({
 
   // Calculate total price based on the number of days booked
   const totalPrice = pricePerNight * daysBooked;
+  const formatedTotalToPay = totalPrice
+    ? `$${totalPrice.toLocaleString('us-US')} USD`
+    : `$${pricePerNight.toLocaleString('us-US')} USD`;
 
   // Description for the date picker
   const description =
@@ -132,6 +152,29 @@ export default function RoomDatePicker({
       },
     });
   };
+
+  const handlePayment = () => {
+    if (!date?.from || !date?.to) {
+      return;
+    }
+
+    initStripeCheckout({
+      id: roomId,
+      checkInDate: date.from.toISOString(),
+      checkOutDate: date.to.toISOString(),
+      amount: totalPrice,
+      daysOfStay: daysBooked,
+    });
+  };
+
+  React.useEffect(() => {
+    if (isInitStripeSuccess) {
+      router.replace(stripeCheckoutData?.url);
+    }
+    if (isInitStripeError) {
+      toast.error('An error occurred while starting the payment process');
+    }
+  }, [isInitStripeSuccess, isInitStripeError]);
 
   if (!isDesktop) {
     let title = daysBooked ? `${daysBooked} nights` : '';
@@ -215,11 +258,7 @@ export default function RoomDatePicker({
       <Card className="px-2 h-fit">
         <CardHeader>
           <CardTitle>
-            <span>
-              {totalPrice
-                ? `$${totalPrice.toLocaleString('us-US')} USD`
-                : `$${pricePerNight.toLocaleString('us-US')} USD`}
-            </span>
+            <span>{formatedTotalToPay}</span>
             <span className="italic text-base text-muted-foreground">
               {date?.to && date.from
                 ? `/ ${formatDistanceStrict(date?.to, date?.from)}`
@@ -250,14 +289,22 @@ export default function RoomDatePicker({
           )}
         </CardContent>
         <CardFooter>
+          {!isAuthenticated && (
+            <Button variant="outline" asChild>
+              <Link href="/login" target="_self">
+                Log In to Pay
+              </Link>
+            </Button>
+          )}
           <Button
             className="w-full"
             type="button"
-            onClick={handleSave}
-            disabled={isButtonDisabled}
-            loading={isLoading}
+            onClick={handlePayment}
+            disabled={isButtonDisabled || !isAuthenticated}
+            loading={isInitiatingStripe}
           >
-            Reserve
+            {isInitiatingStripe && <Loader2Icon className="h-5 w-5 mr-2 animate-spin" />}
+            {isInitiatingStripe ? 'Processing' : `Pay - ${formatedTotalToPay}`}
           </Button>
         </CardFooter>
       </Card>
