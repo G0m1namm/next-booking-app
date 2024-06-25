@@ -300,7 +300,7 @@ export default function RoomDatePicker({
             className="w-full"
             type="button"
             onClick={handlePayment}
-            disabled={isButtonDisabled || !isAuthenticated}
+            disabled={isButtonDisabled || !isAuthenticated || isInitiatingStripe}
             loading={isInitiatingStripe}
           >
             {isInitiatingStripe && <Loader2Icon className="h-5 w-5 mr-2 animate-spin" />}

@@ -57,7 +57,7 @@ export const updatePassword = catchAsyncErrors(async (req: NextRequest) => {
   });
 });
 
-// Update user avatar => /api/me/update_avatar
+// Update user avatar => /api/me/update_avatar?update=true
 export const updateAvatar = catchAsyncErrors(async (req: NextRequest) => {
   const body = await req.json();
 
