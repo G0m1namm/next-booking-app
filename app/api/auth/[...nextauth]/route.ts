@@ -20,13 +20,13 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
       strategy: 'jwt',
     },
     providers: [
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       CredentialsProvider({
+        // @ts-ignore
         async authorize(credentials: Credentials) {
           dbConnect();
+
           const { email, password } = credentials;
-          const user = await User.findOne({ email }).select('+password');
+          const user = await User.findOne({ email }).select(['+password', '+avatar']);
 
           if (!user) {
             throw new Error('Invalid Email or Password');
@@ -44,21 +44,24 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
     ],
     callbacks: {
       jwt: async ({ token, user }) => {
-        const jwtToken = token as Token;
         user && (token.user = user);
 
-        if (req.url?.includes('/api/auth/session')) {
-          const updatedUser = await User.findById(jwtToken?.user?._id).select('avatar');
+        
+        if (req.url?.includes('/api/auth/session?')) {
+          // @ts-ignore
+          const updatedUser = await User.findById(token?.user?._id).select('avatar');
 
-          token.user = updatedUser;
+          // @ts-ignore
+          token.user.avatar = updatedUser?.avatar;
         }
+        /* eslint-disable @typescript-eslint/ban-ts-comment */
 
         return token;
       },
       session: async ({ session, token }) => {
+        
         session.user = token.user as IUser;
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         delete session.user.password;
         return session;
