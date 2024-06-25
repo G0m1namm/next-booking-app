@@ -2,7 +2,6 @@
 
 import { IBooking } from '@/backend/models/booking';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
-import Image from 'next/image';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
 import {
@@ -19,24 +18,48 @@ import { formatPrice } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { DownloadIcon, PrinterIcon } from 'lucide-react';
 
+import { Margin, usePDF } from 'react-to-pdf';
+import { useMergedRef } from '@mantine/hooks';
+
 type Props = {
   booking: IBooking;
 };
 
-export default function BookingInvoice({ booking }: Props) {
+export default function BookingInvoice({ booking }: Readonly<Props>) {
+  const PDFBaseOptions = {
+    filename: `invoice-${booking._id}.pdf`,
+    page: {
+      margin: Margin.SMALL,
+    },
+  };
+
+  const { toPDF: printPDFHandler, targetRef: printTargetRef } = usePDF({
+    method: 'open',
+    ...PDFBaseOptions,
+  });
+  const { toPDF: downloadPDFHandler, targetRef: downloadTargetRef } = usePDF({
+    method: 'save',
+    ...PDFBaseOptions,
+  });
+
+  const targetRef = useMergedRef(printTargetRef, downloadTargetRef);
+
+  const onPrint = () => printPDFHandler();
+  const onDownload = () => downloadPDFHandler();
+
   return (
     <div className="max-w-[1000px] mx-auto grid gap-6">
       <div className="flex gap-4">
-        <Button variant="outline">
+        <Button variant="outline" onClick={onPrint}>
           Print
           <PrinterIcon size={16} className="ml-2" />
         </Button>
-        <Button>
+        <Button onClick={onDownload}>
           Download
           <DownloadIcon size={16} className="ml-2" />
         </Button>
       </div>
-      <Card className="rounded-lg">
+      <Card ref={targetRef} className="rounded-lg">
         <CardHeader className="flex-row gap-4 justify-between items-end">
           <div>
             <h1 className="text-2xl text-violet-600 font-semibold">NextBooking</h1>
@@ -114,8 +137,8 @@ export default function BookingInvoice({ booking }: Props) {
             </Table>
           </div>
         </CardContent>
-        <Separator className="print:hidden" />
-        <CardFooter className="pt-4 justify-center hidden print:flex">
+        <Separator />
+        <CardFooter className="pt-4 justify-center">
           <p className="text-tiny">
             Invoice was created on a computer and it's valid without the signature
           </p>
