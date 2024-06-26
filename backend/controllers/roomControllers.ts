@@ -5,6 +5,7 @@ import Room, { IReview, IRoom } from '../models/room';
 import APIFilters from '../utils/apiFilters';
 import ErrorHandler from '../utils/errorHandler';
 import { revalidatePath } from 'next/cache';
+import Booking from '../models/booking';
 
 const FILTERS_NOT_ALLOWED = ['location', 'page'];
 const RESULTS_PER_PAGE = 8;
@@ -152,6 +153,22 @@ export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
 
     return NextResponse.json({
       success: true
+    });
+  } catch (error: any) {
+    throw new ErrorHandler(error.message, 400);
+  }
+})
+
+// Can user review room => GET /api/reviews/can_review
+export const canReview = catchAsyncErrors(async (req: NextRequest) => {
+  const {searchParams} = new URL(req.url);
+  const roomId = searchParams.get('roomId');
+  try {
+   const bookings = await Booking.find({user: req.user._id, room: roomId});
+    const isAllowed = bookings.length > 0 ? true : false;
+    
+    return NextResponse.json({
+      canReview: isAllowed
     });
   } catch (error: any) {
     throw new ErrorHandler(error.message, 400);

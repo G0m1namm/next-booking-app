@@ -11,9 +11,18 @@ export const roomApi = createApi({
         body,
       }),
     }),
+    checkCanReview: builder.query({
+      query: (body) => ({
+        url: '/reviews/can_review',
+        params: {
+          ...body,
+        }
+      }),
+    }),
   }),
 });
 
 export const {
-    useCreateReviewMutation
+    useCreateReviewMutation,
+    useCheckCanReviewQuery
 } = roomApi;

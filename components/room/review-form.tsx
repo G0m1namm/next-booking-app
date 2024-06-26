@@ -14,17 +14,18 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
-import { useCreateReviewMutation } from '@/redux/api/room';
+import { useCheckCanReviewQuery, useCreateReviewMutation } from '@/redux/api/room';
 import { useEffect } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { IRoom } from '@/backend/models/room';
 import { useRouter } from 'next/navigation';
+import { CookieIcon } from 'lucide-react';
+import { Skeleton } from '../ui/skeleton';
 
 const FormSchema = z.object({
   comment: z
@@ -41,10 +42,19 @@ const FormSchema = z.object({
 export function ReviewForm({ roomId }: { roomId: Pick<IRoom, '_id'> }) {
   const router = useRouter();
   const [createReview, { isLoading, isError, isSuccess }] = useCreateReviewMutation();
+  const { data } = useCheckCanReviewQuery({ roomId });
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: 'onChange',
   });
+
+  const canReview = data?.canReview;
+
+  const { isDirty, isValid } = form.formState;
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    createReview({ roomId, ...data });
+  }
 
   useEffect(() => {
     if (isSuccess) {
@@ -57,10 +67,17 @@ export function ReviewForm({ roomId }: { roomId: Pick<IRoom, '_id'> }) {
     }
   }, [isSuccess, isError]);
 
-  const { isDirty, isValid } = form.formState;
+  if (canReview === undefined) {
+    return (
+      <div className="w-full grid gap-4">
+        <Skeleton className="h-4 rounded-md" />
+        <Skeleton className="h-10 rounded-md" />
+      </div>
+    );
+  }
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    createReview({ roomId, ...data });
+  if (canReview === false) {
+    return null;
   }
 
   return (
