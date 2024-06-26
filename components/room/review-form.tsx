@@ -19,9 +19,15 @@ import {
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { useCreateReviewMutation } from '@/redux/api/room';
+import { useEffect } from 'react';
+import { Rating } from 'react-simple-star-rating';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
+import { IRoom } from '@/backend/models/room';
+import { useRouter } from 'next/navigation';
 
 const FormSchema = z.object({
-  review: z
+  comment: z
     .string()
     .min(10, {
       message: 'Review must be at least 10 characters.',
@@ -29,39 +35,73 @@ const FormSchema = z.object({
     .max(1000, {
       message: 'Review must not be longer than 1000 characters.',
     }),
+  rating: z.number(),
 });
 
-export function ReviewForm() {
+export function ReviewForm({ roomId }: { roomId: Pick<IRoom, '_id'> }) {
+  const router = useRouter();
+  const [createReview, { isLoading, isError, isSuccess }] = useCreateReviewMutation();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: 'onChange',
   });
 
-  const { isDirty, isValid, isSubmitting } = form.formState;
+  useEffect(() => {
+    if (isSuccess) {
+      form.reset();
+      router.refresh();
+      toast.success('Review submitted successfully');
+    }
+    if (isError) {
+      toast.error('Failed to submit review');
+    }
+  }, [isSuccess, isError]);
+
+  const { isDirty, isValid } = form.formState;
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast('You submitted the following values:', {
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    createReview({ roomId, ...data });
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+        <Alert className="border-violet-500/50 text-violet-500 dark:border-violet-500 bg-violet-100/30 flex flex-wrap items-center gap-6 w-fit">
+          <AlertTitle>How will you rate this room?</AlertTitle>
+          <AlertDescription>
+            <Rating
+              initialValue={0}
+              allowFraction
+              onClick={(rate) => form.setValue('rating', rate)}
+              style={{ overflow: 'hidden' }}
+              emptyClassName="[&_svg]:text-violet-500/20 [&_svg]:!inline-flex"
+              fillClassName="[&_svg]:text-violet-500 [&_svg]:!inline-flex"
+              tooltipClassName="!bg-violet-600"
+              showTooltip
+              tooltipArray={[
+                'Terrible',
+                'Terrible+',
+                'Bad',
+                'Bad+',
+                'Average',
+                'Average+',
+                'Great',
+                'Great+',
+                'Awesome',
+                'Awesome+',
+              ]}
+            />
+          </AlertDescription>
+        </Alert>
         <FormField
           control={form.control}
-          name="review"
+          name="comment"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-tiny">Add your review:</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Share your experience with this place"
-                  className="resize-none h-24 w-full placeholder:text-base"
+                  className="resize-none h-24 w-full text-base placeholder:text-base"
                   {...field}
                 />
               </FormControl>
@@ -80,9 +120,9 @@ export function ReviewForm() {
             </FormItem>
           )}
         />
-        <Button disabled={!isDirty || !isValid || isSubmitting} type="submit">
-          {isSubmitting && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-          {isSubmitting ? 'Submitting...' : 'Submit your review'}
+        <Button disabled={!isDirty || !isValid || isLoading} type="submit">
+          {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+          {isLoading ? 'Submitting...' : 'Submit your review'}
         </Button>
       </form>
     </Form>

@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 import geocoder from '@/lib/geocoder';
+import { IUser } from './user';
 
 export interface ILocation {
   type: string;
@@ -18,7 +19,7 @@ export interface IImage extends Document {
 }
 
 export interface IReview extends Document {
-  user: mongoose.Types.ObjectId;
+  user: IUser;
   rating: number;
   comment: string;
 }
@@ -42,7 +43,7 @@ export interface IRoom extends Document {
   images: IImage[];
   category: 'King' | 'Single' | 'Twins';
   reviews: IReview[];
-  user: mongoose.Types.ObjectId;
+  user: IUser;
   createdAt: Date;
 }
 const roomSchema: Schema = new Schema({
@@ -140,7 +141,7 @@ const roomSchema: Schema = new Schema({
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
         required: true,
       },
       rating: {
@@ -155,8 +156,8 @@ const roomSchema: Schema = new Schema({
   ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-    required: false, // TODO: turn ir true once users are created in DB
+    ref: 'User',
+    required: true,
   },
   createdAt: {
     type: Date,

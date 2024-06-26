@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { IRoom } from '@/backend/models/room';
+import room, { IRoom } from '@/backend/models/room';
 import { useMediaQuery } from '@mantine/hooks';
 import { StarFilledIcon, CookieIcon } from '@radix-ui/react-icons';
 import {
@@ -128,7 +128,7 @@ export default function RoomDetails({ data }: Props) {
           <Separator className="my-10" />
           <div id="reviews">
             <h2 className="text-lg font-medium mb-2">Reviews</h2>
-            <ReviewForm />
+            {data._id && <ReviewForm roomId={data._id} />}
             <ReviewList reviews={data.reviews} />
           </div>
         </div>

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
-import Room, { IRoom } from '../models/room';
+import Room, { IReview, IRoom } from '../models/room';
 import APIFilters from '../utils/apiFilters';
 import ErrorHandler from '../utils/errorHandler';
+import { revalidatePath } from 'next/cache';
 
 const FILTERS_NOT_ALLOWED = ['location', 'page'];
 const RESULTS_PER_PAGE = 8;
@@ -76,7 +77,7 @@ export const newRoom = catchAsyncErrors(async (req: NextRequest) => {
 // Get single room => GET /api/rooms/:id
 export const getRoomById = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-    const room = await Room.findById(params.id);
+    const room = await Room.findById(params.id).populate({path: 'reviews', populate: {path: 'user', model: "User", select: 'name avatar'}});
 
     if (!room) throw new ErrorHandler('Room not found', 404);
 
@@ -119,3 +120,40 @@ export const deleteRoomById = catchAsyncErrors(
     });
   }
 );
+
+// Create/Update room review => POST /api/rooms/reviews
+export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
+  const { rating, comment, roomId } = await req.json();
+  const review = {
+    user: req.user._id,
+    rating: Number(rating),
+    comment,
+  };
+  try {
+    const room = await Room.findById(roomId) as IRoom;
+    const isReviewed = room.reviews.find((r: IReview) => r.user.toString() === req.user._id.toString());
+    if(isReviewed) {
+      room.reviews.forEach((review: IReview) => {
+        if(review.user.toString() === req.user._id.toString()) {
+          review.comment = comment;
+          review.rating = rating;
+        }
+      });
+    } else {
+      room.reviews.push(review as IReview);
+      room.numOfReviews = room.reviews.length;
+    }
+
+    room.ratings = room.reviews.reduce((acc, item) => item.rating + acc, 0) / room.reviews.length;
+
+    await room.save();
+
+    revalidatePath("/rooms/[id]", "page");
+
+    return NextResponse.json({
+      success: true
+    });
+  } catch (error: any) {
+    throw new ErrorHandler(error.message, 400);
+  }
+})

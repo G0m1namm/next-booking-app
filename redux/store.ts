@@ -6,6 +6,7 @@ import { passwordApi } from './api/password';
 import { userApi } from './api/user';
 import breadcrumbsReducer from './features/breadcrumbs/breadcrumbs-slice';
 import userReducer from './features/user/user-slice';
+import { roomApi } from './api/room';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [passwordApi.reducerPath]: passwordApi.reducer,
     [bookinApi.reducerPath]: bookinApi.reducer,
+    [roomApi.reducerPath]: roomApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -22,6 +24,7 @@ export const store = configureStore({
       userApi.middleware,
       passwordApi.middleware,
       bookinApi.middleware,
+      roomApi.middleware,
     ]),
 });
 
