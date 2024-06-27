@@ -1,6 +1,20 @@
 import { withAuth } from 'next-auth/middleware';
-export default withAuth(function middleware() {});
+import { IUser } from './backend/models/user';
+import { NextResponse } from 'next/server';
+
+export default withAuth(function middleware(req) {
+  const url = req.nextUrl.pathname;
+  const user = req.nextauth.token?.user as IUser;
+
+  if(url?.startsWith('/admin') && user?.role !== 'admin') {
+    return NextResponse.redirect(new URL("/",  req.url))
+  }
+}, {
+  callbacks: {
+    authorized: ({token}) => !!token,
+  }
+});
 
 export const config = {
-  matcher: ['/account-settings/:path*', '/bookings/:path*'],
+  matcher: ['/account-settings/:path*', '/bookings/:path*', '/admin/:path*'],
 };
