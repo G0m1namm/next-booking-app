@@ -50,10 +50,12 @@ export default function UserNav() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Link href="/admin/dashboard">Dashboard</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
+          {user?.role === 'admin' && (
+            <DropdownMenuItem asChild>
+              <Link href="/admin/dashboard">Dashboard</Link>
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuItem asChild>
             <Link href="/bookings/me">My Bookings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
