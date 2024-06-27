@@ -4,7 +4,6 @@ import { useAppSelector } from '@/redux/hooks';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
@@ -20,7 +19,7 @@ import { Skeleton } from './ui/skeleton';
 
 export default function UserNav() {
   const { user } = useAppSelector((state) => state.auth);
-  const avatarUrl = user?.avatar?.url || '/images/avatar.jpg';
+  const avatarUrl = user?.avatar?.url ?? '/images/avatar.jpg';
 
   if (!user) {
     return (
@@ -51,8 +50,8 @@ export default function UserNav() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => toast('say somethin!')}>
-            Dashboard
+          <DropdownMenuItem>
+            <Link href="/admin/dashboard">Dashboard</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href="/bookings/me">My Bookings</Link>

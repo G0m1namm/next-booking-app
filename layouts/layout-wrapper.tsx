@@ -13,7 +13,9 @@ const layouts = {
   loading: NoAuthLayout,
 };
 
-export default function LayoutWrapper({ children }: React.PropsWithChildren<unknown>) {
+export default function LayoutWrapper({
+  children,
+}: Readonly<React.PropsWithChildren<unknown>>) {
   const { status } = useSession();
   const Layout = layouts[status];
   return (

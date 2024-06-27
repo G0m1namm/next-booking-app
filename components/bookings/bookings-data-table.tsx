@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { Booking } from '@/app/bookings/me/columns';
+import { Booking } from '@/app/(user)/bookings/me/columns';
 import {
   ColumnDef,
   ColumnFiltersState,

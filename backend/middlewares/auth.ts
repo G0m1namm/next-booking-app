@@ -26,3 +26,15 @@ export const isAuthenticated = async (
 
   return next();
 };
+
+export const getAuthorizedRoles = (...roles: string[]) => {
+    return function (
+      req: NextRequest,
+      event: unknown,
+      next: NextFunction) {
+        if (!roles.includes(req.user?.role)) {
+            return NextResponse.json({message: `Role (${req.user?.role}) does not have access to this resource`}, {status: 403});
+        }
+        next();
+    };
+}

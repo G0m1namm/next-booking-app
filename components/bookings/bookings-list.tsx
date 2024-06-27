@@ -1,4 +1,4 @@
-import { Booking } from '@/app/bookings/me/columns';
+import { Booking } from '@/app/(user)/bookings/me/columns';
 import { ColumnDef } from '@tanstack/react-table';
 
 import BookingsDataTable from './bookings-data-table';
