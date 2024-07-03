@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Serie, ResponsiveLine } from '@nivo/line';
+import { formatPrice } from '@/lib/utils';
 
 type ChartDataProp = {
   data: Readonly<Serie[]>;
@@ -16,6 +17,7 @@ const LineChart = React.forwardRef<
       <ResponsiveLine
         data={data}
         margin={{ top: 10, right: 20, bottom: 70, left: 70 }}
+        yFormat={(value) => `${formatPrice(value as number)}`}
         axisTop={null}
         axisRight={null}
         axisBottom={{
@@ -37,6 +39,23 @@ const LineChart = React.forwardRef<
         pointSize={6}
         useMesh={true}
         enableArea={true}
+        defs={[
+          {
+            colors: [
+              {
+                color: 'inherit',
+                offset: 0,
+              },
+              {
+                color: 'inherit',
+                offset: 100,
+                opacity: 0,
+              },
+            ],
+            id: 'gradientA',
+            type: 'linearGradient',
+          },
+        ]}
         enableGridX={false}
         enableGridY={false}
         theme={{

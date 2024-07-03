@@ -133,6 +133,50 @@ const fetchLastSixMonthsSales = async () => {
   return months;
 }
 
+const fetchTopPerformingRooms = async (startDate: Date, endDate: Date) => {
+  const rooms = await Booking.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: startDate, $lte: endDate },
+      }
+    },
+    {
+      $group: {
+        _id: '$room',
+        bookingsCount: { $sum: 1 },
+      },
+    },
+    {
+      $sort: {
+        bookingsCount: -1,
+      }
+    },
+    {
+      $limit: 3,
+    },
+    {
+      $lookup: {
+        from: 'rooms',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'roomData',
+      },
+    },
+    {
+      $unwind: '$roomData',
+    },
+    {
+      $project: {
+        _id: 0,
+        roomName: '$roomData.name',
+        bookingsCount: 1
+      }
+    },
+  ]);
+
+  return rooms ?? [];
+}
+
 // Get sales statistics   =>   /api/admin/sales_stats
 export const getSalesStats = catchAsyncErrors(
   async (req: NextRequest) => {
@@ -154,11 +198,13 @@ export const getSalesStats = catchAsyncErrors(
   const totalSales = bookings.reduce((acc, booking) => acc + booking.amountPaid, 0);
   
   const lastSixMonthsSales = await fetchLastSixMonthsSales();
+  const topPerformingRooms = await fetchTopPerformingRooms(startDate, endDate);
 
   return NextResponse.json({
     success: true,
     numberOfBookings,
     totalSales,
-    lastSixMonthsSales
+    lastSixMonthsSales,
+    topPerformingRooms
   });
 });

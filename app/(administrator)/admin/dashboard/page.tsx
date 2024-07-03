@@ -33,15 +33,16 @@ export default function Page() {
   }, [data]);
 
   const bookingsData = useMemo(() => {
-    return [
-      { id: 'Jan', value: 111 },
-      { id: 'Feb', value: 157 },
-      { id: 'Mar', value: 129 },
-      { id: 'Apr', value: 150 },
-      { id: 'May', value: 119 },
-      { id: 'Jun', value: 72 },
-    ];
-  }, []);
+    if (!data?.topPerformingRooms) return [];
+
+    const topPerformingRooms = data?.topPerformingRooms;
+    return topPerformingRooms.map(
+      (room: { roomName: string; bookingsCount: number }) => ({
+        id: room.roomName,
+        value: room.bookingsCount,
+      })
+    );
+  }, [data]);
 
   const dateChangeHandler = (values: { range: DateRange; rangeCompare?: DateRange }) => {
     if (!values.range.from || !values.range.to) return;
@@ -67,7 +68,7 @@ export default function Page() {
 
   return (
     <AdminPageLayout title="Dashboard">
-      <div className="grid gap-6 w-full">
+      <div className="grid gap-6 w-full mb-10">
         <div className="flex flex-1">
           <DateRangePicker
             showCompare={false}
@@ -77,7 +78,7 @@ export default function Page() {
             onUpdate={dateChangeHandler}
           />
         </div>
-        <section className="flex flex-1 gap-10">
+        <section className="flex flex-1 gap-6">
           <Card className="flex-1">
             <CardHeader>
               <CardTitle className="font-light">Total Sales</CardTitle>
@@ -95,26 +96,32 @@ export default function Page() {
             </CardContent>
           </Card>
         </section>
-        <Card>
-          <CardHeader>
-            <CardTitle>Sales Trends</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {isLoading ? (
-              <Skeleton className="w-full h-[400px]" />
-            ) : (
-              <LineChart className="aspect-[16/9]" data={salesData} />
-            )}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Top performing Bookings</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <PieChart className="aspect-square" data={bookingsData} />
-          </CardContent>
-        </Card>
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Sales Trends</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <Skeleton className="w-full h-[400px]" />
+              ) : (
+                <LineChart className="aspect-[16/9]" data={salesData} />
+              )}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Top performing Bookings</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoading && bookingsData.length > 0 ? (
+                <Skeleton className="w-full h-[400px]" />
+              ) : (
+                <PieChart className="aspect-[16/9]" data={bookingsData} />
+              )}
+            </CardContent>
+          </Card>
+        </section>
       </div>
     </AdminPageLayout>
   );
