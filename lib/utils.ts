@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatPrice(price: number) {
+  if(isNaN(price)) return price;
   return price.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
