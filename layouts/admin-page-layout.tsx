@@ -9,11 +9,11 @@ export default function AdminPageLayout({
   children,
 }: Readonly<React.PropsWithChildren<Props>>) {
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-5 container">
       <div className="flex items-center">
         <h1 className="text-xl font-semibold md:text-2xl">{title}</h1>
       </div>
-      <div className="flex flex-1">{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 }

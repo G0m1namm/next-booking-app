@@ -101,3 +101,30 @@ export const getBookingDetails = catchAsyncErrors(
     booking,
   });
 });
+
+// Get sales statistics   =>   /api/admin/sales_stats
+export const getSalesStats = catchAsyncErrors(
+  async (req: NextRequest) => {
+  const { searchParams } = new URL(req.url);
+
+  const startDate = new Date(searchParams.get('startDate') as string);
+  startDate.setHours(0, 0, 0, 0);
+  const endDate = new Date(searchParams.get('endDate') as string);
+  endDate.setHours(23, 59, 59, 999);
+
+  const bookings = await Booking.find({
+    createdAt: {
+      $gte: startDate,
+      $lte: endDate,
+    },
+  });
+
+  const numberOfBookings = bookings.length;
+  const totalSales = bookings.reduce((acc, booking) => acc + booking.amountPaid, 0);
+  
+  return NextResponse.json({
+    success: true,
+    numberOfBookings,
+    totalSales
+  });
+});

@@ -37,6 +37,12 @@ export const bookinApi = createApi({
         },
       }),
     }),
+    getSalesStats: builder.query({
+      query: (params) => ({
+        url: '/admin/sales_stats',
+        params,
+      }),
+    }),
   }),
 });
 
@@ -44,5 +50,6 @@ export const {
   useCreateBookingMutation,
   useLazyCheckBookingAvailabilityQuery,
   useGetAllBookedDaysQuery,
-  useLazyInitStripeCheckoutQuery
+  useLazyInitStripeCheckoutQuery,
+  useLazyGetSalesStatsQuery
 } = bookinApi;

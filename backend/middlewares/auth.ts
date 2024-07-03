@@ -27,14 +27,17 @@ export const isAuthenticated = async (
   return next();
 };
 
-export const getAuthorizedRoles = (...roles: string[]) => {
-    return function (
-      req: NextRequest,
-      event: unknown,
-      next: NextFunction) {
-        if (!roles.includes(req.user?.role)) {
-            return NextResponse.json({message: `Role (${req.user?.role}) does not have access to this resource`}, {status: 403});
-        }
-        next();
-    };
-}
+export const authorizeRoles = (...roles: string[]) => {
+  return (req: NextRequest, event: any, next: any) => {
+    if (!roles.includes(req.user.role)) {
+      return NextResponse.json(
+        {
+          errMessage: `Role (${req.user.role}) is now allowed to access this resource.`,
+        },
+        { status: 403 }
+      );
+    }
+
+    return next();
+  };
+};
