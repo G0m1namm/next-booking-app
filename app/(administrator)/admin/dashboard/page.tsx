@@ -11,39 +11,27 @@ import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatPrice } from '@/lib/utils';
 
-type Props = {};
 
-export default function Page({}: Props) {
+export default function Page() {
   const [getSalesStats, { isLoading, isError, data }] = useLazyGetSalesStatsQuery();
 
   const salesData = useMemo(() => {
+    if (!data?.lastSixMonthsSales) return [];
+
+    const lastSixMonthData = data?.lastSixMonthsSales;
     return [
       {
-        id: 'Desktop',
-        data: [
-          { x: '2018-01-01', y: 7 },
-          { x: '2018-01-02', y: 5 },
-          { x: '2018-01-03', y: 11 },
-          { x: '2018-01-04', y: 9 },
-          { x: '2018-01-05', y: 12 },
-          { x: '2018-01-06', y: 16 },
-          { x: '2018-01-07', y: 13 },
-        ],
-      },
-      {
-        id: 'Mobile',
-        data: [
-          { x: '2018-01-01', y: 9 },
-          { x: '2018-01-02', y: 8 },
-          { x: '2018-01-03', y: 13 },
-          { x: '2018-01-04', y: 6 },
-          { x: '2018-01-05', y: 8 },
-          { x: '2018-01-06', y: 14 },
-          { x: '2018-01-07', y: 11 },
-        ],
+        id: 'Sales',
+        data: lastSixMonthData
+          .map((monthData: { month: string; totalSales: number }) => ({
+            x: monthData.month,
+            y: monthData.totalSales,
+          }))
+          .reverse(),
       },
     ];
-  }, []);
+  }, [data]);
+
   const bookingsData = useMemo(() => {
     return [
       { id: 'Jan', value: 111 },
@@ -112,7 +100,11 @@ export default function Page({}: Props) {
             <CardTitle>Sales Trends</CardTitle>
           </CardHeader>
           <CardContent>
-            <LineChart className="aspect-[16/9]" data={salesData} />
+            {isLoading ? (
+              <Skeleton className="w-full h-[400px]" />
+            ) : (
+              <LineChart className="aspect-[16/9]" data={salesData} />
+            )}
           </CardContent>
         </Card>
         <Card>

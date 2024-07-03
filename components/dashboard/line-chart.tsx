@@ -15,36 +15,30 @@ const LineChart = React.forwardRef<
     <div {...props} ref={ref}>
       <ResponsiveLine
         data={data}
-        margin={{ top: 10, right: 20, bottom: 40, left: 40 }}
-        xScale={{
-          type: 'time',
-          format: '%Y-%m-%d',
-          useUTC: false,
-          precision: 'day',
-        }}
-        xFormat="time:%Y-%m-%d"
-        yScale={{
-          type: 'linear',
-          min: 0,
-          max: 'auto',
-        }}
+        margin={{ top: 10, right: 20, bottom: 70, left: 70 }}
         axisTop={null}
         axisRight={null}
         axisBottom={{
           tickSize: 0,
           tickPadding: 16,
-          format: '%d',
-          tickValues: 'every 1 day',
+          legend: 'Last 6 months',
+          legendPosition: 'middle',
+          legendOffset: 50,
         }}
         axisLeft={{
           tickSize: 0,
           tickValues: 5,
           tickPadding: 16,
+          legend: 'USD ($)',
+          legendPosition: 'middle',
+          legendOffset: -60,
         }}
         colors={['#2563eb', '#e11d48']}
         pointSize={6}
         useMesh={true}
-        gridYValues={6}
+        enableArea={true}
+        enableGridX={false}
+        enableGridY={false}
         theme={{
           tooltip: {
             chip: {
@@ -62,6 +56,33 @@ const LineChart = React.forwardRef<
             },
           },
         }}
+        legends={[
+          {
+            anchor: 'top-left',
+            direction: 'row',
+            justify: false,
+            translateX: -5,
+            translateY: -38,
+            itemsSpacing: 0,
+            itemDirection: 'left-to-right',
+            itemWidth: 78,
+            itemHeight: 20,
+            itemOpacity: 0.75,
+            symbolSize: 13,
+            symbolShape: 'circle',
+            symbolBorderColor: 'rgba(0, 0, 0, .5)',
+            effects: [
+              {
+                on: 'hover',
+                style: {
+                  itemBackground: 'rgba(0, 0, 0, .03)',
+                  itemOpacity: 1,
+                },
+              },
+            ],
+          },
+        ]}
+        motionConfig="molasses"
         role="application"
       />
     </div>

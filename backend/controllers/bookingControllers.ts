@@ -102,6 +102,37 @@ export const getBookingDetails = catchAsyncErrors(
   });
 });
 
+const fetchLastSixMonthsSales = async () => {
+  const months = [];
+  for (let i = 0; i < 6; i++) {
+    const firstDay = new Date(new Date().getFullYear(), new Date().getMonth() - i, 1);
+    const lastDay = new Date(new Date().getFullYear(), new Date().getMonth() - i + 1, 0);
+
+    const sales = await Booking.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: firstDay, $lte: lastDay },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSales: { $sum: '$amountPaid' },
+          numberOfBookings: { $sum: 1 },
+        },
+      },
+    ]);
+
+    months.push({
+      month: firstDay.toLocaleString('default', { month: 'long' }),
+      totalSales: sales.length > 0 ? sales[0].totalSales : 0,
+      numberOfBookings: sales.length > 0 ? sales[0].numberOfBookings : 0,
+    });
+  }
+
+  return months;
+}
+
 // Get sales statistics   =>   /api/admin/sales_stats
 export const getSalesStats = catchAsyncErrors(
   async (req: NextRequest) => {
@@ -122,9 +153,12 @@ export const getSalesStats = catchAsyncErrors(
   const numberOfBookings = bookings.length;
   const totalSales = bookings.reduce((acc, booking) => acc + booking.amountPaid, 0);
   
+  const lastSixMonthsSales = await fetchLastSixMonthsSales();
+
   return NextResponse.json({
     success: true,
     numberOfBookings,
-    totalSales
+    totalSales,
+    lastSixMonthsSales
   });
 });
