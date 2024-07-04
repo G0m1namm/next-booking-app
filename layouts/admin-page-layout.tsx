@@ -1,7 +1,7 @@
 import React from 'react';
 
 type Props = {
-  title: string;
+  title: string | React.ReactNode;
 };
 
 export default function AdminPageLayout({
@@ -11,7 +11,10 @@ export default function AdminPageLayout({
   return (
     <div className="grid gap-5 container">
       <div className="flex items-center">
-        <h1 className="text-xl font-semibold md:text-2xl">{title}</h1>
+        {typeof title === 'string' && (
+          <h1 className="text-xl font-semibold md:text-2xl">{title}</h1>
+        )}
+        {typeof title !== 'string' && title}
       </div>
       <div className="w-full">{children}</div>
     </div>
