@@ -2,7 +2,6 @@ import dbConnect from '@/backend/config/dbConnect';
 import { deleteRoomById, updateRoomById } from '@/backend/controllers/roomControllers';
 import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
-
 interface RequestContext {
   params: {
     id: 'string';

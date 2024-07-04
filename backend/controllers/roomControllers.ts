@@ -174,3 +174,15 @@ export const canReview = catchAsyncErrors(async (req: NextRequest) => {
     throw new ErrorHandler(error.message, 400);
   }
 })
+
+// Get all rooms - Admin view => GET /api/admin/rooms
+export const getAllRoomsAdmin = catchAsyncErrors(
+  async () => {
+    const rooms = await Room.find();
+
+    return NextResponse.json({
+      success: true,
+      rooms,
+    });
+  }
+);
