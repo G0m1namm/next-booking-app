@@ -8,9 +8,9 @@ const router = createEdgeRouter<NextRequest, unknown>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).get(getAllRoomsAdmin);
+router.use(isAuthenticated, authorizeRoles("admin")).post(newRoom);
 
-export async function GET(
+export async function POST(
   request: NextRequest,
   ctx: unknown
 ): Promise<NextResponse<void | Response>> {
