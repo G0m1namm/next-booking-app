@@ -10,6 +10,7 @@ import AdminRoomsList from '@/components/room/admin-rooms-list';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { PlusCircleIcon } from 'lucide-react';
 
 export const metadata = {
   title: 'All Rooms | Administrator',
@@ -58,7 +59,10 @@ function RoomPageHeader({ totalRooms }: { totalRooms: number }) {
         <Badge className="inline-block text-lg">{totalRooms}</Badge>
       </h1>
       <Button asChild>
-        <Link href="/admin/rooms/new">Create Room</Link>
+        <Link href="/admin/rooms/new">
+          <PlusCircleIcon size={20} className="mr-2" />
+          Add Room
+        </Link>
       </Button>
     </div>
   );

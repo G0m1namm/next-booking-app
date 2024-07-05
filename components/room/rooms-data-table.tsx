@@ -26,6 +26,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { RoomData } from '@/app/(administrator)/admin/rooms/columns';
+import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 
 export default function RoomsDataTable({
   data,
@@ -59,16 +60,16 @@ export default function RoomsDataTable({
   });
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <Card>
+      <CardHeader>
         <Input
           placeholder="Filter IDs..."
           value={(table.getColumn('id')?.getFilterValue() as string) ?? ''}
           onChange={(event) => table.getColumn('id')?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
-      </div>
-      <div className="rounded-md border">
+      </CardHeader>
+      <CardContent>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -105,8 +106,8 @@ export default function RoomsDataTable({
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      </CardContent>
+      <CardFooter>
         <div className="flex-1 text-tiny text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -129,7 +130,7 @@ export default function RoomsDataTable({
             Next
           </Button>
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }
