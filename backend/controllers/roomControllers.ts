@@ -4,7 +4,7 @@ import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
 import Room, { IReview, IRoom } from '../models/room';
 import APIFilters from '../utils/apiFilters';
 import ErrorHandler from '../utils/errorHandler';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import Booking from '../models/booking';
 
 const FILTERS_NOT_ALLOWED = ['location', 'page'];
@@ -101,6 +101,9 @@ export const updateRoomById = catchAsyncErrors(
 
     room = await Room.findByIdAndUpdate(params.id, body, { new: true });
 
+    revalidateTag('RoomDetails');
+    revalidateTag('Rooms');
+
     return NextResponse.json({
       success: true,
       room,
@@ -134,10 +137,10 @@ export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
   };
   try {
     const room = await Room.findById(roomId) as IRoom;
-    const isReviewed = room.reviews.find((r: IReview) => r.user.toString() === req.user._id.toString());
+    const isReviewed = room.reviews.find((r: IReview) => r.user._id.toString() === req.user._id.toString());
     if(isReviewed) {
       room.reviews.forEach((review: IReview) => {
-        if(review.user.toString() === req.user._id.toString()) {
+        if(review.user._id.toString() === req.user._id.toString()) {
           review.comment = comment;
           review.rating = rating;
         }

@@ -29,7 +29,11 @@ export const getSingleRoom = async (
   id: string
 ): Promise<IPagination & IRoomResponse & Pick<ApiError, 'message'>> => {
   try {
-    const res = await fetch(`${getApiUrl()}/rooms/${id}`);
+    const res = await fetch(`${getApiUrl()}/rooms/${id}`, {
+      next: {
+        tags: ['RoomDetails'],
+      },
+    });
     const data = await res.json();
     return data;
   } catch (error) {

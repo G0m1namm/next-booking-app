@@ -8,6 +8,6 @@ type Props = {
   columns: ColumnDef<RoomData>[];
 };
 
-export default function AdminRoomsList({ data, columns }: Props) {
+export default function AdminRoomsList({ data, columns }: Readonly<Props>) {
   return <RoomsDataTable data={data} columns={columns} />;
 }

@@ -1,13 +1,29 @@
-import AdminNewRoomForm from '@/components/room/admin-new-room-form';
 import { Button } from '@/components/ui/button';
 import AdminPageLayout from '@/layouts/admin-page-layout';
-import { useCreateRoomMutation } from '@/redux/api/room';
 import Link from 'next/link';
+import { getSingleRoom } from '@/lib/room/actions';
+import { IRoom } from '@/backend/models/room';
+import ErrorPage from '../error';
+import AdminUpdateRoomForm from '@/components/room/admin-update-room-form';
 
-export default function Page() {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function Page({ params: { id } }: Readonly<Props>) {
+  const data = await getSingleRoom(id);
+
+  if (!data.success) {
+    return <ErrorPage error={data} />;
+  }
+
+  const room = data.room as IRoom;
+
   return (
     <AdminPageLayout title={<NewRoonPageHeader />}>
-      <AdminNewRoomForm useOnSubmitMutation={useCreateRoomMutation} />
+      <AdminUpdateRoomForm room={room} />
     </AdminPageLayout>
   );
 }
@@ -16,7 +32,7 @@ function NewRoonPageHeader() {
   return (
     <div className="flex w-full justify-between items-center">
       <h1 className="text-xl font-semibold md:text-2xl inline-flex items-center gap-3">
-        New Room
+        Edit Room
       </h1>
       <div className="flex items-center gap-4">
         <Button asChild variant="outline">

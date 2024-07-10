@@ -4,13 +4,12 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Upload } from 'lucide-react';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
 
-import { useCreateRoomMutation } from '@/redux/api/room';
+import { useCreateRoomMutation, useUpdateRoomMutation } from '@/redux/api/room';
 import {
   Form,
   FormDescription,
@@ -29,12 +28,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import Image from 'next/image';
 import { Textarea } from '../ui/textarea';
 import { cn } from '@/lib/utils';
 import { Checkbox } from '../ui/checkbox';
 import CurrenyInput from '../ui/currency-input';
 import { useRouter } from 'next/navigation';
+import { IRoom } from '@/backend/models/room';
 
 const formSchema = z.object({
   name: z
@@ -94,28 +93,37 @@ const roomFeatures = [
   },
 ];
 
-export default function AdminNewRoomForm() {
+type Props = {
+  room?: IRoom;
+  useOnSubmitMutation: () => ReturnType<
+    typeof useCreateRoomMutation | typeof useUpdateRoomMutation
+  >;
+};
+
+export default function AdminNewRoomForm({ room, useOnSubmitMutation }: Readonly<Props>) {
   const router = useRouter();
   const form = useForm<IFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      description: '',
-      pricePerNight: 0,
-      address: '',
-      category: 'Single',
-      guestCapacity: 0,
-      numOfBeds: 0,
-      isInternet: false,
-      isBreakfast: false,
-      isAirConditioned: false,
-      isPetAllowed: false,
-      isRoomCleaning: false,
+      name: room?.name ?? '',
+      description: room?.description ?? '',
+      pricePerNight: room?.pricePerNight ?? 0,
+      address: room?.address ?? '',
+      category: room?.category ?? 'Single',
+      guestCapacity: room?.guestCapacity ?? 0,
+      numOfBeds: room?.numOfBeds ?? 0,
+      isInternet: room?.isInternet ?? false,
+      isBreakfast: room?.isBreakfast ?? false,
+      isAirConditioned: room?.isAirConditioned ?? false,
+      isPetAllowed: room?.isPetAllowed ?? false,
+      isRoomCleaning: room?.isRoomCleaning ?? false,
     },
   });
-  const [createRoom, { isSuccess, isError, error }] = useCreateRoomMutation();
+  const [mutation, { isSuccess, isError, error }] = useOnSubmitMutation();
   const submitHandler = async (formData: IFormSchema) => {
-    createRoom(formData);
+    const body = { ...formData } as IFormSchema & { id?: string };
+    if (room?._id) body.id = room._id.toString();
+    mutation(body);
   };
 
   useEffect(() => {
@@ -124,8 +132,6 @@ export default function AdminNewRoomForm() {
       router.replace('/admin/rooms');
     }
     if (isError) {
-      console.log(error);
-
       toast.error('An error occurred while creating your room');
     }
   }, [isSuccess, isError]);

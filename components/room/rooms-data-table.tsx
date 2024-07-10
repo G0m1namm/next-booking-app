@@ -31,10 +31,10 @@ import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 export default function RoomsDataTable({
   data,
   columns,
-}: {
+}: Readonly<{
   data: RoomData[];
   columns: ColumnDef<RoomData>[];
-}) {
+}>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});

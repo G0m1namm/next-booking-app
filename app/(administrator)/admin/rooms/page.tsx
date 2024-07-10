@@ -51,7 +51,7 @@ export default async function Page() {
   );
 }
 
-function RoomPageHeader({ totalRooms }: { totalRooms: number }) {
+function RoomPageHeader({ totalRooms }: Readonly<{ totalRooms: number }>) {
   return (
     <div className="flex w-full justify-between items-center">
       <h1 className="text-xl font-semibold md:text-2xl inline-flex items-center gap-3">
