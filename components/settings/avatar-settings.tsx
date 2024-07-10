@@ -52,7 +52,7 @@ export default function AvatarSettings() {
       <div className="flex flex-col md:flex-row gap-12 pl-6">
         <div className="flex flex-col gap-2 flex-none items-center">
           <Avatar className="size-28">
-            <AvatarImage src={temporalAvatar || user?.avatar?.url} alt="user avatar" />
+            <AvatarImage src={temporalAvatar ?? user?.avatar?.url} alt="user avatar" />
             <AvatarFallback>
               <Image
                 src="/images/avatar.jpg"
