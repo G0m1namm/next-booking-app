@@ -120,6 +120,12 @@ export const deleteRoomById = catchAsyncErrors(
     if (!room) throw new ErrorHandler('Room not found', 404);
 
     // TODO: delete images related to the room
+    const allPromises = room.images.map((image: IImage, index: number) => {
+      return deleteFIle(image.public_id)
+    })
+
+    await Promise.allSettled(allPromises);
+
     await room.deleteOne();
 
     return NextResponse.json({

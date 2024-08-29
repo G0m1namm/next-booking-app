@@ -10,10 +10,24 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { useDeleteRoomMutation } from '@/redux/api/room';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export type RoomData = {
   id: string;
@@ -94,17 +108,48 @@ export const columns: ColumnDef<RoomData>[] = [
                 Upload Images
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                href={`/admin/rooms/${room.id}/`}
-                className="text-destructive hover:!text-destructive-foreground hover:!bg-destructive cursor-pointer"
-              >
-                Delete Room
-              </Link>
-            </DropdownMenuItem>
+            <DeleteRoomMenuItem id={room.id} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
     },
   },
 ];
+
+const DeleteRoomMenuItem = ({ id }: { id: string }) => {
+  const [deleteRoom, { isSuccess, isLoading }] = useDeleteRoomMutation();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading('Your room is being deleted...');
+    }
+    if (isSuccess) {
+      toast.success('Room successfully deleted');
+      router.refresh();
+    }
+  }, [isSuccess, isLoading]);
+
+  return (
+    <DropdownMenuItem asChild>
+      <AlertDialog>
+        <AlertDialogTrigger className="text-destructive hover:!text-destructive-foreground hover:!bg-destructive cursor-pointer relative flex select-none items-center rounded-sm px-2 py-1.5 text-tiny outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 w-full">
+          Delete Room
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the room and all
+              the images related to it.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => deleteRoom(id)}>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </DropdownMenuItem>
+  );
+};
