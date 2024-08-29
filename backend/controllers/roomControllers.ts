@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
-import Room, { IReview, IRoom } from '../models/room';
+import Room, { IImage, IReview, IRoom } from '../models/room';
 import APIFilters from '../utils/apiFilters';
 import ErrorHandler from '../utils/errorHandler';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import Booking from '../models/booking';
+import { deleteFIle } from '@/lib/cloudinary';
 
 const FILTERS_NOT_ALLOWED = ['location', 'page'];
 const RESULTS_PER_PAGE = 8;
@@ -136,12 +137,38 @@ export const uploadImages = catchAsyncErrors(
     if (!room) throw new ErrorHandler('Room not found', 404);
 
     const withNewImages = body.images;
-    console.log(withNewImages);
     
     room = await Room.findByIdAndUpdate(params.id, { images: withNewImages });
 
     revalidateTag('RoomDetails');
     revalidateTag('Rooms');
+
+    return NextResponse.json({
+      success: true,
+      images: room.images,
+    });
+  }
+);
+
+// Upload images to single room => PUT /api/admin/rooms/:id/delete_image
+export const deleteImage = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+    let room = await Room.findById(params.id);
+    const body = await req.json();
+    
+    if (!room) throw new ErrorHandler('Room not found', 404);
+
+    const isDeleted = await deleteFIle(body.imageId);
+
+    if(isDeleted) {
+      
+      const newImagesList = room.images.filter((image: IImage) => image.public_id !== body.imageId);
+
+      room = await Room.findByIdAndUpdate(params.id, { images: newImagesList });
+
+      revalidateTag('RoomDetails');
+      revalidateTag('Rooms');
+    }
 
     return NextResponse.json({
       success: true,

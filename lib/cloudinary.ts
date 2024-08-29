@@ -47,13 +47,13 @@ export const uploadFile = async ({
 
 // Delete an image
 export const deleteFIle = async (public_id: string) => {
-  console.log(public_id);
-
   try {
     const data = await cloudinary.uploader.destroy(public_id);
-    if (data.result === 'ok') {
+    
+    if (data.result === 'ok' || data.result === 'not found') {
       return true;
     }
+    
     return false;
   } catch (error) {
     console.log(error);

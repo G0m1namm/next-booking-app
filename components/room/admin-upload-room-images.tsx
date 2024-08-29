@@ -11,13 +11,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Trash2Icon, UploadIcon } from 'lucide-react';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { CldUploadButton, CloudinaryUploadWidgetInfo } from 'next-cloudinary';
 import {
-  CldUploadButton,
-  CloudinaryUploadWidgetInfo,
-  CloudinaryUploadWidgetResults,
-} from 'next-cloudinary';
-import { useUploadRoomImagesMutation } from '@/redux/api/room';
+  useDeleteRoomImageMutation,
+  useUploadRoomImagesMutation,
+} from '@/redux/api/room';
 import Image from 'next/image';
 import { UPLOAD_ROOMS_PRESET_ID } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
@@ -34,7 +33,13 @@ export default function AdminUploadRoomImages({ room }: Readonly<Props>) {
   const [temporalImagePreviews, setTemporalImagePreviews] =
     React.useState<IImage[]>(initialImages);
   const [uploadImages, { isLoading, isError, isSuccess }] = useUploadRoomImagesMutation();
+  const [deleteImage, { isLoading: isDeletingImage }] = useDeleteRoomImageMutation();
   const router = useRouter();
+
+  const getImageId = (imageId: string) => {
+    deleteImage({ id: room._id, imageId });
+    setTemporalImagePreviews((prev) => prev.filter((item) => item.public_id !== imageId));
+  };
 
   useEffect(() => {
     if (isSuccess) {
@@ -101,7 +106,7 @@ export default function AdminUploadRoomImages({ room }: Readonly<Props>) {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {temporalImagePreviews.map(({ url }) => (
+            {temporalImagePreviews.map(({ url, public_id }) => (
               <div key={`room-image-${crypto.randomUUID()}`} className="relative group">
                 <Link
                   href={url}
@@ -118,11 +123,13 @@ export default function AdminUploadRoomImages({ room }: Readonly<Props>) {
                   height={300}
                   className="aspect-square rounded-lg object-cover group-hover:opacity-50 transition-opacity bg-slate-400"
                 />
-                <div className="absolute top-2 right-2 flex items-center gap-2">
+                <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-6 w-6 bg-background/80 text-muted-foreground hover:bg-background"
+                    className="h-8 w-8 bg-background/80 text-muted-foreground hover:bg-background"
+                    disabled={isDeletingImage}
+                    onClick={() => getImageId(public_id)}
                   >
                     <Trash2Icon className="h-4 w-4" />
                     <span className="sr-only">Delete</span>
