@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { buttonVariants } from '../ui/button';
+import { UPLOAD_AVATAR_PRESET_ID } from '@/lib/constants';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -71,7 +72,7 @@ export default function AvatarSettings() {
               className={cn(buttonVariants({ variant: 'default', size: 'default' }))}
               signatureEndpoint="/api/sign-cloudinary-params"
               onSuccess={successHandler}
-              uploadPreset="cehwrfa3" // preset for avatar
+              uploadPreset={UPLOAD_AVATAR_PRESET_ID} // preset for avatar
               options={{ maxFileSize: MAX_FILE_SIZE, multiple: false }}
             />
             <p className="text-tiny text-gray-500 dark:text-gray-400">

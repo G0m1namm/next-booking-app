@@ -127,6 +127,29 @@ export const deleteRoomById = catchAsyncErrors(
   }
 );
 
+// Upload images to single room => PUT /api/admin/rooms/:id/upload_images
+export const uploadImages = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+    let room = await Room.findById(params.id);
+    const body = await req.json();
+    
+    if (!room) throw new ErrorHandler('Room not found', 404);
+
+    const withNewImages = body.images;
+    console.log(withNewImages);
+    
+    room = await Room.findByIdAndUpdate(params.id, { images: withNewImages });
+
+    revalidateTag('RoomDetails');
+    revalidateTag('Rooms');
+
+    return NextResponse.json({
+      success: true,
+      images: room.images,
+    });
+  }
+);
+
 // Create/Update room review => POST /api/rooms/reviews
 export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
   const { rating, comment, roomId } = await req.json();

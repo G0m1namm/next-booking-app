@@ -88,7 +88,7 @@ export const columns: ColumnDef<RoomData>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href={`/admin/rooms/${room.id}/upload_images`}
+                href={`/admin/rooms/${room.id}/upload-images`}
                 className="cursor-pointer"
               >
                 Upload Images
