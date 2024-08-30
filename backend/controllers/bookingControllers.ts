@@ -6,11 +6,11 @@ import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
 import Booking, { IBooking } from '../models/booking';
 import ErrorHandler from '../utils/errorHandler';
 
-// Create a new room booking   =>   /api/booking/new
+// Create a new room booking   => POST  /api/booking/new
 export const newBooking = catchAsyncErrors(async (req: NextRequest) => {
   const body = await req.json();
   const { room, checkInDate, checkOutDate, daysOfStay, amountPaid, paymentInfo } = body;
-
+  
   const booking = await Booking.create({
     room,
     user: req.user._id,
@@ -23,6 +23,7 @@ export const newBooking = catchAsyncErrors(async (req: NextRequest) => {
   });
 
   revalidatePath('/rooms/[id]', 'page');
+  revalidatePath('/bookings/me', 'page');
 
   return NextResponse.json({
     success: true,
@@ -30,7 +31,7 @@ export const newBooking = catchAsyncErrors(async (req: NextRequest) => {
   });
 });
 
-// Check room booking availability   =>   /api/booking/check
+// Check room booking availability   => GET  /api/booking/check
 export const checkRoomBookingAvailability = catchAsyncErrors(async (req: NextRequest) => {
   // Get params from request url
   const { searchParams } = new URL(req.url);
@@ -56,7 +57,7 @@ export const checkRoomBookingAvailability = catchAsyncErrors(async (req: NextReq
   });
 });
 
-// Get all booked days of a room   =>   /api/booking/all-booked-days
+// Get all booked days of a room   =>  GET /api/booking/all-booked-days
 export const getAllBookedDays = catchAsyncErrors(async (req: NextRequest) => {
   // Get params from request url
   const { searchParams } = new URL(req.url);
@@ -77,7 +78,7 @@ export const getAllBookedDays = catchAsyncErrors(async (req: NextRequest) => {
   });
 });
 
-// Get all booked days of a room   =>   /api/booking/all
+// Get all booked days of a room   => GET  /api/booking/all
 export const getBookings = catchAsyncErrors(async (req: NextRequest) => {
   const bookings = await Booking.find({ user: req.user._id });
 
@@ -87,12 +88,12 @@ export const getBookings = catchAsyncErrors(async (req: NextRequest) => {
   });
 });
 
-// Get booking details   =>   /api/booking/:id
+// Get booking details   => GET  /api/booking/:id
 export const getBookingDetails = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
   const booking = await Booking.findById(params.id).populate(['user', 'room']) as IBooking
   
-  if(booking?.user._id.toString() !== req.user._id) {
+  if(booking?.user._id.toString() !== req.user._id && req?.user?.role !== "admin") {
     throw new ErrorHandler("You don't have access to this view", 403);
   }
 
@@ -177,7 +178,7 @@ const fetchTopPerformingRooms = async (startDate: Date, endDate: Date) => {
   return rooms ?? [];
 }
 
-// Get sales statistics   =>   /api/admin/sales_stats
+// Get sales statistics   => GET  /api/admin/sales_stats
 export const getSalesStats = catchAsyncErrors(
   async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
@@ -206,5 +207,34 @@ export const getSalesStats = catchAsyncErrors(
     totalSales,
     lastSixMonthsSales,
     topPerformingRooms
+  });
+});
+
+
+// Get all bookings - Admin view => GET /api/admin/bookings
+export const getAllBookingsAdmin = catchAsyncErrors(
+  async () => {
+    const bookings = await Booking.find();
+
+    return NextResponse.json({
+      success: true,
+      bookings,
+    });
+  }
+);
+
+// Delete booking - Admin view   => DELETE  /api/admin/bookings/:id
+export const deleteBooking = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+  const booking = await Booking.findById(params.id)
+  
+  if(!booking) {
+    throw new ErrorHandler("Booking not found with this ID", 404);
+  }
+
+  await booking?.deleteOne();
+
+  return NextResponse.json({
+    success: true,
   });
 });

@@ -25,15 +25,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { RoomData } from '@/app/(administrator)/admin/rooms/columns';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 
-export default function RoomsDataTable({
+export default function RoomsDataTable<TData>({
   data,
   columns,
 }: Readonly<{
-  data: RoomData[];
-  columns: ColumnDef<RoomData>[];
+  data: TData[];
+  columns: ColumnDef<TData>[];
 }>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);

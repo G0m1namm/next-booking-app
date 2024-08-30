@@ -43,6 +43,18 @@ export const bookinApi = createApi({
         params,
       }),
     }),
+    getAllBookings: builder.query({
+      query: (params) => ({
+        url: '/admin/bookings',
+        params,
+      }),
+    }),
+    deleteBooking: builder.mutation({
+      query: (id) => ({
+        url: `/admin/bookings/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
@@ -51,5 +63,7 @@ export const {
   useLazyCheckBookingAvailabilityQuery,
   useGetAllBookedDaysQuery,
   useLazyInitStripeCheckoutQuery,
-  useLazyGetSalesStatsQuery
+  useLazyGetSalesStatsQuery,
+  useGetAllBookingsQuery,
+  useDeleteBookingMutation
 } = bookinApi;

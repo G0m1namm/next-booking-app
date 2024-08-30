@@ -118,7 +118,7 @@ export default function BookingInvoice({ booking }: Readonly<Props>) {
               <TableBody className="text-base">
                 <TableRow className="bg-slate-100">
                   <TableCell className="grid gap-1 py-6">
-                    <span className="text-base font-medium">{booking.room.name}</span>
+                    <span className="text-base font-medium">{booking.room?.name}</span>
                     <span className="text-tiny">
                       From{' '}
                       {formatISO9075(booking.checkInDate, { representation: 'date' })} -
@@ -126,7 +126,7 @@ export default function BookingInvoice({ booking }: Readonly<Props>) {
                     </span>
                   </TableCell>
                   <TableCell>{booking.daysOfStay}</TableCell>
-                  <TableCell>{formatPrice(booking.room.pricePerNight)}</TableCell>
+                  <TableCell>{formatPrice(booking.room?.pricePerNight)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell></TableCell>
