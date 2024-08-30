@@ -11,7 +11,37 @@ export const authApi = createApi({
         body,
       }),
     }),
+    getAllUsers: builder.query({
+      query: (params) => ({
+        url: '/admin/users',
+        params,
+      }),
+    }),
+    getUserDetails: builder.query({
+      query: (id) => ({
+        url: `/admin/users/${id}`,
+      }),
+    }),
+    updateUser: builder.mutation({
+      query: ({id, ...body}) => ({
+        url: `/admin/users/${id}`,
+        method: 'PUT',
+        body
+      }),
+    }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/admin/users/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation } = authApi;
+export const { 
+  useRegisterMutation, 
+  useGetAllUsersQuery, 
+  useDeleteUserMutation, 
+  useGetUserDetailsQuery, 
+  useUpdateUserMutation
+} = authApi;
