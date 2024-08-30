@@ -10,7 +10,7 @@ import ErrorHandler from '../utils/errorHandler';
 export const newBooking = catchAsyncErrors(async (req: NextRequest) => {
   const body = await req.json();
   const { room, checkInDate, checkOutDate, daysOfStay, amountPaid, paymentInfo } = body;
-  
+
   const booking = await Booking.create({
     room,
     user: req.user._id,
@@ -91,17 +91,21 @@ export const getBookings = catchAsyncErrors(async (req: NextRequest) => {
 // Get booking details   => GET  /api/booking/:id
 export const getBookingDetails = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const booking = await Booking.findById(params.id).populate(['user', 'room']) as IBooking
-  
-  if(booking?.user._id.toString() !== req.user._id && req?.user?.role !== "admin") {
-    throw new ErrorHandler("You don't have access to this view", 403);
-  }
+    const booking = (await Booking.findById(params.id).populate([
+      'user',
+      'room',
+    ])) as IBooking;
 
-  return NextResponse.json({
-    success: true,
-    booking,
-  });
-});
+    if (booking?.user._id.toString() !== req.user._id && req?.user?.role !== 'admin') {
+      throw new ErrorHandler("You don't have access to this view", 403);
+    }
+
+    return NextResponse.json({
+      success: true,
+      booking,
+    });
+  }
+);
 
 const fetchLastSixMonthsSales = async () => {
   const months = [];
@@ -132,14 +136,14 @@ const fetchLastSixMonthsSales = async () => {
   }
 
   return months;
-}
+};
 
 const fetchTopPerformingRooms = async (startDate: Date, endDate: Date) => {
   const rooms = await Booking.aggregate([
     {
       $match: {
         createdAt: { $gte: startDate, $lte: endDate },
-      }
+      },
     },
     {
       $group: {
@@ -150,7 +154,7 @@ const fetchTopPerformingRooms = async (startDate: Date, endDate: Date) => {
     {
       $sort: {
         bookingsCount: -1,
-      }
+      },
     },
     {
       $limit: 3,
@@ -170,17 +174,16 @@ const fetchTopPerformingRooms = async (startDate: Date, endDate: Date) => {
       $project: {
         _id: 0,
         roomName: '$roomData.name',
-        bookingsCount: 1
-      }
+        bookingsCount: 1,
+      },
     },
   ]);
 
   return rooms ?? [];
-}
+};
 
 // Get sales statistics   => GET  /api/admin/sales_stats
-export const getSalesStats = catchAsyncErrors(
-  async (req: NextRequest) => {
+export const getSalesStats = catchAsyncErrors(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
 
   const startDate = new Date(searchParams.get('startDate') as string);
@@ -197,7 +200,7 @@ export const getSalesStats = catchAsyncErrors(
 
   const numberOfBookings = bookings.length;
   const totalSales = bookings.reduce((acc, booking) => acc + booking.amountPaid, 0);
-  
+
   const lastSixMonthsSales = await fetchLastSixMonthsSales();
   const topPerformingRooms = await fetchTopPerformingRooms(startDate, endDate);
 
@@ -206,35 +209,33 @@ export const getSalesStats = catchAsyncErrors(
     numberOfBookings,
     totalSales,
     lastSixMonthsSales,
-    topPerformingRooms
+    topPerformingRooms,
   });
 });
 
-
 // Get all bookings - Admin view => GET /api/admin/bookings
-export const getAllBookingsAdmin = catchAsyncErrors(
-  async () => {
-    const bookings = await Booking.find();
+export const getAllBookingsAdmin = catchAsyncErrors(async () => {
+  const bookings = await Booking.find();
 
-    return NextResponse.json({
-      success: true,
-      bookings,
-    });
-  }
-);
+  return NextResponse.json({
+    success: true,
+    bookings,
+  });
+});
 
 // Delete booking - Admin view   => DELETE  /api/admin/bookings/:id
 export const deleteBooking = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const booking = await Booking.findById(params.id)
-  
-  if(!booking) {
-    throw new ErrorHandler("Booking not found with this ID", 404);
+    const booking = await Booking.findById(params.id);
+
+    if (!booking) {
+      throw new ErrorHandler('Booking not found with this ID', 404);
+    }
+
+    await booking?.deleteOne();
+
+    return NextResponse.json({
+      success: true,
+    });
   }
-
-  await booking?.deleteOne();
-
-  return NextResponse.json({
-    success: true,
-  });
-});
+);

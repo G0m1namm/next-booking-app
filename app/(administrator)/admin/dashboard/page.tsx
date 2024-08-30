@@ -11,7 +11,6 @@ import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatPrice } from '@/lib/utils';
 
-
 export default function Page() {
   const [getSalesStats, { isLoading, isError, data }] = useLazyGetSalesStatsQuery();
 

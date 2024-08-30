@@ -7,15 +7,16 @@ import Pagination from '../pagination';
 import Search from '../search';
 import RoomCard from './room-card';
 
-type RequiredNonNullableObject<T extends object> = {
-  [P in keyof Required<T>]: NonNullable<T[P]>;
-};
-
 type Props = {
-  roomsList: RequiredNonNullableObject<GetRoomResponseType>;
+  limit?: number;
+  page?: number;
+  totalResults?: number;
+  totalFiltered?: number;
+  totalPages?: number;
+  rooms?: IRoom[];
 };
 
-export default function RoomList({ roomsList }: Props) {
+export default function RoomList({ roomsList }: { roomsList: Props }) {
   const { rooms, totalPages, totalFiltered, limit } = roomsList;
   return (
     <section id="rooms_list" className="container">
@@ -37,7 +38,9 @@ export default function RoomList({ roomsList }: Props) {
           </div>
         ))}
       </div>
-      {limit < totalFiltered && <Pagination total={totalPages} />}
+      {limit && totalFiltered && limit < totalFiltered && (
+        <Pagination total={totalPages!} />
+      )}
     </section>
   );
 }

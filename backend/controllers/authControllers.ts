@@ -166,48 +166,50 @@ export const getAllusers = catchAsyncErrors(async (req: NextRequest) => {
 // Update user - Admin view => /api/admin/users/:id
 export const updateUser = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const body = await req.json();
+    const body = await req.json();
 
-  const user = await User.findByIdAndUpdate(params.id, body);
+    const user = await User.findByIdAndUpdate(params.id, body);
 
-  return NextResponse.json({
-    success: true,
-    user
-  });
-});
+    return NextResponse.json({
+      success: true,
+      user,
+    });
+  }
+);
 
 // Get user details - Admin view => /api/admin/users/:id
 export const getUserDetails = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-    
-  const user = await User.findById(params.id);
-  
-  if(!user) {
-    throw new ErrorHandler('The user was not found', 404); 
-  }
+    const user = await User.findById(params.id);
 
-  return NextResponse.json({
-    success: true,
-    user
-  });
-});
+    if (!user) {
+      throw new ErrorHandler('The user was not found', 404);
+    }
+
+    return NextResponse.json({
+      success: true,
+      user,
+    });
+  }
+);
 
 // Delete user - Admin view => /api/admin/users/:id
 export const deleteUser = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const user = await User.findById(params.id);
+    const user = await User.findById(params.id);
 
-  if(!user) {
-    throw new ErrorHandler('The user was not found', 404); 
+    if (!user) {
+      throw new ErrorHandler('The user was not found', 404);
+    }
+
+    if (req?.user?.avatar?.public_id) {
+      await deleteFIle(req?.user?.avatar?.public_id);
+    }
+
+    await user.deleteOne();
+
+    return NextResponse.json({
+      success: true,
+    });
   }
-
-  if (req?.user?.avatar?.public_id) {
-    await deleteFIle(req?.user?.avatar?.public_id);
-  }
-
-  await user.deleteOne();
-
-  return NextResponse.json({
-    success: true,
-  });
-});
+);

@@ -81,7 +81,7 @@ export default function AdminUploadRoomImages({ room }: Readonly<Props>) {
               onQueuesEnd={function (event) {
                 const info = event.info as CloudinaryUploadWidgetInfo;
                 if ('files' in info) {
-                  const newImages = (info.files as any).map((file) => ({
+                  const newImages = (info.files as any).map((file: any) => ({
                     public_id: file.uploadInfo.public_id,
                     url: file.uploadInfo.url,
                   }));

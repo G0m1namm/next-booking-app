@@ -1,7 +1,7 @@
 import dbConnect from '@/backend/config/dbConnect';
 import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
-import {  webhookCheckout } from '@/backend/controllers/paymentControllers';
+import { webhookCheckout } from '@/backend/controllers/paymentControllers';
 
 const router = createEdgeRouter<NextRequest, unknown>();
 

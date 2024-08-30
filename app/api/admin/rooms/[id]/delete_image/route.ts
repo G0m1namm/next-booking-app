@@ -14,7 +14,7 @@ const router = createEdgeRouter<NextRequest, RequestContext>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).put(deleteImage);
+router.use(isAuthenticated, authorizeRoles('admin')).put(deleteImage);
 
 export async function PUT(
   request: NextRequest,

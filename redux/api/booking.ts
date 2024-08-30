@@ -30,10 +30,10 @@ export const bookinApi = createApi({
       }),
     }),
     initStripeCheckout: builder.query({
-      query: ({ id, ...body}) => ({
+      query: ({ id, ...body }) => ({
         url: `/payment/checkout_session/${id}`,
         params: {
-          ...body
+          ...body,
         },
       }),
     }),
@@ -65,5 +65,5 @@ export const {
   useLazyInitStripeCheckoutQuery,
   useLazyGetSalesStatsQuery,
   useGetAllBookingsQuery,
-  useDeleteBookingMutation
+  useDeleteBookingMutation,
 } = bookinApi;

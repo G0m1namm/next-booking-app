@@ -2,15 +2,19 @@ import dbConnect from '@/backend/config/dbConnect';
 import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { authorizeRoles, isAuthenticated } from '@/backend/middlewares/auth';
-import { deleteUser, getUserDetails, updateUser } from '@/backend/controllers/authControllers';
+import {
+  deleteUser,
+  getUserDetails,
+  updateUser,
+} from '@/backend/controllers/authControllers';
 
 const router = createEdgeRouter<NextRequest, unknown>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).get(getUserDetails);
-router.use(isAuthenticated, authorizeRoles("admin")).put(updateUser);
-router.use(isAuthenticated, authorizeRoles("admin")).delete(deleteUser);
+router.use(isAuthenticated, authorizeRoles('admin')).get(getUserDetails);
+router.use(isAuthenticated, authorizeRoles('admin')).put(updateUser);
+router.use(isAuthenticated, authorizeRoles('admin')).delete(deleteUser);
 
 export async function GET(
   request: NextRequest,

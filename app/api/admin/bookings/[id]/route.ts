@@ -8,7 +8,7 @@ const router = createEdgeRouter<NextRequest, unknown>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).delete(deleteBooking);
+router.use(isAuthenticated, authorizeRoles('admin')).delete(deleteBooking);
 
 export async function DELETE(
   request: NextRequest,

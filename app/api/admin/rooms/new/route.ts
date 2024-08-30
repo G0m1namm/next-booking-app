@@ -8,7 +8,7 @@ const router = createEdgeRouter<NextRequest, unknown>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).post(newRoom);
+router.use(isAuthenticated, authorizeRoles('admin')).post(newRoom);
 
 export async function POST(
   request: NextRequest,

@@ -49,11 +49,11 @@ export const uploadFile = async ({
 export const deleteFIle = async (public_id: string) => {
   try {
     const data = await cloudinary.uploader.destroy(public_id);
-    
+
     if (data.result === 'ok' || data.result === 'not found') {
       return true;
     }
-    
+
     return false;
   } catch (error) {
     console.log(error);

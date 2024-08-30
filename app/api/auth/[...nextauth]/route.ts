@@ -1,9 +1,9 @@
 import dbConnect from '@/backend/config/dbConnect';
 import User, { IUser } from '@/backend/models/user';
 import bcrypt from 'bcryptjs';
-import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { NextRequest, NextResponse } from 'next/server';
 
 type Credentials = {
   email: string;
@@ -14,7 +14,7 @@ type Token = {
   user: IUser;
 };
 
-async function auth(req: NextApiRequest, res: NextApiResponse) {
+async function auth(req: NextRequest, res: any) {
   return await NextAuth(req, res, {
     session: {
       strategy: 'jwt',
@@ -46,7 +46,6 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
       jwt: async ({ token, user }) => {
         user && (token.user = user);
 
-        
         if (req.url?.includes('/api/auth/session?')) {
           // @ts-ignore
           const updatedUser = await User.findById(token?.user?._id).select('avatar');
@@ -59,7 +58,6 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
         return token;
       },
       session: async ({ session, token }) => {
-        
         session.user = token.user as IUser;
 
         // @ts-ignore

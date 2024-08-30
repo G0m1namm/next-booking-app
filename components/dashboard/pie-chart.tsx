@@ -11,7 +11,6 @@ const PieChart = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & ChartDataProp
 >(({ data, ...props }, ref) => {
-
   if (!data || data.length === 0) {
     return (
       <span className="grid size-full justify-center items-center text-center m-5 aspect-video text-lg font-medium text-muted-foreground">

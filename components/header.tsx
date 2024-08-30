@@ -2,7 +2,11 @@
 
 import { useEffect } from 'react';
 
-import { setIsAuthenticated, setUser } from '@/redux/features/user/user-slice';
+import {
+  IUserClient,
+  setIsAuthenticated,
+  setUser,
+} from '@/redux/features/user/user-slice';
 import { useAppDistpatch, useAppSelector } from '@/redux/hooks';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -16,7 +20,7 @@ export default function Header() {
 
   useEffect(() => {
     if (data?.user) {
-      dispatch(setUser(data.user));
+      dispatch(setUser(data.user as IUserClient));
       dispatch(setIsAuthenticated(true));
     }
   }, []);

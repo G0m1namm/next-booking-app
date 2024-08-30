@@ -8,7 +8,7 @@ const router = createEdgeRouter<NextRequest, unknown>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).get(getSalesStats);
+router.use(isAuthenticated, authorizeRoles('admin')).get(getSalesStats);
 
 export async function GET(
   request: NextRequest,

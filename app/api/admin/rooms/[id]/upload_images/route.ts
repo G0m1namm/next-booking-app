@@ -14,7 +14,7 @@ const router = createEdgeRouter<NextRequest, RequestContext>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).put(uploadImages);
+router.use(isAuthenticated, authorizeRoles('admin')).put(uploadImages);
 
 export async function PUT(
   request: NextRequest,

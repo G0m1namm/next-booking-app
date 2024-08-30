@@ -37,12 +37,7 @@
           }
         },
         "newlines-between": "always",
-        "internal-pattern": [
-          "@/components/**",
-          "@/fonts/**",
-          "@/pages/**",
-          "@/lib/**"
-        ]
+        "internal-pattern": ["@/components/**", "@/fonts/**", "@/pages/**", "@/lib/**"]
       }
     ],
     "prettier/prettier": [

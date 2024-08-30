@@ -8,7 +8,7 @@ const router = createEdgeRouter<NextRequest, unknown>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).get(getAllRoomsAdmin);
+router.use(isAuthenticated, authorizeRoles('admin')).get(getAllRoomsAdmin);
 
 export async function GET(
   request: NextRequest,

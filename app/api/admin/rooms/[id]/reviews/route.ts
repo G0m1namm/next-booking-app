@@ -13,7 +13,7 @@ const router = createEdgeRouter<NextRequest, RequestContext>();
 
 dbConnect();
 
-router.use(isAuthenticated, authorizeRoles("admin")).put(deleteRoomReview);
+router.use(isAuthenticated, authorizeRoles('admin')).put(deleteRoomReview);
 
 export async function PUT(
   request: NextRequest,

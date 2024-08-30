@@ -1,21 +1,24 @@
 class APIFilters {
-    readonly model: any;
-    readonly queryParams: Record<string, string | number | object> = {};
+  readonly model: any;
+  readonly queryParams: Record<string, string | number | object> = {};
 
-    constructor(model: any, queryParams: Record<string, string | number | object>) {
-        this.model = model;
-        this.queryParams = queryParams;
-    }
+  constructor(model: any, queryParams: Record<string, string | number | object>) {
+    this.model = model;
+    this.queryParams = queryParams;
+  }
 
-    search(): Promise<Array<any>> {
-        return this.model.find({ ...this.queryParams })
-    }
+  search(): Promise<Array<any>> {
+    return this.model.find({ ...this.queryParams });
+  }
 
-    pagination(page: number, resultsPerPage: number): Promise<Array<any>> {
-        const skipPage = resultsPerPage * (page - 1)
+  pagination(page: number, resultsPerPage: number): Promise<Array<any>> {
+    const skipPage = resultsPerPage * (page - 1);
 
-        return this.model.find({ ...this.queryParams }).limit(resultsPerPage).skip(skipPage)
-    }
+    return this.model
+      .find({ ...this.queryParams })
+      .limit(resultsPerPage)
+      .skip(skipPage);
+  }
 }
 
-export default APIFilters
+export default APIFilters;
