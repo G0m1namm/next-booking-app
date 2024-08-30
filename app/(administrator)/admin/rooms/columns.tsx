@@ -96,6 +96,11 @@ export const columns: ColumnDef<RoomData>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
+              <Link href={`/admin/rooms/${room.id}/reviews`} className="cursor-pointer">
+                View reviews
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link href={`/admin/rooms/${room.id}`} className="cursor-pointer">
                 Edit room details
               </Link>

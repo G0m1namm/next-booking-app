@@ -35,7 +35,6 @@ const menuItems = [
   { icon: DoorOpen, text: 'Rooms', href: '/admin/rooms' },
   { icon: Receipt, text: 'Bookings', href: '/admin/bookings' },
   { icon: Users, text: 'Users', href: '/admin/users' },
-  { icon: GanttChartIcon, text: 'Reviews', href: '/admin/reviews' },
 ];
 
 export default function Layout({ children }: Readonly<React.PropsWithChildren<{}>>) {

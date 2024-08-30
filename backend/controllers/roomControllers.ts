@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
 import Room, { IImage, IReview, IRoom } from '../models/room';
+import User, { IUser } from '../models/user';
 import APIFilters from '../utils/apiFilters';
 import ErrorHandler from '../utils/errorHandler';
 import { revalidatePath, revalidateTag } from 'next/cache';
@@ -186,6 +187,7 @@ export const deleteImage = catchAsyncErrors(
 // Create/Update room review => POST /api/rooms/reviews
 export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
   const { rating, comment, roomId } = await req.json();
+  
   const review = {
     user: req.user._id,
     rating: Number(rating),
@@ -193,6 +195,7 @@ export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
   };
   try {
     const room = await Room.findById(roomId) as IRoom;
+    room.user = req.user._id;
     const isReviewed = room.reviews.find((r: IReview) => r.user._id.toString() === req.user._id.toString());
     if(isReviewed) {
       room.reviews.forEach((review: IReview) => {
@@ -216,6 +219,34 @@ export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
       success: true
     });
   } catch (error: any) {
+    console.log(error);
+    
+    throw new ErrorHandler(error.message, 400);
+  }
+})
+
+// Delete room review - Admin View => PUT /api/admin/rooms/:id/reviews
+export const deleteRoomReview = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+  const { reviewId } = await req.json();
+  
+  try {
+    const room = await Room.findById(params.id) as IRoom;
+
+    const reviews = room.reviews.filter(review => review._id.toString() !== reviewId)
+    const numOfReviews = reviews.length;
+    const ratings =  numOfReviews === 0 ? 0 : reviews.reduce((acc, item) => item.rating + acc, 0) / room.reviews.length;
+
+    await Room.findByIdAndUpdate(params.id, { reviews, numOfReviews, ratings });
+    
+    revalidatePath("/admin/rooms/[id]/reviews", "page");
+
+    return NextResponse.json({
+      success: true
+    });
+  } catch (error: any) {
+    console.log(error);
+    
     throw new ErrorHandler(error.message, 400);
   }
 })
@@ -225,7 +256,7 @@ export const canReview = catchAsyncErrors(async (req: NextRequest) => {
   const {searchParams} = new URL(req.url);
   const roomId = searchParams.get('roomId');
   try {
-   const bookings = await Booking.find({user: req.user._id, room: roomId});
+    const bookings = await Booking.find({user: req.user._id, room: roomId});
     const isAllowed = bookings.length > 0 ? true : false;
     
     return NextResponse.json({

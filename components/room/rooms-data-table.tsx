@@ -60,14 +60,6 @@ export default function RoomsDataTable<TData>({
 
   return (
     <Card>
-      <CardHeader>
-        <Input
-          placeholder="Filter IDs..."
-          value={(table.getColumn('id')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('id')?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
-      </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>

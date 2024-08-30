@@ -59,8 +59,8 @@ export function ReviewForm({ roomId }: { roomId: Pick<IRoom, '_id'> }) {
   useEffect(() => {
     if (isSuccess) {
       form.reset();
-      router.refresh();
       toast.success('Review submitted successfully');
+      router.refresh();
     }
     if (isError) {
       toast.error('Failed to submit review');
