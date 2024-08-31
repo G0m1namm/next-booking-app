@@ -3,7 +3,7 @@ import User, { IUser } from '@/backend/models/user';
 import bcrypt from 'bcryptjs';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 type Credentials = {
   email: string;

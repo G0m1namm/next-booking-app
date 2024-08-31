@@ -1,3 +1,5 @@
+'use client';
+
 import AdminNewRoomForm from '@/components/room/admin-new-room-form';
 import { Button } from '@/components/ui/button';
 import AdminPageLayout from '@/layouts/admin-page-layout';

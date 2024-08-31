@@ -6,11 +6,13 @@ import { columns } from './columns';
 import ErrorPage from './error';
 import { IRoom } from '@/backend/models/room';
 import AdminPageLayout from '@/layouts/admin-page-layout';
-import AdminRoomsList from '@/components/room/admin-rooms-list';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import AdminRoomsList from '@/components/room/admin-rooms-list';
 import Link from 'next/link';
 import { PlusCircleIcon } from 'lucide-react';
+
+
 
 export const metadata = {
   title: 'All Rooms | Administrator',

@@ -59,12 +59,6 @@ function PageHeader({ totalBookings }: Readonly<{ totalBookings: number }>) {
         <span>All Bookings</span>
         <Badge className="inline-block text-lg">{totalBookings}</Badge>
       </h1>
-      <Button asChild>
-        <Link href="/admin/bookings/new">
-          <PlusCircleIcon size={20} className="mr-2" />
-          Add Booking
-        </Link>
-      </Button>
     </div>
   );
 }

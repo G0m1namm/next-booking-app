@@ -11,7 +11,6 @@ import {
   ShoppingCart,
   Users,
   DoorOpen,
-  GanttChartIcon,
 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
@@ -24,11 +23,19 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import React from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import UserNav from '@/components/user-nav';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useAppDistpatch } from '@/redux/hooks';
+import {
+  IUserClient,
+  setIsAuthenticated,
+  setUser,
+} from '@/redux/features/user/user-slice';
+import Loading from '@/app/(administrator)/admin/loading';
 
 const menuItems = [
   { icon: LineChart, text: 'Dashboard', href: '/admin/dashboard' },
@@ -39,6 +46,16 @@ const menuItems = [
 
 export default function Layout({ children }: Readonly<React.PropsWithChildren<{}>>) {
   const pathname = usePathname();
+  const { data } = useSession();
+  const dispatch = useAppDistpatch();
+
+  useEffect(() => {
+    if (data?.user) {
+      dispatch(setUser(data.user as IUserClient));
+      dispatch(setIsAuthenticated(true));
+    }
+  }, [data]);
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-background md:block">
@@ -143,7 +160,7 @@ export default function Layout({ children }: Readonly<React.PropsWithChildren<{}
           <UserNav />
         </header>
         <ScrollArea className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          {children}
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </ScrollArea>
       </div>
     </div>

@@ -60,12 +60,6 @@ function PageHeader({ totalUsers }: Readonly<{ totalUsers: number }>) {
         <span>All Users</span>
         <Badge className="inline-block text-lg">{totalUsers}</Badge>
       </h1>
-      <Button asChild>
-        <Link href="/admin/bookings/new">
-          <PlusCircleIcon size={20} className="mr-2" />
-          Add User
-        </Link>
-      </Button>
     </div>
   );
 }

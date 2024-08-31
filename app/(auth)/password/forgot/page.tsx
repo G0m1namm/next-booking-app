@@ -10,7 +10,7 @@ export default function Page() {
       </div>
       <div className="hidden bg-muted lg:block">
         <Image
-          src="/placeholder.svg"
+          src="https://res.cloudinary.com/ds7aawikt/image/upload/v1725048780/premium_photo-1689609950112-d66095626efb_fnsuwv.avif"
           alt="Image"
           width="1920"
           height="1080"

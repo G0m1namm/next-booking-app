@@ -23,7 +23,7 @@ export default function Header() {
       dispatch(setUser(data.user as IUserClient));
       dispatch(setIsAuthenticated(true));
     }
-  }, []);
+  }, [data]);
 
   return (
     <header className="w-full sticky top-0 left-0 z-10 border-b border-slate-200 bg-white">
@@ -33,7 +33,7 @@ export default function Header() {
         </h2>
         <div className="flex items-center space-x-4">
           <UserNav />
-          {isAuthenticated && <Link href="/login">LogIn</Link>}
+          {!isAuthenticated && <Link href="/login">LogIn</Link>}
         </div>
       </div>
     </header>

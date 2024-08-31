@@ -44,7 +44,7 @@ export default function UserNav() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-background text-black">
+      <DropdownMenuContent className="w-56 bg-background text-black" align="end">
         <DropdownMenuGroup>
           <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
         </DropdownMenuGroup>

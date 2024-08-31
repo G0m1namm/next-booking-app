@@ -28,17 +28,17 @@
 
     --page-shell-max-content-width: 2520px;
 
-    --font-size-sm: 0.5rem;
-    --font-size-tiny: 0.71rem;
+    --font-size-sm: 0.64rem;
+    --font-size-tiny: 0.8rem;
     --font-size-base: 1rem;
-    --font-size-lg: 1.41rem;
-    --font-size-xl: 2rem;
-    --font-size-2xl: 2.83rem;
-    --font-size-3xl: 4rem;
-    --font-size-4xl: 5.65rem;
-    --font-size-5xl: 7.99rem;
-    --font-size-6xl: 11.3rem;
-    --font-size-7xl: 15.98rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.563rem;
+    --font-size-2xl: 1.953rem;
+    --font-size-3xl: 2.441rem;
+    --font-size-4xl: 3.052rem;
+    --font-size-5xl: 3.815rem;
+    --font-size-6xl: 4.769rem;
+    --font-size-7xl: 5.960rem;
   }
 
   .dark {
