@@ -1,6 +1,8 @@
 import Image from 'next/image';
 
 import { ResetPasswordForm } from '@/components/auth/reset-password-form';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import Link from 'next/link';
 
 type Props = {
   params: {
@@ -10,17 +12,22 @@ type Props = {
 
 export default function Page({ params: { token } }: Props) {
   return (
-    <div className="w-full h-dvh lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex items-center justify-center py-12">
-        <ResetPasswordForm token={token} />
-      </div>
-      <div className="hidden bg-muted lg:block">
+    <div className="w-full h-dvh lg:grid lg:grid-cols-2">
+      <span className="fixed top-4 left-4 z-10 cursor-pointer text-lg text-violet-500">
+        <Link href="/">NextBooking</Link>
+      </span>
+      <ScrollArea>
+        <main className="h-full w-full min-h-dvh py-12 flex items-center">
+          <ResetPasswordForm token={token} />
+        </main>
+      </ScrollArea>
+      <div className="hidden bg-muted lg:block h-full relative w-full">
         <Image
-          src="https://res.cloudinary.com/ds7aawikt/image/upload/v1725048780/premium_photo-1689609950112-d66095626efb_fnsuwv.avif"
+          src="https://res.cloudinary.com/ds7aawikt/image/upload/v1725079762/4_sn5hge.webp"
           alt="Image"
           width="1920"
           height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="absolute left-0 top-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </div>
     </div>

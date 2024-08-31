@@ -72,42 +72,43 @@ export function ResetPasswordForm({ token }: { token: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(submitHandler)}>
-      <div className="mx-auto grid w-[350px] gap-6">
-        <div className="grid gap-2 text-center">
-          <h1 className="text-3xl font-bold">Reset Password</h1>
-          <p className="text-balance text-muted-foreground">
-            Enter your email below to create your account
-          </p>
-        </div>
-        <div className="grid gap-4">
-          <FormControl<IFormSchema>
-            register={register}
-            name="oldPassword"
-            label="Old Password"
-            errors={errors}
-          />
-          <FormControl<IFormSchema>
-            register={register}
-            name="newPassword"
-            label="New Password"
-          />
-          <PasswordErrorList
-            errors={errors}
-            errorMessages={errorMessages}
-            fieldName="newPassword"
-          />
-        </div>
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={(isDirty && !isValid) || isLoading}
-          loading={isLoading}
-        >
-          {isLoading && <Loader2Icon className="h-5 w-5 animate-spin" />}
-          Reset Password
-        </Button>
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="mx-auto grid w-full max-w-[350px] gap-6"
+    >
+      <div className="grid gap-2 text-center">
+        <h1 className="text-3xl font-bold">Reset Password</h1>
+        <p className="text-balance text-muted-foreground">
+          Enter your email below to create your account
+        </p>
       </div>
+      <div className="grid gap-4">
+        <FormControl<IFormSchema>
+          register={register}
+          name="oldPassword"
+          label="Old Password"
+          errors={errors}
+        />
+        <FormControl<IFormSchema>
+          register={register}
+          name="newPassword"
+          label="New Password"
+        />
+        <PasswordErrorList
+          errors={errors}
+          errorMessages={errorMessages}
+          fieldName="newPassword"
+        />
+      </div>
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={(isDirty && !isValid) || isLoading}
+        loading={isLoading}
+      >
+        {isLoading && <Loader2Icon className="h-5 w-5 animate-spin" />}
+        Reset Password
+      </Button>
     </form>
   );
 }

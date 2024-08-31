@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 
 import NoAuthLayout from './no-auth-layout';
 import UserLayout from './user-layout';
+import { usePathname } from 'next/navigation';
 
 const layouts = {
   authenticated: UserLayout,
@@ -17,10 +18,11 @@ export default function LayoutWrapper({
   children,
 }: Readonly<React.PropsWithChildren<unknown>>) {
   const { status } = useSession();
-  const Layout = layouts[status];
+  const pathname = usePathname();
+  const Layout = pathname === '/' ? layouts['authenticated'] : layouts[status];
   return (
     <Layout>
-      <main className="container">{children}</main>
+      <main className="page-shell-container">{children}</main>
     </Layout>
   );
 }

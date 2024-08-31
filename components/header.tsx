@@ -27,12 +27,12 @@ export default function Header() {
 
   return (
     <header className="w-full sticky top-0 left-0 z-10 border-b border-slate-200 bg-white">
-      <div className="page-shell-container mx-auto px-24 h-20 flex items-center justify-between">
+      <div className="page-shell-container container h-20 flex items-center justify-between">
         <h2 className="text-lg text-violet-500">
-          <Link href="/">NextBnB</Link>
+          <Link href="/">NextBooking</Link>
         </h2>
         <div className="flex items-center space-x-4">
-          <UserNav />
+          {isAuthenticated && <UserNav />}
           {!isAuthenticated && <Link href="/login">LogIn</Link>}
         </div>
       </div>

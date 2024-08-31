@@ -33,56 +33,46 @@ export default function RegisterForm() {
   }, [isSuccess, error, router]);
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <div className="mx-auto grid w-[350px] gap-6">
-        <div className="grid gap-2 text-center">
-          <h1 className="text-3xl font-bold">Create your account</h1>
-          <p className="text-balance text-muted-foreground">
-            Enter your email below to create your account
-          </p>
+    <form onSubmit={onSubmitHandler} className="mx-auto grid w-full max-w-[350px] gap-6">
+      <div className="grid gap-2 text-center">
+        <h1 className="text-3xl font-bold">Sign Up</h1>
+      </div>
+      <div className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="name">Name</Label>
+          <Input
+            id="name"
+            name="name"
+            type="name"
+            placeholder="John Smith"
+            autoFocus
+            required
+          />
         </div>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              name="name"
-              type="name"
-              placeholder="John Smith"
-              autoFocus
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" name="password" required />
-          </div>
-          <Button
-            type="submit"
-            className="w-full"
-            loading={isLoading}
-            disabled={isLoading}
-          >
-            {isLoading && <Loader2Icon className="h-5 w-5 animate-spin" />}
-            SignUp
-          </Button>
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="m@example.com"
+            required
+          />
         </div>
-        <div className="mt-4 text-center text-sm">
-          Already have an account?{' '}
-          <Link href="/login" className="underline">
-            LogIn
-          </Link>
+        <div className="grid gap-2">
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" type="password" name="password" required />
         </div>
+        <Button type="submit" className="w-full" loading={isLoading} disabled={isLoading}>
+          {isLoading && <Loader2Icon className="h-5 w-5 animate-spin" />}
+          SignUp
+        </Button>
+      </div>
+      <div className="mt-4 text-center">
+        Already have an account?{' '}
+        <Link href="/login" className="underline">
+          LogIn
+        </Link>
       </div>
     </form>
   );
