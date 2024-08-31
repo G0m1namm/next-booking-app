@@ -1,16 +1,8 @@
-import { getAuthHeader } from '@/backend/utils/getAuthHeader';
-
-import { getApiUrl } from '@/lib/getBaseUrl';
-
 import { columns } from './columns';
 import ErrorPage from './error';
 import { IRoom } from '@/backend/models/room';
 import AdminPageLayout from '@/layouts/admin-page-layout';
-import AdminRoomsList from '@/components/room/admin-rooms-list';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { PlusCircleIcon } from 'lucide-react';
 import { getSingleRoom } from '@/lib/room/actions';
 import AdminReviewsList from '@/components/room/admin-reviews-list';
 
@@ -42,7 +34,7 @@ export default async function Page({ params: { id } }: Readonly<Props>) {
 
   return (
     <AdminPageLayout title={<RoomPageHeader totalReviews={reviews.length} />}>
-      <AdminReviewsList data={reviews} columns={columns} />
+      <AdminReviewsList roomName={room.name} data={reviews} columns={columns} />
     </AdminPageLayout>
   );
 }

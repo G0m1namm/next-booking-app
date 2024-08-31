@@ -7,7 +7,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
-import { useCreateRoomMutation, useUpdateRoomMutation } from '@/redux/api/room';
 import {
   Form,
   FormField,
@@ -27,6 +26,8 @@ import {
 } from '../ui/select';
 import { IUser } from '@/backend/models/user';
 import { useUpdateUserMutation } from '@/redux/api/auth';
+import { useAppDistpatch } from '@/redux/hooks';
+import { setBreadcrumbs } from '@/redux/features/breadcrumbs/breadcrumbs-slice';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'User name can not be less than 2 characters' }),
@@ -49,6 +50,7 @@ export default function AdminUpdateUserForm({ user }: Readonly<Props>) {
       role: (user?.role as 'user' | 'admin') ?? 'user',
     },
   });
+  const dispatch = useAppDistpatch();
   const [updateUser, { isSuccess, isError }] = useUpdateUserMutation();
 
   const submitHandler = async (formData: IFormSchema) => {
@@ -56,6 +58,15 @@ export default function AdminUpdateUserForm({ user }: Readonly<Props>) {
     if (user?._id) body.id = user._id.toString();
     updateUser(body);
   };
+
+  useEffect(() => {
+    dispatch(
+      setBreadcrumbs([
+        { href: '/admin/rooms', label: 'All Users' },
+        { href: '', label: `Edit ${user?.name}` },
+      ])
+    );
+  }, []);
 
   useEffect(() => {
     if (isSuccess) {

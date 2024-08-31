@@ -10,9 +10,12 @@ import { DateRange } from 'react-day-picker';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatPrice } from '@/lib/utils';
+import { useAppDistpatch } from '@/redux/hooks';
+import { resetBreadcrumbs } from '@/redux/features/breadcrumbs/breadcrumbs-slice';
 
 export default function Page() {
   const [getSalesStats, { isLoading, isError, data }] = useLazyGetSalesStatsQuery();
+  const dispatch = useAppDistpatch();
 
   const salesData = useMemo(() => {
     if (!data?.lastSixMonthsSales) return [];
@@ -51,6 +54,10 @@ export default function Page() {
       endDate: values.range.to.toISOString(),
     });
   };
+
+  useEffect(() => {
+    dispatch(resetBreadcrumbs());
+  }, []);
 
   useEffect(() => {
     if (isError) {

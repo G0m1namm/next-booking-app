@@ -4,9 +4,23 @@ import AdminNewRoomForm from '@/components/room/admin-new-room-form';
 import { Button } from '@/components/ui/button';
 import AdminPageLayout from '@/layouts/admin-page-layout';
 import { useCreateRoomMutation } from '@/redux/api/room';
+import { setBreadcrumbs } from '@/redux/features/breadcrumbs/breadcrumbs-slice';
+import { useAppDistpatch } from '@/redux/hooks';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function Page() {
+  const dispatch = useAppDistpatch();
+
+  useEffect(() => {
+    dispatch(
+      setBreadcrumbs([
+        { href: '/admin/rooms', label: 'All Rooms' },
+        { href: '', label: 'Create Room' },
+      ])
+    );
+  }, []);
+
   return (
     <AdminPageLayout title={<NewRoonPageHeader />}>
       <AdminNewRoomForm useOnSubmitMutation={useCreateRoomMutation} />

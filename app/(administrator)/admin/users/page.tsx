@@ -6,9 +6,6 @@ import { columns } from './columns';
 import ErrorPage from './error';
 import AdminPageLayout from '@/layouts/admin-page-layout';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { PlusCircleIcon } from 'lucide-react';
 import { IUser } from '@/backend/models/user';
 import AdminUsersList from '@/components/room/admin-users-list';
 

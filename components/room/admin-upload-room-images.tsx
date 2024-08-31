@@ -19,8 +19,10 @@ import {
 } from '@/redux/api/room';
 import Image from 'next/image';
 import { UPLOAD_ROOMS_PRESET_ID } from '@/lib/constants';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useAppDistpatch } from '@/redux/hooks';
+import { setBreadcrumbs } from '@/redux/features/breadcrumbs/breadcrumbs-slice';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -35,11 +37,23 @@ export default function AdminUploadRoomImages({ room }: Readonly<Props>) {
   const [uploadImages, { isLoading, isError, isSuccess }] = useUploadRoomImagesMutation();
   const [deleteImage, { isLoading: isDeletingImage }] = useDeleteRoomImageMutation();
   const router = useRouter();
+  const dispatch = useAppDistpatch();
+  const params = useParams();
 
   const getImageId = (imageId: string) => {
     deleteImage({ id: room._id, imageId });
     setTemporalImagePreviews((prev) => prev.filter((item) => item.public_id !== imageId));
   };
+
+  useEffect(() => {
+    dispatch(
+      setBreadcrumbs([
+        { href: '/admin/rooms', label: 'Rooms' },
+        { href: `/admin/rooms/${params?.id}`, label: `Room ${room?.name}` },
+        { href: '', label: `Upload images` },
+      ])
+    );
+  }, []);
 
   useEffect(() => {
     if (isSuccess) {
@@ -101,7 +115,7 @@ export default function AdminUploadRoomImages({ room }: Readonly<Props>) {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Uploaded Images</CardTitle>
+          <CardTitle>Existing Images</CardTitle>
           <CardDescription>View and manage your uploaded images.</CardDescription>
         </CardHeader>
         <CardContent>

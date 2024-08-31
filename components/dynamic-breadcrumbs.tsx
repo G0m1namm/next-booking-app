@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 
 import { useAppSelector } from '@/redux/hooks';
@@ -37,6 +39,15 @@ export default function DynamicBreadcrumbs() {
   const ITEMS_TO_DISPLAY = useMemo(() => (isDesktop ? 5 : 3), [isDesktop]);
   const { items } = useAppSelector((state) => state.breadcrumbs);
 
+  if (!items.length) return null;
+
+  // Last items shown when the ones in between are hidden
+  const slicedItems = items.slice(
+    isDesktop ? -ITEMS_TO_DISPLAY + 2 : -ITEMS_TO_DISPLAY + 1
+  );
+
+  const lastItems = items.length > ITEMS_TO_DISPLAY ? slicedItems : items.slice(1);
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -56,7 +67,7 @@ export default function DynamicBreadcrumbs() {
                     <BreadcrumbEllipsis className="h-4 w-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
-                    {items.slice(1, -2).map((item, index) => (
+                    {items.slice(1, -4).map((item, index) => (
                       <DropdownMenuItem key={index}>
                         <Link href={item.href ? item.href : '#'}>{item.label}</Link>
                       </DropdownMenuItem>
@@ -96,7 +107,7 @@ export default function DynamicBreadcrumbs() {
             <BreadcrumbSeparator />
           </>
         ) : null}
-        {items.slice(-ITEMS_TO_DISPLAY + 1).map((item, index) => (
+        {lastItems.map((item, index) => (
           <BreadcrumbItem key={index}>
             {item.href ? (
               <>
