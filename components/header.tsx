@@ -26,11 +26,11 @@ export default function Header() {
   }, [data]);
 
   return (
-    <header className="w-full sticky top-0 left-0 z-10 border-b border-slate-200 bg-white">
-      <div className="page-shell-container container h-20 flex items-center justify-between">
-        <h2 className="text-lg text-violet-500">
-          <Link href="/">NextBooking</Link>
-        </h2>
+    <header className="w-full sticky top-0 left-0 z-10 backdrop-blur-md">
+      <div className="page-shell-container px-4 h-20 flex items-center justify-between">
+        <span className="text-lg 2xl:text-xl font-playfair">
+          <Link href="/">Home&Fun</Link>
+        </span>
         <div className="flex items-center space-x-4">
           {isAuthenticated && <UserNav />}
           {!isAuthenticated && <Link href="/login">LogIn</Link>}

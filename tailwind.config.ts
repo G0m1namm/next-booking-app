@@ -94,6 +94,9 @@ const config = {
         sans: ['var(--font-sans)', ...fontFamily.sans],
         playfair: ['var(--font-playfair)', ...fontFamily.serif],
       },
+      transitionTimingFunction: {
+        smooth: 'var(--smooth-easing)'
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],
