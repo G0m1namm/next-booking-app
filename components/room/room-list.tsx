@@ -23,19 +23,19 @@ export default function RoomList({ roomsList }: Readonly<{ roomsList: Props }>) 
   const [parent] = useAutoAnimate(/* optional config */);
   return (
     <section id="rooms_list">
-      <div className="w-full h-[50vh] max-h-[550px]">
-        <div className="w-full h-full flex items-end">
-          <article className="py-8 px-4 text-violet-700">
+      <div className="w-full h-[40vh] max-h-[450px]">
+        <div className="w-full h-full flex items-center justify-center">
+          <article className="py-8 px-4 text-violet-700 text-center">
             <h1 className="text-4xl 2xl:text-5xl font-playfair">Rooms</h1>
             <p className="">Explore a new way of living</p>
           </article>
         </div>
       </div>
-      <div className="flex justify-center items-center relative w-full dark-border-t bg-white">
+      <div className="flex justify-center items-center sticky top-[78px] z-10 w-full dark-border-t bg-white">
         <Search />
       </div>
       <div className="relative dark-border-t">
-        <div ref={parent} className="grid lg:grid-cols-2 2xl:grid-cols-3 gap-1">
+        <div ref={parent} className="grid lg:grid-cols-2 2xl:grid-cols-3 gap-1 pt-1">
           {Boolean(rooms?.length) &&
             rooms?.map((room: IRoom, roomIdx: number) => (
               <div

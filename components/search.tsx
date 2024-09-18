@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
+import RoomFilters from './room/room-filters';
 
 export default function Search() {
   const router = useRouter();
@@ -27,8 +28,11 @@ export default function Search() {
   const debounedSearch = useDebouncedCallback(handleSearchChange, 500);
 
   return (
-    <div className="flex gap-4 rounded-md">
-      <div className="flex gap-2 items-center p-1 rounded-sm">
+    <div className="flex w-full items-center gap-4 rounded-md px-4">
+      <div className="flex-none">
+        <RoomFilters />
+      </div>
+      <div className="flex flex-1 gap-2 items-center p-1 rounded-sm">
         <SearchIcon size={24} className="text-black inline-flex shrink-0 flex-none" />
         <div>
           <Label htmlFor="rooms_search" className="sr-only">
@@ -43,10 +47,6 @@ export default function Search() {
           />
         </div>
       </div>
-      <Button variant="ghost">
-        <ListFilter size={24} className="mr-2" />
-        Filters
-      </Button>
     </div>
   );
 }
