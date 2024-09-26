@@ -16,9 +16,7 @@ export function ForgotPasswordForm() {
   const [forgotPassword, { isLoading, isSuccess }] = useForgotPasswordMutation();
 
   const login = (prevState: unknown, formData: FormData) => {
-    forgotPassword({
-      ...Object.fromEntries(formData),
-    });
+    forgotPassword(Object.fromEntries(formData));
   };
 
   const [_, action] = useFormState(login, undefined);

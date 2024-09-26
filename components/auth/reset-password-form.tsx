@@ -22,7 +22,7 @@ const formSchema = z.object({
     .min(6, { message: 'minimum_characters' })
     .regex(/[a-z]/, { message: 'lowercase_character' })
     .regex(/[A-Z]/, { message: 'uppercase_character' })
-    .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, { message: 'special_character' })
+    .regex(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/, { message: 'special_character' })
     .regex(/[0-9]/, { message: 'one_number' }),
 });
 
