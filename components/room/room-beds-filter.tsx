@@ -16,12 +16,12 @@ export default function RoomBedsFilter({}: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-3 px-8 py-4">
+    <div className="flex flex-col gap-3 px-8 py-4 -mt-6 sm:mt-0">
       <div className="flex items-center justify-center space-x-2 p-2">
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8 shrink-0 rounded-full"
+          className="h-10 w-10 sm:h-8 sm:w-8 shrink-0 rounded-full"
           onClick={() => decreaseCount(setBedsCount)}
           disabled={bedsCount < 1}
         >
@@ -35,7 +35,7 @@ export default function RoomBedsFilter({}: Props) {
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8 shrink-0 rounded-full"
+          className="h-10 w-10 sm:h-8 sm:w-8 shrink-0 rounded-full"
           onClick={() => increaseCount(setBedsCount)}
           disabled={bedsCount > 9}
         >

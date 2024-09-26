@@ -4,7 +4,6 @@ import { useDebouncedCallback } from '@mantine/hooks';
 import { ListFilter, SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import RoomFilters from './room/room-filters';
@@ -16,10 +15,14 @@ export default function Search() {
     if (window === undefined) return;
     const searchParams = new URLSearchParams(window.location.search);
     const path = window.location.pathname;
-    if (searchParams.has('location')) {
-      searchParams.set('location', e.target.value);
+    if (searchParams.has('name')) {
+      searchParams.set('name', e.target.value);
     } else {
-      searchParams.append('location', e.target.value);
+      searchParams.append('name', e.target.value);
+    }
+
+    if (!e.target.value) {
+      searchParams.delete('name');
     }
     const href = `${path}?${searchParams.toString()}`;
     router.push(href);
@@ -32,9 +35,9 @@ export default function Search() {
       <div className="flex-none">
         <RoomFilters />
       </div>
-      <div className="flex flex-1 gap-2 items-center p-1 rounded-sm">
+      <div className="flex flex-1 gap-2 items-center rounded-sm">
         <SearchIcon size={24} className="text-black inline-flex shrink-0 flex-none" />
-        <div>
+        <div className="flex-1">
           <Label htmlFor="rooms_search" className="sr-only">
             Search
           </Label>
@@ -42,7 +45,7 @@ export default function Search() {
             id="rooms_search"
             placeholder="Search accommodations"
             type="search"
-            className="outline-none border-none shadow-none focus:shadow-none focus:border-none focus-visible:ring-ring focus:w-[250px] transition-[width] duration-300 ease"
+            className="w-full outline-none border-none shadow-none focus:!shadow-none focus:!border-none focus-visible:!shadow-none focus-visible:!outline-none focus-visible:ring-0"
             onChange={debounedSearch}
           />
         </div>

@@ -35,7 +35,7 @@ export default function RoomList({ roomsList }: Readonly<{ roomsList: Props }>) 
         <Search />
       </div>
       <div className="relative dark-border-t">
-        <div ref={parent} className="grid lg:grid-cols-2 2xl:grid-cols-3 gap-1 pt-1">
+        <div ref={parent} className="grid lg:grid-cols-2 2xl:grid-cols-3 gap-1 p-1">
           {Boolean(rooms?.length) &&
             rooms?.map((room: IRoom, roomIdx: number) => (
               <div

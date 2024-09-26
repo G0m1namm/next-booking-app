@@ -38,9 +38,9 @@ export const getAllRooms = catchAsyncErrors<GetRoomResponseType>(
 
     searchParams.forEach((value, key) => (queryParams[key] = value));
 
-    if (queryParams?.location) {
-      queryParams.address = {
-        $regex: queryParams.location,
+    if (queryParams?.name) {
+      queryParams.name = {
+        $regex: queryParams.name,
         $options: 'i', // Case-sensitive
       };
     }

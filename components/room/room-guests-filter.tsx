@@ -23,7 +23,7 @@ export default function RoomGuestsFilter({}: Props) {
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full"
+            className="h-10 w-10 sm:h-8 sm:w-8 shrink-0 rounded-full"
             onClick={() => decreaseCount(setAdultsCount)}
             disabled={adultsCount < 1}
           >
@@ -37,7 +37,7 @@ export default function RoomGuestsFilter({}: Props) {
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full"
+            className="h-10 w-10 sm:h-8 sm:w-8 shrink-0 rounded-full"
             onClick={() => increaseCount(setAdultsCount)}
             disabled={adultsCount > 9}
           >
@@ -51,7 +51,7 @@ export default function RoomGuestsFilter({}: Props) {
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full"
+            className="h-10 w-10 sm:h-8 sm:w-8 shrink-0 rounded-full"
             onClick={() => decreaseCount(setKidsCount)}
             disabled={kidsCount < 1}
           >
@@ -65,7 +65,7 @@ export default function RoomGuestsFilter({}: Props) {
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full"
+            className="h-10 w-10 sm:h-8 sm:w-8 shrink-0 rounded-full"
             onClick={() => increaseCount(setKidsCount)}
             disabled={kidsCount > 9}
           >
