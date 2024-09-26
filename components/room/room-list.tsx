@@ -21,6 +21,7 @@ type Props = {
 export default function RoomList({ roomsList }: Readonly<{ roomsList: Props }>) {
   const { rooms, totalPages, totalFiltered, limit } = roomsList;
   const [parent] = useAutoAnimate(/* optional config */);
+
   return (
     <section id="rooms_list">
       <div className="w-full h-[40vh] max-h-[450px]">

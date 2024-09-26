@@ -1,7 +1,7 @@
 'use client';
 
 import { useDebouncedCallback } from '@mantine/hooks';
-import { ListFilter, SearchIcon } from 'lucide-react';
+import { SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { Input } from './ui/input';

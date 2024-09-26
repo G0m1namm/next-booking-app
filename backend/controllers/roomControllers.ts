@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { catchAsyncErrors } from '../middlewares/catchAsyncErrors';
 import Room, { IImage, IReview, IRoom } from '../models/room';
-import User, { IUser } from '../models/user';
 import APIFilters from '../utils/apiFilters';
 import ErrorHandler from '../utils/errorHandler';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import Booking from '../models/booking';
 import { deleteFIle } from '@/lib/cloudinary';
 
-const FILTERS_NOT_ALLOWED = ['location', 'page'];
+const FILTERS_NOT_ALLOWED = ['location', 'page', 'numOfKids', 'numOfAdults'];
 const RESULTS_PER_PAGE = 8;
 
 export interface IRoomResponse {
@@ -33,6 +32,9 @@ export const getAllRooms = catchAsyncErrors<GetRoomResponseType>(
   async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
     const page = Number(searchParams.get('page')) || 1;
+    const numOfAdults = !isNaN(Number(searchParams.get('numOfAdults'))) ? Number(searchParams.get('numOfAdults')) : 0;
+    const numOfKids = !isNaN(Number(searchParams.get('numOfKids'))) ? Number(searchParams.get('numOfKids')) : 0;
+    const numOfBeds = !isNaN(Number(searchParams.get('numOfBeds'))) ? Number(searchParams.get('numOfBeds')) : 0;
     const queryParams: Record<string, string | number | object> = {};
     const totalResults = await Room.countDocuments();
 
@@ -43,6 +45,18 @@ export const getAllRooms = catchAsyncErrors<GetRoomResponseType>(
         $regex: queryParams.name,
         $options: 'i', // Case-sensitive
       };
+    }
+
+    if(numOfAdults || numOfKids) {
+      queryParams.guestCapacity = {
+        $gte: numOfAdults + numOfKids
+      }
+    }
+
+    if(numOfBeds) {
+      queryParams.numOfBeds = {
+        $gte: numOfBeds
+      }
     }
 
     FILTERS_NOT_ALLOWED.forEach((filter) => delete queryParams[filter]);

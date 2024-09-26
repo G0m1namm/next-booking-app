@@ -3,6 +3,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { CookieIcon } from '@radix-ui/react-icons';
 import { AirVentIcon, PawPrintIcon, WashingMachineIcon, WifiIcon } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
+import { parseAsBoolean, useQueryStates } from 'nuqs';
 
 type Props = {};
 
@@ -40,12 +41,36 @@ const amenities = [
 ];
 
 export default function RoomAmenitiesFilter({}: Props) {
+  const [amenitiesState, setAmenitiesState] = useQueryStates(
+    {
+      isBreakfast: parseAsBoolean.withOptions({ shallow: false }),
+      isInternet: parseAsBoolean.withOptions({ shallow: false }),
+      isAirConditioned: parseAsBoolean.withOptions({ shallow: false }),
+      isPetAllowed: parseAsBoolean.withOptions({ shallow: false }),
+      isRoomCleaning: parseAsBoolean.withOptions({ shallow: false }),
+    },
+    {
+      history: 'push',
+    }
+  );
+
+  const toggleGroupHandler = async (values: string[]) => {
+    await setAmenitiesState({
+      isBreakfast: values.includes('isBreakfast') || null,
+      isInternet: values.includes('isInternet') || null,
+      isAirConditioned: values.includes('isAirConditioned') || null,
+      isPetAllowed: values.includes('isPetAllowed') || null,
+      isRoomCleaning: values.includes('isRoomCleaning') || null,
+    });
+  };
+
   return (
     <div className="">
       <ToggleGroup
         type="multiple"
         size="lg"
         className="grid grid-cols-[150px,150px] sm:grid-cols-[300px,300px] w-fit p-1"
+        onValueChange={toggleGroupHandler}
       >
         {amenities.map((amenity) => (
           <ToggleGroupItem
@@ -53,7 +78,7 @@ export default function RoomAmenitiesFilter({}: Props) {
             className={twMerge(
               'flex items-center justify-start sm:justify-center text-left h-max space-x-3 !px-4 !py-4 sm:!px-8',
               'data-[state=on]:bg-black data-[state=on]:text-white hover:',
-              'w-[300px]'
+              'w-[300px] hover:bg-violet-100 hover:text-violet-600'
             )}
             value={amenity.value}
             aria-labelledby={amenity.id}
