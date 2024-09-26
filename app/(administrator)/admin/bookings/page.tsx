@@ -6,9 +6,9 @@ import { columns } from './columns';
 import ErrorPage from './error';
 import AdminPageLayout from '@/layouts/admin-page-layout';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { PlusCircleIcon } from 'lucide-react';
+
+
+
 import AdminBookingsList from '@/components/room/admin-bookings-list';
 import { IBooking } from '@/backend/models/booking';
 

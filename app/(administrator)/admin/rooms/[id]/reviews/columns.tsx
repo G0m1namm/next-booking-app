@@ -1,18 +1,13 @@
 'use client';
 
-import { CaretSortIcon, DotsHorizontalIcon, TrashIcon } from '@radix-ui/react-icons';
+import { CaretSortIcon, TrashIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
-import Link from 'next/link';
+
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  } from '@/components/ui/dropdown-menu';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +19,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useDeleteRoomMutation, useDeleteRoomReviewMutation } from '@/redux/api/room';
+import { useDeleteRoomReviewMutation } from '@/redux/api/room';
 import { useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';

@@ -24,7 +24,7 @@ import { Rating } from 'react-simple-star-rating';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { IRoom } from '@/backend/models/room';
 import { useRouter } from 'next/navigation';
-import { CookieIcon } from 'lucide-react';
+
 import { Skeleton } from '../ui/skeleton';
 
 const FormSchema = z.object({

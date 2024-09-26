@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import room, { IRoom } from '@/backend/models/room';
+import { IRoom } from '@/backend/models/room';
 import { useMediaQuery } from '@mantine/hooks';
 import { StarFilledIcon, CookieIcon } from '@radix-ui/react-icons';
 import {

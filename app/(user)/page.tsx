@@ -24,7 +24,7 @@ export default async function Page({ searchParams }: Props) {
     return <ErrorPage error={data} />;
   }
 
-  const { success, message, ...roomsData } = data;
+  const { ...roomsData } = data;
 
   return (
     <div className="flex-col items-center justify-between">
