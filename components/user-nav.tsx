@@ -46,16 +46,18 @@ export default function UserNav() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-background text-black" align="end">
         <DropdownMenuGroup>
-          <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
+          <DropdownMenuItem className="pointer-events-none">
+            {user?.name}
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {user?.role === 'admin' && (
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild className="cursor-pointer">
               <Link href="/admin/dashboard">Dashboard</Link>
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/bookings/me">My Bookings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
