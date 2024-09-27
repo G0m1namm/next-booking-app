@@ -255,7 +255,7 @@ export default function RoomDatePicker({
 
   if (inline) {
     return (
-      <Card className="px-2 h-fit">
+      <Card className="px-2 h-fit rounded-none">
         <CardHeader>
           <CardTitle>
             <span>{formatedTotalToPay}</span>

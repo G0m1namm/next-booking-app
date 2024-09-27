@@ -11,7 +11,7 @@ import '../globals.css';
 const lato = Lato({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['400', '700'],
+  weight: ['300', '400', '700'],
 });
 
 const playfair = Playfair_Display({

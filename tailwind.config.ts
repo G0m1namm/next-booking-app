@@ -35,6 +35,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        'slg': '992px',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

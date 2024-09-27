@@ -4,15 +4,15 @@ import React from 'react';
 
 import { IRoom } from '@/backend/models/room';
 import { useMediaQuery } from '@mantine/hooks';
-import { StarFilledIcon, CookieIcon } from '@radix-ui/react-icons';
+import { CookieIcon } from '@radix-ui/react-icons';
 import {
   AirVentIcon,
-  ArrowLeftIcon,
+  BedDoubleIcon,
   PawPrintIcon,
+  User2Icon,
   WashingMachineIcon,
   WifiIcon,
 } from 'lucide-react';
-import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 
@@ -20,8 +20,24 @@ import { Separator } from '../ui/separator';
 import { ReviewForm } from './review-form';
 import ReviewList from './review-list';
 import { RoomCarousel } from './room-carousel';
-import RoomDatePicker from './room-date-picker';
 import RoomMap from './room-map';
+import { StarRating } from '../ui/star-rating';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '../ui/skeleton';
+import { twMerge } from 'tailwind-merge';
+
+const RoomDatePicker = dynamic(() => import('./room-date-picker'), {
+  ssr: false,
+  loading: () => (
+    <Skeleton
+      className={twMerge(
+        'h-20 w-svw fixed bottom-0 left-0 z-10',
+        'slg:w-[290px] slg:h-[430px] slg:static slg:z-0',
+        'xl:w-[530px]'
+      )}
+    />
+  ),
+});
 
 type Props = {
   data: IRoom;
@@ -31,103 +47,76 @@ export default function RoomDetails({ data }: Props) {
   const isDesktop = useMediaQuery('(min-width: 992px)');
 
   return (
-    <div className="w-full flex flex-col min-h-svh pt-20">
-      <div className="mb-5">
-        <Link href="/" className="flex items-center">
-          <ArrowLeftIcon size={24} className="mr-2" /> Back
-        </Link>
-      </div>
-      <div className="flex flex-col mb-10">
-        <h1 className="text-2xl">{data.name}</h1>
-        <address>{data.address}</address>
+    <div className="w-full flex flex-col min-h-svh container px-4">
+      <div className="h-[50vh] max-h-[600px] flex flex-col justify-end">
+        <div className="flex flex-col mb-10">
+          <StarRating
+            initialValue={data?.ratings}
+            showTooltip={false}
+            readonly
+            className="scale-[0.4] sm:scale-50 -my-2 -mx-16 sm:-mx-12"
+          />
+          <h1 className="text-2xl sm:text-3xl 2xl:text-4xl font-playfair">{data.name}</h1>
+        </div>
       </div>
       <RoomCarousel images={data.images} name={data.name} />
-      <div className="flex flex-col md:flex-row w-full my-10 gap-10">
+      <address className="not-italic mt-3 text-tiny sm:text-base">{data.address}</address>
+      <div className="flex flex-col md:flex-row w-full my-14 gap-10">
         <div className="flex-1">
-          <div className="flex w-fit items-stretch border border-foreground rounded-md py-4 px-8 space-x-8 mb-6">
-            <div className="flex flex-col space-y-2">
-              <span className="flex justify-center items-center w-full text-center leading-tight text-lg font-semibold">
-                {data.ratings}
-              </span>
-              <div className="w-full text-center leading-tight flex space-x-1 justify-center">
-                <StarFilledIcon className="size-5" />
-                <StarFilledIcon className="size-5" />
-                <StarFilledIcon className="size-5" />
-                <StarFilledIcon className="size-5" />
-                <StarFilledIcon className="size-5" />
-              </div>
-            </div>
-            <Separator className="h-auto bg-slate-300" orientation="vertical" />
-            <div className="flex flex-1 flex-col justify-center space-y-2">
-              <span className="flex justify-center items-center w-full text-center leading-tight text-lg font-semibold">
-                {data.guestCapacity}
-              </span>
-              <span className="flex justify-center items-center w-full text-center leading-tight text-base">
-                Guests
-              </span>
-            </div>
-            <Separator className="h-auto bg-slate-300" orientation="vertical" />
-            <div className="flex flex-1 flex-col justify-center space-y-2">
-              <span className="flex justify-center items-center w-full text-center leading-tight text-lg font-semibold">
-                {data.numOfBeds}
-              </span>
-              <span className="flex justify-center items-center w-full text-center leading-tight text-base">
-                Beds
-              </span>
-            </div>
-            <Separator className="h-auto bg-slate-300" orientation="vertical" />
-            <div className="flex flex-1 flex-col justify-center space-y-2">
-              <span className="flex justify-center items-center w-full text-center leading-tight text-lg font-semibold">
-                {data.numOfReviews}
-              </span>
-              <a
-                className="flex justify-center items-center w-full text-center leading-tight text-base underline"
-                href="#reviews"
-              >
-                Reviews
-              </a>
-            </div>
-          </div>
           <div
-            className="text-200 mb-6"
+            className="sm:text-lg leading-tight mb-10"
             dangerouslySetInnerHTML={{ __html: data.description }}
           ></div>
-          <div className="flex flex-col space-y-3 mb-6">
-            <h2 className="text-lg font-medium">Ammenities</h2>
-            {data.isBreakfast && (
-              <li className="flex items-center space-x-2">
-                <CookieIcon className="size-6" />
-                <p className="flex text-200"> Breakfast</p>
-              </li>
-            )}
-            {data.isInternet && (
-              <li className="flex items-center space-x-2">
-                <WifiIcon className="size-6" />
-                <p className="flex text-200"> Internet</p>
-              </li>
-            )}
-            {data.isAirConditioned && (
-              <li className="flex items-center space-x-2">
-                <AirVentIcon className="size-6" />
-                <p className="flex text-200"> Air Conditioned</p>
-              </li>
-            )}
-            {data.isPetAllowed && (
-              <li className="flex items-center space-x-2">
-                <PawPrintIcon className="size-6" />
-                <p className="flex text-200"> Pets allowed</p>
-              </li>
-            )}
-            {data.isRoomCleaning && (
-              <li className="flex items-center space-x-2">
-                <WashingMachineIcon className="size-6" />
-                <p className="flex text-200"> Room Cleaning</p>
-              </li>
-            )}
+          <ul className="space-y-5">
+            <li className="flex items-center space-x-2 relative dark-border-b pb-1">
+              <User2Icon className="size-5" />
+              <p className="flex">{data.guestCapacity} Guests</p>
+            </li>
+            <li className="flex items-center space-x-2 relative dark-border-b pb-1">
+              <BedDoubleIcon className="size-5" />
+              <p className="flex">{data.numOfBeds} Beds</p>
+            </li>
+          </ul>
+          <div className="flex flex-col mb-6 mt-32 text-base leading-tight">
+            <h2 className="text-xl sm:text-2xl mb-6 font-medium font-playfair leading-none">
+              Ammenities
+            </h2>
+            <ul className="space-y-5">
+              {data.isBreakfast && (
+                <li className="flex items-center space-x-2 relative dark-border-b pb-1">
+                  <CookieIcon className="size-5" />
+                  <p className="flex"> Breakfast</p>
+                </li>
+              )}
+              {data.isInternet && (
+                <li className="flex items-center space-x-2 relative dark-border-b pb-1">
+                  <WifiIcon className="size-5" />
+                  <p className="flex"> Internet</p>
+                </li>
+              )}
+              {data.isAirConditioned && (
+                <li className="flex items-center space-x-2 relative dark-border-b pb-1">
+                  <AirVentIcon className="size-5" />
+                  <p className="flex"> Air Conditioned</p>
+                </li>
+              )}
+              {data.isPetAllowed && (
+                <li className="flex items-center space-x-2 relative dark-border-b pb-1">
+                  <PawPrintIcon className="size-5" />
+                  <p className="flex"> Pets allowed</p>
+                </li>
+              )}
+              {data.isRoomCleaning && (
+                <li className="flex items-center space-x-2 relative dark-border-b pb-1">
+                  <WashingMachineIcon className="size-5" />
+                  <p className="flex"> Room Cleaning</p>
+                </li>
+              )}
+            </ul>
           </div>
           <Separator className="my-10" />
           <div id="reviews">
-            <h2 className="text-lg font-medium mb-2">Reviews</h2>
+            <h2 className="text-xl font-playfair font-medium mb-2">Reviews</h2>
             {data._id && <ReviewForm roomId={data._id} />}
             <ReviewList reviews={data.reviews} />
           </div>
