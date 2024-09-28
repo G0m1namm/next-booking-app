@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator';
 
 export default function Page() {
   return (
-    <div className="pt-20">
+    <div className="pt-20 container">
       <h1 className="text-2xl font-semibold">Account Settings</h1>
       <Separator className="my-4" />
       <div className="grid gap-4">

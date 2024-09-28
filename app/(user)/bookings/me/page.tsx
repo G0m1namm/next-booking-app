@@ -37,7 +37,7 @@ export default async function Page() {
   });
 
   return (
-    <div className="pt-10">
+    <div className="pt-10 container">
       <h1 className="text-2xl font-semibold mb-6">My Bookings</h1>
       <BookingsList data={bookingsDataParsed} columns={columns} />
     </div>

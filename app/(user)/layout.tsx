@@ -21,7 +21,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'NextBooking',
+  title: 'Home&Fun',
   description: 'Book your next appointment online!',
   icons: '/favicon.ico',
 };

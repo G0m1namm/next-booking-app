@@ -33,7 +33,7 @@ export default async function Page({ params }: Readonly<Props>) {
   const booking = data.booking as IBooking;
 
   return (
-    <div className="pt-10">
+    <div className="pt-10 container">
       <BookingInvoice booking={booking} />
     </div>
   );

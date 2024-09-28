@@ -1,20 +1,27 @@
 import type { Metadata } from 'next';
 
 import GlobalProvider from '@/providers/global-provider';
-import { Open_Sans as FontSans } from 'next/font/google';
+import NoAuthLayout from '@/layouts/no-auth-layout';
+import { Lato, Playfair_Display } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
 
 import '../globals.css';
-import NoAuthLayout from '@/layouts/no-auth-layout';
 
-const openSans = FontSans({
+const lato = Lato({
   subsets: ['latin'],
   variable: '--font-sans',
+  weight: ['300', '400', '700'],
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  weight: ['400', '600'],
 });
 
 export const metadata: Metadata = {
-  title: 'NextBooking | Administrator',
+  title: 'Home&Fun | Administrator',
   description: 'Book your next appointment online!',
   icons: '/favicon.ico',
 };
@@ -27,7 +34,8 @@ export default function RootLayout({
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
-          openSans.variable
+          lato.variable,
+          playfair.variable
         )}
       >
         <GlobalProvider>

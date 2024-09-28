@@ -62,7 +62,9 @@ export default function BookingInvoice({ booking }: Readonly<Props>) {
       <Card ref={targetRef} className="rounded-lg">
         <CardHeader className="flex-row gap-4 justify-between items-end">
           <div>
-            <h1 className="text-2xl text-violet-600 font-semibold">NextBooking</h1>
+            <h1 className="text-2xl text-violet-600 font-semibold font-playfair">
+              Home&Fun
+            </h1>
             <h2 className="text-xl font-semibold inline-flex items-center">
               Invoice
               <Badge
@@ -95,10 +97,10 @@ export default function BookingInvoice({ booking }: Readonly<Props>) {
             <div className="grid gap-2">
               <span className="text-tiny">From:</span>
               <ul className="text-tiny">
-                <li className="font-medium text-base">NextBooking</li>
+                <li className="font-medium text-base">Home&Fun</li>
                 <li>455 Foggy, Heights</li>
                 <li>California, USA</li>
-                <li>info@nextbooking.com</li>
+                <li>info@homefun.com</li>
               </ul>
             </div>
           </div>

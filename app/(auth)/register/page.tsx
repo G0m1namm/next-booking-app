@@ -7,8 +7,8 @@ import Link from 'next/link';
 export default function Page() {
   return (
     <div className="w-full h-dvh lg:grid lg:grid-cols-2">
-      <span className="fixed top-4 left-4 z-10 cursor-pointer text-lg text-violet-500">
-        <Link href="/">NextBooking</Link>
+      <span className="fixed top-4 left-4 z-10 cursor-pointer text-lg font-playfair text-violet-500">
+        <Link href="/">Home&Fun</Link>
       </span>
       <ScrollArea>
         <main className="h-full w-full min-h-dvh py-12 flex items-center">

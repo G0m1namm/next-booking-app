@@ -2,22 +2,23 @@ import type { Metadata } from 'next';
 
 import AdminLayout from '@/layouts/admin-layout';
 import GlobalProvider from '@/providers/global-provider';
-import { Open_Sans as FontSans } from 'next/font/google';
+import { Lato, Playfair_Display } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
 
 import '../globals.css';
 
-const openSans = FontSans({
+const lato = Lato({
   subsets: ['latin'],
   variable: '--font-sans',
+  weight: ['300', '400', '700'],
 });
 
-export const metadata: Metadata = {
-  title: 'NextBooking | Administrator',
-  description: 'Book your next appointment online!',
-  icons: '/favicon.ico',
-};
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  weight: ['400', '600'],
+});
 
 export default function RootLayout({
   children,
@@ -26,8 +27,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen bg-background-admin font-sans antialiased noisy-background',
-          openSans.variable
+          'min-h-screen bg-violet-50 font-sans antialiased',
+          lato.variable,
+          playfair.variable
         )}
       >
         <GlobalProvider>
