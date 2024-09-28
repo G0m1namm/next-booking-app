@@ -20,9 +20,7 @@ import {
 } from '../ui/drawer';
 import { Button } from '../ui/button';
 
-type Props = {};
-
-export default function RoomFilters({}: Props) {
+export default function RoomFilters() {
   const isTablet = useMediaQuery('(min-width: 640px)');
   const [open, toggle] = useToggle([false, true]);
 

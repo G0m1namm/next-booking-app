@@ -5,8 +5,6 @@ import { AirVentIcon, PawPrintIcon, WashingMachineIcon, WifiIcon } from 'lucide-
 import { twMerge } from 'tailwind-merge';
 import { parseAsBoolean, useQueryStates } from 'nuqs';
 
-type Props = {};
-
 const amenities = [
   {
     label: 'Breakfast Included',
@@ -40,7 +38,7 @@ const amenities = [
   },
 ];
 
-export default function RoomAmenitiesFilter({}: Props) {
+export default function RoomAmenitiesFilter() {
   const [amenitiesState, setAmenitiesState] = useQueryStates(
     {
       isBreakfast: parseAsBoolean.withOptions({ shallow: false }),

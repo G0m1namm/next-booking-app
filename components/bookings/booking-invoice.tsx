@@ -142,7 +142,7 @@ export default function BookingInvoice({ booking }: Readonly<Props>) {
         <Separator />
         <CardFooter className="pt-4 justify-center">
           <p className="text-tiny">
-            Invoice was created on a computer and it's valid without the signature
+            Invoice was created on a computer and it is valid without the signature
           </p>
         </CardFooter>
       </Card>

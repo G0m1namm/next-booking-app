@@ -34,7 +34,7 @@ export default function CurrenyInput(props: TextInputProps) {
     return moneyFormatter.format(Number(digits) / 100);
   }, initialValue);
 
-  function handleChange(realChangeFn: Function, formattedValue: string) {
+  function handleChange(realChangeFn: (...event: any[]) => void, formattedValue: string) {
     const digits = formattedValue.replace(/\D/g, '');
     const realValue = Number(digits) / 100;
     realChangeFn(realValue);

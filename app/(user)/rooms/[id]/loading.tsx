@@ -1,8 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton';
 
-type Props = {};
-
-export default function Loading({}: Props) {
+export default function Loading() {
   return (
     <div className="w-full flex flex-col min-h-svh pt-20">
       <div className="mb-5">

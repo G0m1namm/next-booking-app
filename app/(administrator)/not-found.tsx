@@ -2,9 +2,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react';
 
-type Props = {};
-
-export default function NotFound({}: Props) {
+export default function NotFound() {
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
@@ -16,7 +14,8 @@ export default function NotFound({}: Props) {
             Something's missing.
           </p>
           <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
-            Sorry, we can't find that page. You'll find lots to explore on the home page.{' '}
+            Sorry, we can not find that page. You will find lots to explore on the home
+            page.{' '}
           </p>
           <Button asChild>
             <Link

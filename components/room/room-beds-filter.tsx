@@ -2,9 +2,7 @@ import { Button } from '@/components/ui/button';
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons';
 import { parseAsInteger, useQueryState } from 'nuqs';
 
-type Props = {};
-
-export default function RoomBedsFilter({}: Props) {
+export default function RoomBedsFilter() {
   const [bedsCount, setBedsCount] = useQueryState(
     'numOfBeds',
     parseAsInteger.withOptions({ shallow: false })

@@ -3,9 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons';
 import { parseAsInteger, useQueryState } from 'nuqs';
-type Props = {};
 
-export default function RoomGuestsFilter({}: Props) {
+export default function RoomGuestsFilter() {
   const [kidsCount, setKidsCount] = useQueryState(
     'numOfKids',
     parseAsInteger.withOptions({ shallow: false })

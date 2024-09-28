@@ -1,9 +1,7 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import AdminPageLayout from '@/layouts/admin-page-layout';
 
-type Props = {};
-
-export default function Loading({}: Props) {
+export default function Loading() {
   return (
     <AdminPageLayout title="">
       <div className="flex justify-between items-center">

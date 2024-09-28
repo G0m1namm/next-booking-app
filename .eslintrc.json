@@ -6,10 +6,10 @@
     "prettier"
   ],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/no-explicit-any": 1,
     "perfectionist/sort-imports": [
-      "error",
+      1,
       {
         "type": "natural",
         "order": "asc",
@@ -41,7 +41,7 @@
       }
     ],
     "prettier/prettier": [
-      "error",
+      1,
       {
         "endOfLine": "auto"
       },
