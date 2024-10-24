@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import geocoder from '../../lib/geocoder';
 
-import geocoder from '@/lib/geocoder';
 import { IUser } from './user';
 
 export interface ILocation {

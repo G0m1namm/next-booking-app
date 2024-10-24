@@ -41,8 +41,9 @@ const FormSchema = z.object({
 
 export function ReviewForm({ roomId }: { roomId: Pick<IRoom, '_id'> }) {
   const router = useRouter();
-  const [createReview, { isLoading, isError, isSuccess }] = useCreateReviewMutation();
-  const { data } = useCheckCanReviewQuery({ roomId });
+  const [createReview, { isLoading, isError, isSuccess, isUninitialized }] =
+    useCreateReviewMutation();
+  const { data, isError: isCanReviewError } = useCheckCanReviewQuery({ roomId });
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: 'onChange',
@@ -67,7 +68,7 @@ export function ReviewForm({ roomId }: { roomId: Pick<IRoom, '_id'> }) {
     }
   }, [isSuccess, isError]);
 
-  if (canReview === undefined) {
+  if (canReview === undefined && !isCanReviewError) {
     return (
       <div className="w-full grid gap-4">
         <Skeleton className="h-4 rounded-md" />
@@ -76,7 +77,7 @@ export function ReviewForm({ roomId }: { roomId: Pick<IRoom, '_id'> }) {
     );
   }
 
-  if (canReview === false) {
+  if (canReview === false || isCanReviewError) {
     return null;
   }
 

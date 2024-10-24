@@ -48,7 +48,7 @@ export default function RoomList({ roomsList }: Readonly<{ roomsList: Props }>) 
                 <meta itemProp="name" content={room.name} />
                 <meta itemProp="position" content={roomIdx.toString()} />
                 <meta itemProp="url" content={`${getBaseUrl()}/rooms/${room._id}`} />
-                <RoomCard room={room} className="bg-violet-50" />
+                <RoomCard room={room} index={roomIdx} className="bg-violet-50" />
               </div>
             ))}
           {Boolean(!rooms?.length) && (

@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 
 import ErrorHandler from './errorHandler';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { env } from '@/app/env-var';
 
 interface EmailProps {
   email?: string;
@@ -12,17 +13,17 @@ interface EmailProps {
 export async function sendEmail({ email, subject, template }: EmailProps) {
   try {
     const options: SMTPTransport.Options = {
-      host: process.env.EMAIL_SERVER_HOST,
-      port: Number(process.env.EMAIL_SERVER_PORT),
+      host: env.EMAIL_SERVER_HOST,
+      port: Number(env.EMAIL_SERVER_PORT),
       auth: {
-        user: process.env.EMAIL_SERVER_USER,
-        pass: process.env.EMAIL_SERVER_PASSWORD,
+        user: env.EMAIL_SERVER_USER,
+        pass: env.EMAIL_SERVER_PASSWORD,
       },
       secure: true,
     };
     const transporter = nodemailer.createTransport(options);
     await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: env.EMAIL_FROM,
       to: email || 'delivered@resend.dev',
       subject: subject,
       html: template,

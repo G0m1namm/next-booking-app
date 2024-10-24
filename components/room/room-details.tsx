@@ -48,7 +48,7 @@ export default function RoomDetails({ data }: Props) {
 
   return (
     <div className="w-full flex flex-col min-h-svh container px-4">
-      <div className="h-[50vh] max-h-[600px] flex flex-col justify-end">
+      <div className="h-[300px] md:h-[500px] flex flex-col justify-end">
         <div className="flex flex-col mb-10">
           <StarRating
             initialValue={data?.ratings}

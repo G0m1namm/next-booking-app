@@ -1,14 +1,15 @@
+import { env } from '@/app/env-var';
 import { SignApiOptions, v2 as cloudinary } from 'cloudinary';
 
 // Configuration
 cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET, // Click 'View Credentials' below to copy your API secret
+  cloud_name: env.CLOUDINARY_CLOUD_NAME,
+  api_key: env.CLOUDINARY_API_KEY,
+  api_secret: env.CLOUDINARY_API_SECRET, // Click 'View Credentials' below to copy your API secret
 });
 
 export const signatureParams = ({ paramsToSign }: { paramsToSign: SignApiOptions }) => {
-  const secret = process.env.CLOUDINARY_API_SECRET;
+  const secret = env.CLOUDINARY_API_SECRET;
   if (!secret) {
     throw new Error('CLOUDINARY_API_SECRET is not defined');
   }

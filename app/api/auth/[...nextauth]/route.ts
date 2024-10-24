@@ -1,3 +1,4 @@
+import { env } from '@/app/env-var';
 import dbConnect from '@/backend/config/dbConnect';
 import User, { IUser } from '@/backend/models/user';
 import bcrypt from 'bcryptjs';
@@ -68,7 +69,7 @@ async function auth(req: NextRequest, res: any) {
     pages: {
       signIn: '/login',
     },
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: env.NEXTAUTH_SECRET,
   });
 }
 

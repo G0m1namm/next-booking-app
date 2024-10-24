@@ -13,9 +13,10 @@ import { StarRating } from '../ui/star-rating';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   room?: IRoom;
+  index: number;
 }
 
-export default function RoomCard({ className, room }: Props) {
+export default function RoomCard({ className, room, index }: Props) {
   return (
     <div className={cn('relative flex w-full group/room overflow-hidden', className)}>
       {room?._id && (
@@ -39,9 +40,10 @@ export default function RoomCard({ className, room }: Props) {
           }
           alt={room?.name ?? 'default house - no available'}
           className="w-full h-full object-cover origin-center scale-100 transition-transform ease-smooth duration-300 group-hover/room:scale-110"
-          width={400}
-          height={400}
-          loading="lazy"
+          width={200}
+          height={200}
+          priority={index < 3}
+          loading={index < 3 ? undefined : 'lazy'}
         />
       </div>
       <div className="px-2 py-2 flex flex-col justify-between w-full transition-colors text-violet-900 group-hover/room:text-white relative z-[1]">

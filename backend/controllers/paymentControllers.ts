@@ -6,8 +6,9 @@ import ErrorHandler from '../utils/errorHandler';
 import { headers } from 'next/headers';
 import User from '../models/user';
 import Booking from '../models/booking';
+import { env } from '@/app/env-var';
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(env.STRIPE_SECRET_KEY);
 
 // Stripe Checkout API Controller -> /api/payment/checkout_session/:roomId
 export const stripeCheckoutSession = catchAsyncErrors(
@@ -64,7 +65,7 @@ export const webhookCheckout = async (req: NextRequest) => {
     const event = stripe.webhooks.constructEvent(
       rawBody,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET
+      env.STRIPE_WEBHOOK_SECRET
     );
 
     if (event.type === 'checkout.session.completed') {

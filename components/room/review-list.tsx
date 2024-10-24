@@ -18,8 +18,7 @@ export default function ReviewList({ reviews }: Props) {
     );
   }
   return (
-    <div className="mx-auto max-w-2xl space-y-6 py-8">
-      <h2 className="text-xl font-bold">Comments</h2>
+    <div className="mx-4 space-y-6 py-8">
       <div className="space-y-4">
         {reviews.map((review) => (
           <Review key={`comment-${review?._id}`} review={review} />
