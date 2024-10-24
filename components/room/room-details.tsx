@@ -20,7 +20,6 @@ import { Separator } from '../ui/separator';
 import { ReviewForm } from './review-form';
 import ReviewList from './review-list';
 import { RoomCarousel } from './room-carousel';
-import RoomMap from './room-map';
 import { StarRating } from '../ui/star-rating';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '../ui/skeleton';
@@ -37,6 +36,10 @@ const RoomDatePicker = dynamic(() => import('./room-date-picker'), {
       )}
     />
   ),
+});
+
+const RoomMap = dynamic(() => import('./room-map'), {
+  ssr: true,
 });
 
 type Props = {

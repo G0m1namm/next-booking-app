@@ -1,6 +1,24 @@
-import { IRoom } from "@/backend/models/room";
+interface IRoomSeeds {
+  name: string;
+  user?: string; 
+  pricePerNight: number;
+  description: string;
+  address: string;
+  guestCapacity: number;
+  numOfBeds: number;
+  isInternet: boolean;
+  isBreakfast: boolean;
+  isAirConditioned: boolean;
+  isPetsAllowed: boolean;
+  isRoomCleaning: boolean;
+  ratings: number;
+  numOfReviews: number;
+  images: { public_id: string; url: string }[]; // Array of objects with public_id and url properties
+  category: string;
+  reviews: [];
+}
 
-export const rooms: IRoom[] = [
+export const rooms: IRoomSeeds[] = [
   {
     name: "Charming Studio < 10 Miles to Wells' Beaches!",
     pricePerNight: 168,

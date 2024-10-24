@@ -14,7 +14,7 @@ export default function RoomMap({ coordinates, className }: Props) {
   return (
     <div id="room-map" className={cn('h-[350px] w-full', className)}>
       <Map
-        mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+        mapboxAccessToken={env.MAPBOX_ACCESS_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v12"
         style={{ width: '100%', height: '100%' }}
         initialViewState={{

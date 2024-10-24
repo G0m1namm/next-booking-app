@@ -2,9 +2,6 @@ import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
 export const env = createEnv({
-  shared: {
-    NEXT_PUBLIC_TEST_USER_PASSWORD: z.string().min(6),
-  },
   server: {
     DB_URI: z.string().url(),
     DB_LOCAL_URI: z.string().url(),
@@ -22,20 +19,17 @@ export const env = createEnv({
     GEOCODER_PROVIDER: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
     NEXTAUTH_URL: z.string().url(),
+    TEST_USER_PASSWORD: z.string().min(6),
+    MAPBOX_ACCESS_TOKEN: z.string().min(1),
   },
   client: {
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
     NEXT_PUBLIC_VERCEL_URL: z.string().min(1),
-    NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: z.string().min(1),
     NEXT_PUBLIC_CLOUDINARY_AVATAR_PRESET_ID: z.string().min(1),
     NEXT_PUBLIC_CLOUDINARY_ROOMS_PRESET_ID: z.string().min(1),
   },
   experimental__runtimeEnv: {
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
-    NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
     NEXT_PUBLIC_CLOUDINARY_AVATAR_PRESET_ID: process.env.NEXT_PUBLIC_CLOUDINARY_AVATAR_PRESET_ID,
     NEXT_PUBLIC_CLOUDINARY_ROOMS_PRESET_ID: process.env.NEXT_PUBLIC_CLOUDINARY_ROOMS_PRESET_ID,
-    NEXT_PUBLIC_TEST_USER_PASSWORD: process.env.NEXT_PUBLIC_TEST_USER_PASSWORD,
   },
 });

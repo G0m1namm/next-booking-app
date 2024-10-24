@@ -15,7 +15,7 @@ const seedRooms = async () => {
       {
         name: 'testUser',
         email: 'test.booking@email.com',
-        password: process.env.NEXT_PUBLIC_TEST_USER_PASSWORD // Add password with number, uppercase, lowercase and special character
+        password: process.env.TEST_USER_PASSWORD // Add password with number, uppercase, lowercase and special character
       }
     ) as IUser;
     
