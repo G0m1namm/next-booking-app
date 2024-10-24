@@ -6,7 +6,9 @@ jiti('./app/env-var');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: process.env.NEXT_PUBLIC_BASE_URL,
+  env: {
+    NEXTAUTH_URL: `${process.env.NODE_ENV === 'development' ? 'http://' : 'https://'}${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`,
+  },
   images: {
     remotePatterns: [{ hostname: 'res.cloudinary.com' }],
   },

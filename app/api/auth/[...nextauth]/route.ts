@@ -70,6 +70,12 @@ async function auth(req: NextRequest, res: any) {
       signIn: '/login',
     },
     secret: env.NEXTAUTH_SECRET,
+    logger: {
+      error(code, metadata) {
+        console.log("NEXTAUTH => ", code, metadata);
+        
+      },
+    }
   });
 }
 
