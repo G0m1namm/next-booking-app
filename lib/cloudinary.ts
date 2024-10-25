@@ -33,7 +33,6 @@ export const uploadFile = async ({
         resource_type: 'auto',
       })
       .then((result) => {
-        console.log(result);
         resolve({
           public_id: result.public_id,
           url: result.url,
