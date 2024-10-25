@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useLazyUpdateSessionQuery, useUpdateAvatarMutation } from '@/redux/api/user';
-import { setUser } from '@/redux/features/user/user-slice';
+import { useUpdateAvatarMutation } from '@/redux/api/user';
 import { useAppDistpatch, useAppSelector } from '@/redux/hooks';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -14,46 +13,45 @@ import { cn } from '@/lib/utils';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { buttonVariants } from '../ui/button';
-import { UPLOAD_AVATAR_PRESET_ID } from '@/lib/constants';
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+import { MAX_FILE_SIZE, UPLOAD_AVATAR_PRESET_ID } from '@/lib/constants';
+import { useSession } from 'next-auth/react';
 
 export default function AvatarSettings() {
   const [temporalAvatar, setTemporalAvatar] = useState<string | null>(null);
   const router = useRouter();
 
   const [updateAvatar, { isLoading, isError, isSuccess }] = useUpdateAvatarMutation();
-  const [updateSession, { data: sessionData }] = useLazyUpdateSessionQuery();
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDistpatch();
+  const currentSession = useSession();
 
-  if (sessionData) dispatch(setUser(sessionData?.user));
-
-  const successHandler = (event: CloudinaryUploadWidgetResults) => {
+  const successHandler = async (event: CloudinaryUploadWidgetResults) => {
     if (typeof event.info === 'string' || !event.info) return;
     setTemporalAvatar(event.info.secure_url);
     updateAvatar({ url: event.info.secure_url, public_id: event.info.public_id });
+    await currentSession?.update();
   };
 
   useEffect(() => {
     if (isSuccess) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      updateSession();
-      router.refresh();
       toast.success('Profile avatar updated successfully');
+      router.refresh();
     }
     if (isError && !isLoading) {
       toast.error('An error occurred while updating your avatar');
     }
-  }, [isSuccess, isError, isLoading, router, updateSession]);
+  }, [isSuccess, isError, isLoading, router]);
 
   return (
     <div className="grid pt-10 gap-10">
       <div className="flex flex-col md:flex-row gap-12 pl-6">
         <div className="flex flex-col gap-2 flex-none items-center">
           <Avatar className="size-28">
-            <AvatarImage src={temporalAvatar ?? user?.avatar?.url} alt="user avatar" />
+            <AvatarImage
+              className="object-cover object-center"
+              src={temporalAvatar ?? user?.avatar?.url}
+              alt="user avatar"
+            />
             <AvatarFallback>
               <Image
                 src="/images/avatar.jpg"

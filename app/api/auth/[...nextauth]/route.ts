@@ -44,25 +44,28 @@ async function auth(req: NextRequest, res: any) {
       }),
     ],
     callbacks: {
-      jwt: async ({ token, user }) => {
+      jwt: async ({ token, trigger, user }) => {
         user && (token.user = user);
 
-        if (req.url?.includes('/api/auth/session?')) {
-          // @ts-ignore
-          const updatedUser = await User.findById(token?.user?._id).select('avatar');
+        if (trigger === 'update') {
+          const userInfo = await User.findById((token?.user as any)?._id).select('+avatar');
+          const newInfo: any = {
+            ...user,
+            name: userInfo.name,
+            email: userInfo.email,
+            role: userInfo.role
+          }
 
-          // @ts-ignore
-          token.user.avatar = updatedUser?.avatar;
+          if(userInfo.avatar) newInfo.avatar = userInfo.avatar;
+          
+          token.user = newInfo
         }
-        /* eslint-disable @typescript-eslint/ban-ts-comment */
 
         return token;
       },
       session: async ({ session, token }) => {
         session.user = token.user as IUser;
-
-        // @ts-ignore
-        delete session.user.password;
+        delete (session.user as any).password;
         return session;
       },
     },

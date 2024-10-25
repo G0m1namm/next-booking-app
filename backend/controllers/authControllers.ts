@@ -9,6 +9,7 @@ import User, { IUser } from '../models/user';
 import { resetPasswordHTMLTemplate } from '../utils/emailTemplates';
 import ErrorHandler from '../utils/errorHandler';
 import { sendEmail } from '../utils/sendEmail';
+import { revalidatePath } from 'next/cache';
 
 // Register a user => /api/auth/register
 export const registerUser = catchAsyncErrors(async (req: NextRequest) => {
@@ -31,6 +32,8 @@ export const updateProfile = catchAsyncErrors(async (req: NextRequest) => {
 
   const user = await User.findByIdAndUpdate(req.user._id, { name, email });
 
+  revalidatePath('/account-settings/profile', 'page');
+
   return NextResponse.json({
     success: true,
     user,
@@ -51,6 +54,8 @@ export const updatePassword = catchAsyncErrors(async (req: NextRequest) => {
   user.password = newPassword;
   await user.save();
 
+  revalidatePath('/account-settings/privacy', 'page');
+
   return NextResponse.json({
     success: true,
     user,
@@ -66,6 +71,8 @@ export const updateAvatar = catchAsyncErrors(async (req: NextRequest) => {
   if (req?.user?.avatar?.public_id) {
     await deleteFIle(req?.user?.avatar?.public_id);
   }
+
+  revalidatePath('/account-settings/profile', 'page');
 
   return NextResponse.json({
     success: true,

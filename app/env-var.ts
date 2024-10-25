@@ -6,9 +6,7 @@ export const env = createEnv({
     DB_URI: z.string().url(),
     DB_LOCAL_URI: z.string().url(),
     NEXTAUTH_SECRET: z.string().min(10),
-    CLOUDINARY_API_KEY: z.string().min(1),
     CLOUDINARY_API_SECRET: z.string().min(1),
-    CLOUDINARY_CLOUD_NAME: z.string().min(1),
     STRIPE_SECRET_KEY: z.string().min(1),
     EMAIL_SERVER_USER: z.string().min(1),
     EMAIL_SERVER_PASSWORD: z.string().min(1),
@@ -22,6 +20,8 @@ export const env = createEnv({
     MAPBOX_ACCESS_TOKEN: z.string().min(1),
   },
   client: {
+    NEXT_PUBLIC_CLOUDINARY_API_KEY: z.string().min(1),
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
     NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL: z.string().min(1),
     NEXT_PUBLIC_CLOUDINARY_AVATAR_PRESET_ID: z.string().min(1),
     NEXT_PUBLIC_CLOUDINARY_ROOMS_PRESET_ID: z.string().min(1),
@@ -30,5 +30,7 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL: process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL,
     NEXT_PUBLIC_CLOUDINARY_AVATAR_PRESET_ID: process.env.NEXT_PUBLIC_CLOUDINARY_AVATAR_PRESET_ID,
     NEXT_PUBLIC_CLOUDINARY_ROOMS_PRESET_ID: process.env.NEXT_PUBLIC_CLOUDINARY_ROOMS_PRESET_ID,
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    NEXT_PUBLIC_CLOUDINARY_API_KEY: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
   },
 });

@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useLazyUpdateSessionQuery, useUpdateProfileMutation } from '@/redux/api/user';
-import { setUser } from '@/redux/features/user/user-slice';
+import { useUpdateProfileMutation } from '@/redux/api/user';
 import { useAppDistpatch, useAppSelector } from '@/redux/hooks';
 import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -12,6 +11,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useSession } from 'next-auth/react';
 
 export function EmailForm() {
   const [email, setEmail] = useState<string>('');
@@ -19,18 +19,17 @@ export function EmailForm() {
 
   const router = useRouter();
   const dispatch = useAppDistpatch();
+  const currentSession = useSession();
 
   const [updateProfile, { isLoading, isSuccess, isError }] = useUpdateProfileMutation();
-  const [updateSession, { data: sessionData }] = useLazyUpdateSessionQuery();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = formData.get('email') as string;
     await updateProfile({ email });
+    await currentSession.update();
   };
-
-  if (sessionData) dispatch(setUser(sessionData?.user));
 
   useEffect(() => {
     if (currentUser?.email) {
@@ -40,16 +39,13 @@ export function EmailForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      updateSession();
-      router.refresh();
       toast.success('Profile updated successfully');
+      router.refresh();
     }
     if (isError && !isLoading) {
       toast.error('An error occurred while updating your profile');
     }
-  }, [isSuccess, isError, isLoading, router, updateSession]);
+  }, [isSuccess, isError, isLoading, router]);
 
   return (
     <form onSubmit={submitHandler}>
