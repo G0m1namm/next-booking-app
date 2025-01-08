@@ -49,9 +49,7 @@ export const columns: ColumnDef<Booking>[] = [
   {
     accessorKey: 'id',
     header: () => <div className="text-base text-black">Booking ID</div>,
-    cell: ({ row }) => (
-      <div className="text-tiny">{formatRFC7231(row.getValue('id'))}</div>
-    ),
+    cell: ({ row }) => <div className="text-tiny">{row.getValue('id')}</div>,
   },
   {
     accessorKey: 'checkIn',
