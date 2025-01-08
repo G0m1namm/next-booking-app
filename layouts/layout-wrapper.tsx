@@ -22,7 +22,9 @@ export default function LayoutWrapper({
   const Layout = pathname === '/' ? layouts['authenticated'] : layouts[status];
   return (
     <Layout>
-      <main className="page-shell-container">{children}</main>
+      <main className="page-shell-container min-h-[calc(100vh-80px-122px)]">
+        {children}
+      </main>
     </Layout>
   );
 }
