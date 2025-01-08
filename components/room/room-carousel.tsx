@@ -32,9 +32,9 @@ export function RoomCarousel({ images, name }: Props) {
     <Dialog>
       <DialogTrigger className="relative">
         <Image
-          src={images[0].url}
+          src={images[0]?.url}
           alt={`${name} main image`}
-          className="object-cover w-full h-auto max-h-[450px]"
+          className="object-cover w-full h-auto max-h-[450px] bg-slate-400"
           width={300}
           height={200}
           priority={true}
