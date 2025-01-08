@@ -8,6 +8,7 @@ jiti('./app/env-var');
 const nextConfig = {
   env: {
     NEXTAUTH_URL: `${process.env.NODE_ENV === 'development' ? 'http://' : 'https://'}${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`,
+    MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN,
   },
   images: {
     remotePatterns: [{ hostname: 'res.cloudinary.com' }],
